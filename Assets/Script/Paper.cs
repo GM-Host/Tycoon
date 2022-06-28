@@ -4,8 +4,6 @@ using UnityEngine.EventSystems;
 public class Paper : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [SerializeField]
-    private GameObject Identity;
-    [SerializeField]
     [Range(0,1)]
     private float areaY;
     private float height, width;
@@ -52,7 +50,7 @@ public class Paper : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
         if (dragTime == 0)  // 드래그 없이 클릭만 한 경우
         {
             isExpansion = true;
-            Identity.SetActive(true);
+            GameObject.Find("Canvas").transform.Find("CloseUp").gameObject.SetActive(true);
         }
         dragTime = 0;
     }

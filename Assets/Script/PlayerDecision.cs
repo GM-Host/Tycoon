@@ -8,17 +8,11 @@ public class PlayerDecision : MonoBehaviour
     private RequestManager requestManager;
     public void SelectYes()
     {
-        if (requestManager.correct)
-            requestManager.UpdateScore(1);
-        else
-            requestManager.UpdateScore(-1);
-
-        requestManager.VisitGuest();
-
+        requestManager.DecisionComplete(true);
     }
 
     public void SelectNo()
     {
-        requestManager.VisitGuest();
+        requestManager.DecisionComplete(false);
     }
 }
