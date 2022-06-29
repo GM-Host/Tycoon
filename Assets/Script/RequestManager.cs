@@ -13,7 +13,7 @@ public class RequestManager : MonoBehaviour
     [SerializeField]
     private Vector2 spawnPaperPos;
     [SerializeField]
-    private GameObject CloseUp;
+    private GameObject expansionPaper;
     [SerializeField]
     private GameObject parent;  // paper 오브젝트의 부모 오브젝트(캔버스)
     private GameObject paper;
@@ -61,7 +61,7 @@ public class RequestManager : MonoBehaviour
                 UpdateScore(-1);
         }
         Destroy(paper);
-        CloseUp.SetActive(false);
+        expansionPaper.SetActive(false);
         VisitGuest();
     }
 }

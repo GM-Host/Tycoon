@@ -50,7 +50,7 @@ public class Paper : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
         if (dragTime == 0)  // 드래그 없이 클릭만 한 경우
         {
             isExpansion = true;
-            GameObject.Find("Canvas").transform.Find("CloseUp").gameObject.SetActive(true);
+            GameObject.Find("Canvas").transform.Find("ExpansionPaper").gameObject.SetActive(true);
         }
         dragTime = 0;
     }
