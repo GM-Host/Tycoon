@@ -6,11 +6,19 @@ using UnityEngine.UI;
 public class Interaction : MonoBehaviour
 {
     [SerializeField]
+    private GameObject expansionPaper;
+    [SerializeField]
     private GameObject stamps;
     [SerializeField]
     private GameObject toad;
     [SerializeField]
     private Sprite toadImage1, toadImage2;
+
+    public void ClickBackground()
+    {
+        expansionPaper.SetActive(false);
+    }
+
     public void ClickToad()
     {
         if (stamps.activeSelf)
