@@ -5,14 +5,16 @@ using UnityEngine;
 public class Guest : MonoBehaviour
 {
     private string guestName;
+    private string guestLocal;
     private string guestParty;
     private GuestDB.SpeciesType guestSpecies;
     private GuestDB.ProfessionType guestProfession;
 
     // »ý¼ºÀÚ
-    public Guest(string _name, string _party, GuestDB.SpeciesType _species, GuestDB.ProfessionType _profession)
+    public Guest(string _name, string _local, string _party, GuestDB.SpeciesType _species, GuestDB.ProfessionType _profession)
     {
         guestName = _name;
+        guestLocal = _local;
         guestParty = _party;
         guestSpecies = _species;
         guestProfession = _profession;
@@ -21,6 +23,11 @@ public class Guest : MonoBehaviour
     public string GetName()
     {
         return guestName;
+    }
+
+    public string GetLocal()
+    {
+        return guestLocal;
     }
 
     public string GetParty()

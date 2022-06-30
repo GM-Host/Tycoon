@@ -8,7 +8,7 @@ public class RequestManager : MonoBehaviour
     private Guest guest;
     public bool correct;
     private int score;
-    public TextMeshProUGUI scoreText, guestNameText, guestPartyText, guestSpeciesText, guestProfessionText;
+    public TextMeshProUGUI scoreText, guestNameText, guestLocalText, guestPartyText, guestSpeciesText, guestProfessionText;
 
     [SerializeField]
     private Vector2 spawnPaperPos;
@@ -40,6 +40,7 @@ public class RequestManager : MonoBehaviour
         guest = GuestDB.CreateGuest(correct);
 
         guestNameText.text = guest.GetName();
+        guestLocalText.text = guest.GetLocal();
         guestPartyText.text = guest.GetParty();
         guestSpeciesText.text = GuestDB.GetSpeciesText(guest.GetSpecies());
         guestProfessionText.text = GuestDB.GetProfessiosText(guest.GetProfession());
