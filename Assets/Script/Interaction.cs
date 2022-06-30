@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class Interaction : MonoBehaviour
 {
     [SerializeField]
+    private Animator stampAnimator;
+    [SerializeField]
     private GameObject expansionPaper;
     [SerializeField]
     private GameObject stamps;
@@ -14,6 +16,8 @@ public class Interaction : MonoBehaviour
     [SerializeField]
     private Sprite toadImage1, toadImage2;
 
+    private bool stampActive;
+
     public void ClickBackground()
     {
         expansionPaper.SetActive(false);
@@ -21,16 +25,17 @@ public class Interaction : MonoBehaviour
 
     public void ClickToad()
     {
-        if (stamps.activeSelf)
+        if (stampActive)
         {
-            stamps.SetActive(false);
+            stampAnimator.SetBool("appear", false);
             toad.GetComponent<Image>().sprite = toadImage1;
         }
         else
         {
-            stamps.SetActive(true);
+            stampAnimator.SetBool("appear", true);
             toad.GetComponent<Image>().sprite = toadImage2;
         }
+        stampActive = !stampActive;
     }
 
     public void ClickBell()
