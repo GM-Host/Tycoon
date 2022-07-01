@@ -614,7 +614,7 @@ MonoBehaviour:
   guestPartyText: {fileID: 507715048}
   guestSpeciesText: {fileID: 859656848}
   guestProfessionText: {fileID: 626669440}
-  spawnPaperPos: {x: 0, y: -50}
+  spawnPaperPos: {x: 0, y: -200}
   closeUpIdentity: {fileID: 2038412070}
   stampArea: {fileID: 101831347}
   parent: {fileID: 1493612705}
