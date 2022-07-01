@@ -8,17 +8,22 @@ public class Stamp : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
 {
     [SerializeField]
     private bool permit;    // 승인 도장인지, 거절 도장인지
+    [SerializeField]
+    private GameObject sealPrefab;
 
     private GraphicRaycaster graphicRaycaster;
     private PointerEventData pointerEventData;
 
     private static Vector2 defaultPos;  // 도장 기존 위치
+    private GameObject seal;
 
     // 필요한 컴포넌트
     [SerializeField]
     private RequestManager requestManager;
     [SerializeField]
     private Canvas canvas;
+    [SerializeField]
+    private GameObject parent;  // seal 오브젝트의 부모 오브젝트(stamp area)
 
     void Start()
     {
@@ -37,6 +42,8 @@ public class Stamp : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
         this.transform.position = currentPos;
     }
 
+
+    // https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=silentjeong&logNo=221510880388
     public void OnEndDrag(PointerEventData eventData)
     {
         Vector3 currentPos = eventData.position;
@@ -48,14 +55,18 @@ public class Stamp : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
         if (results.Count > 1 && results[1].gameObject.name == "StampArea")
         {
             Debug.Log("스탬프 영역");
-            requestManager.DecisionComplete(permit);
+
+            seal = Instantiate(sealPrefab, currentPos, Quaternion.identity);
+            seal.transform.parent = parent.transform;
+
+            // requestManager.DecisionComplete(permit);
         }
         else
         {
             Debug.Log("null");
-            this.transform.position = defaultPos;
         }
+        this.transform.position = defaultPos;
     }
 
-    
+
 }
