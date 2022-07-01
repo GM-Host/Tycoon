@@ -7,13 +7,13 @@ public class Identity : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 {
     [SerializeField]
     [Range(0,1)]
-    private float areaY;
-    private float height, width;
+    private float characterAreaY, deskAreaY;
+    private float characterHeight, deskHeight;
     private float dragTime;     // 드래그한 시간
     private bool isCloseUp;   // 현재 확대 상태인지
     private bool sealing;   // 인장이 찍혔는지 여부
     private bool permit; // 승인 여부
-    //private static Vector2 defaultPos;
+    private static Vector2 defaultPos;
 
     private GraphicRaycaster graphicRaycaster;
     private PointerEventData pointerEventData;
@@ -21,8 +21,8 @@ public class Identity : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     void Start()
     {
-        height = Screen.height * areaY;
-        width = Screen.width;
+        characterHeight = Screen.height * characterAreaY;
+        deskHeight = Screen.height * deskAreaY;
 
         canvas = GameObject.Find("Canvas");
         graphicRaycaster = canvas.GetComponent<GraphicRaycaster>();
@@ -31,7 +31,7 @@ public class Identity : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     void IBeginDragHandler.OnBeginDrag(PointerEventData eventData)
     {
-        //defaultPos = this.transform.position;
+        defaultPos = this.transform.position;
     }
 
     void IDragHandler.OnDrag(PointerEventData eventData)
@@ -39,8 +39,6 @@ public class Identity : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         if (!isCloseUp)
         {
             Vector2 currentPos = eventData.position;
-            currentPos.x = Mathf.Clamp(currentPos.x, 0, width);
-            currentPos.y = Mathf.Clamp(currentPos.y, 0, height);
             this.transform.position = currentPos;
             dragTime += Time.deltaTime; // 드래그 시간 업데이트
         }
@@ -51,28 +49,26 @@ public class Identity : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         if (!isCloseUp)
         {
             Vector2 currentPos = eventData.position;
-            currentPos.x = Mathf.Clamp(currentPos.x, 0, width);
-            currentPos.y = Mathf.Clamp(currentPos.y, 0, height);
+
+            // 캐릭터보다 높은 경우
+            if (currentPos.y> characterHeight)
+            {
+                this.transform.position = defaultPos;   // 원위치로 이동
+                return;
+            }
+
             this.transform.position = pointerEventData.position = currentPos;
 
             List<RaycastResult> results = new List<RaycastResult>();
             graphicRaycaster.Raycast(pointerEventData, results);
 
-            if (results.Count > 1 && results[1].gameObject.name == "Character")
+            if (results.Count > 1 && results[1].gameObject.name == "Character" && sealing)  // 인장이 찍힌 신원서를 캐릭터에게 주는 경우
             {
-                Debug.Log("캐릭터");
-                if (sealing)    // 인장이 찍힌 신원서인 경우
-                {
-                    Debug.Log("sealing");
-                    GameObject.Find("RequestManager").GetComponent<RequestManager>().DecisionComplete(permit);
-                }
+                GameObject.Find("RequestManager").GetComponent<RequestManager>().DecisionComplete(permit);
             }
-            else
+            else if (currentPos.y > deskHeight)    // 책상이나 캐릭터 영역이 아닌 경우
             {
-                for (int i = 0; i < results.Count; i++)
-                {
-                    Debug.Log(i+results[i].gameObject.name);
-                }
+                this.transform.position = defaultPos;   // 원위치로 이동
             }
         }
     }
