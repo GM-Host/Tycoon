@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RequestManager : MonoBehaviour
 {
@@ -12,6 +13,15 @@ public class RequestManager : MonoBehaviour
 
     [SerializeField]
     private Vector2 spawnPaperPos;
+    
+
+    private GameObject identity;
+
+    private float trueRatio = 0.6f;
+
+    // 필요한 컴포넌트
+    [SerializeField]
+    private GuestDB guestDB;
     [SerializeField]
     private GameObject closeUpIdentity;
     [SerializeField]
@@ -19,11 +29,9 @@ public class RequestManager : MonoBehaviour
     [SerializeField]
     private GameObject parent;  // paper 오브젝트의 부모 오브젝트(캔버스)
     [SerializeField]
+    private Image professionSeal;
+    [SerializeField]
     private GameObject identityPrefab;  // 신분증 프리팹
-
-    private GameObject identity;
-
-    private float trueRatio = 0.6f;
 
     // Start is called before the first frame update
     void Start()
@@ -42,13 +50,14 @@ public class RequestManager : MonoBehaviour
 
         // 신원서 생성
         correct = new System.Random().NextDouble() < trueRatio ? true : false;
-        guest = GuestDB.CreateGuest(correct);
+        guest = guestDB.CreateGuest(correct);
 
         guestNameText.text = guest.GetName();
         guestLocalText.text = guest.GetLocal();
         guestPartyText.text = guest.GetParty();
-        guestSpeciesText.text = GuestDB.GetSpeciesText(guest.GetSpecies());
-        guestProfessionText.text = GuestDB.GetProfessiosText(guest.GetProfession());
+        guestSpeciesText.text = guestDB.GetSpeciesText(guest.GetSpecies());
+        guestProfessionText.text = guestDB.GetProfessiosText(guest.GetProfession());
+        professionSeal.sprite = guest.GetProfessionSeal();
     }
 
     public void UpdateScore(int num)

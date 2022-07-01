@@ -9,15 +9,17 @@ public class Guest : MonoBehaviour
     private string guestParty;
     private GuestDB.SpeciesType guestSpecies;
     private GuestDB.ProfessionType guestProfession;
+    private Sprite professionSeal;
 
     // »ý¼ºÀÚ
-    public Guest(string _name, string _local, string _party, GuestDB.SpeciesType _species, GuestDB.ProfessionType _profession)
+    public Guest(string _name, string _local, string _party, GuestDB.SpeciesType _species, GuestDB.ProfessionType _profession, Sprite _professionSeal)
     {
         guestName = _name;
         guestLocal = _local;
         guestParty = _party;
         guestSpecies = _species;
         guestProfession = _profession;
+        professionSeal = _professionSeal;
     }
 
     public string GetName()
@@ -43,5 +45,10 @@ public class Guest : MonoBehaviour
     public GuestDB.ProfessionType GetProfession()
     {
         return guestProfession;
+    }
+
+    public Sprite GetProfessionSeal()
+    {
+        return professionSeal;
     }
 }

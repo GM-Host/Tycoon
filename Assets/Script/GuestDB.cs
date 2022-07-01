@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class GuestDB
+public class GuestDB : MonoBehaviour
 {
     public enum ProfessionType
     {
@@ -11,7 +11,7 @@ public static class GuestDB
         Mage,       // 마법사
         Bard,       // 음유시인
         Priest,     // 사제
-        Astrologian,// 점성술사
+        //Astrologian,// 점성술사
         Hunter,     // 사냥꾼
     }
 
@@ -34,9 +34,9 @@ public static class GuestDB
         Deek,
     }
 
-    private static List<string> nameList = new List<string>() { "발라드", "이안하트", "디르크", "무에르테", "샤카" };
-    private static List<string> allLocalList = new List<string>() { "아인요르드", "람다", "에르페", "오브리제", "카리알굴", "사몰레아", "오클리드" };
-    private static Dictionary<SpeciesType, List<string>> speciesToLocal = new Dictionary<SpeciesType, List<string>>()
+    private List<string> nameList = new List<string>() { "발라드", "이안하트", "디르크", "무에르테", "샤카" };
+    private List<string> allLocalList = new List<string>() { "아인요르드", "람다", "에르페", "오브리제", "카리알굴", "사몰레아", "오클리드" };
+    private Dictionary<SpeciesType, List<string>> speciesToLocal = new Dictionary<SpeciesType, List<string>>()
     {
         { SpeciesType.Human, new List<string>() { "아인요르드", "람다", "에르페", "오브리제"}},
         { SpeciesType.Dwarf, new List<string>() {"카리알굴"} },
@@ -44,10 +44,15 @@ public static class GuestDB
         //{ SpeciesType.Beastface, new List<string>() {"temp" } },
         //{ SpeciesType.Oak, new List<string>() {"temp" } },
         //{ SpeciesType.Goblin, new List<string>() {"temp" } },
-        { SpeciesType.Reve, allLocalList }
+        { SpeciesType.Reve, new List<string>() { "아인요르드", "람다", "에르페", "오브리제", "카리알굴", "사몰레아", "오클리드" } }
     };
 
-    private static Dictionary<string, List<string>> localToParty = new Dictionary<string, List<string>>()
+    // 직업-인장
+    [SerializeField]
+    private List<Sprite> professionSealList;
+    private Dictionary<ProfessionType, Sprite> professionToSeal;
+
+    private Dictionary<string, List<string>> localToParty = new Dictionary<string, List<string>>()
     {
         { "아인요르드", new List<string>() { "서리갈기", "강철발톱", "거인숨결", "천둥포효", "눈발바닥"}},
         { "람다", new List<string>() { "노래하는 사과", "걷는 양동이", "일하는 설계자", "날개달린 소" } },
@@ -59,17 +64,25 @@ public static class GuestDB
         //{ "temp", new List<string>() { "temp" } }
     };
 
-    private static List<string> speciesText = new List<string>() { "인간", "드워프", "엘프", "레브" };
+    private List<string> speciesText = new List<string>() { "인간", "드워프", "엘프", "레브" };
     //private static List<string> speciesText = new List<string>() { "인간", "드워프", "엘프", "비스트페이스", "오크", "고블린", "레브" };
-    private static List<string> professionText = new List<string>() { "전사", "암살자", "마법사", "음유시인", "사제", "점성술사", "사냥꾼" };
+    private List<string> professionText = new List<string>() { "전사", "암살자", "마법사", "음유시인", "사제", "사냥꾼" };
+    //private List<string> professionText = new List<string>() { "전사", "암살자", "마법사", "음유시인", "사제", "점성술사", "사냥꾼" };
 
-    
+    private void Start()
+    {
+        // 직업-인장 dictionary 세팅
+        professionToSeal = new Dictionary<ProfessionType, Sprite>();
+        for (int i = 0; i < professionSealList.Count; i++)
+            professionToSeal.Add((ProfessionType)i, professionSealList[i]);
+    }
 
-    public static Guest CreateGuest(bool correct)
+    public Guest CreateGuest(bool correct)
     {
         string name, local, party;
         SpeciesType species;
         ProfessionType profession;
+        Sprite professionSeal;
 
         // 이름 랜덤
         name = nameList[Random.Range(0, nameList.Count)];
@@ -86,12 +99,14 @@ public static class GuestDB
         List<string> localList = speciesToLocal[species];
         local = localList[Random.Range(0, localList.Count)];
 
-        if (correct)    // 지역에 따른 올바른 세력 설정
+        if (correct)    // 지역에 따른 올바른 세력, 직업에 따른 올바른 인장 설정
         {
             List<string> partyList = localToParty[local];
             party = partyList[Random.Range(0, partyList.Count)];
+
+            professionSeal = professionToSeal[profession];
         }
-        else    // 지역에 맞지 않는 세력 설정
+        else    // 지역에 맞지 않는 세력, 직업에 맞지 않는 인장 설정
         {
             // 현재 지역과 다른 지역 정하기
             string wrongLocal = allLocalList[Random.Range(0, allLocalList.Count)];
@@ -101,17 +116,28 @@ public static class GuestDB
             // 다른 지역의 세력 정하기
             List<string> wrongPartyList = localToParty[wrongLocal];
             party = wrongPartyList[Random.Range(0, wrongPartyList.Count)];
+
+            //-------------------------------------------------------------------------
+
+            // 현재 직업과 다른 직업 정하기
+            count = System.Enum.GetValues(typeof(ProfessionType)).Length;
+            ProfessionType wrongProfession = (ProfessionType)Random.Range(0, count);
+            while (wrongProfession == profession)
+                wrongProfession = (ProfessionType)Random.Range(0, count);
+
+            // 다른 직업의 인장으로 설정
+            professionSeal = professionToSeal[wrongProfession];
         }
 
-        return new Guest(name, local, party, species, profession);
+        return new Guest(name, local, party, species, profession, professionSeal);
     }
 
-    public static string GetSpeciesText(SpeciesType species)
+    public string GetSpeciesText(SpeciesType species)
     {
         return speciesText[(int)species];
     }
 
-    public static string GetProfessiosText(ProfessionType profession)
+    public string GetProfessiosText(ProfessionType profession)
     {
         return professionText[(int)profession];
     }
