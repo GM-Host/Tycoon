@@ -8,7 +8,7 @@ public class Interaction : MonoBehaviour
     [SerializeField]
     private Animator stampAnimator;
     [SerializeField]
-    private GameObject expansionPaper;
+    private GameObject closeUpIdentity;
     [SerializeField]
     private GameObject stamps;
     [SerializeField]
@@ -20,7 +20,8 @@ public class Interaction : MonoBehaviour
 
     public void ClickBackground()
     {
-        expansionPaper.SetActive(false);
+        closeUpIdentity.SetActive(false);
+        GameObject.Find("Canvas").transform.Find("Identity(Clone)").GetComponent<Identity>().ReleaseCloseUp();  // 클로즈업 해제
     }
 
     public void ClickToad()

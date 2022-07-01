@@ -1631,7 +1631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stampAnimator: {fileID: 390244956}
-  expansionPaper: {fileID: 2038412070}
+  closeUpIdentity: {fileID: 2038412070}
   stamps: {fileID: 390244954}
   toad: {fileID: 624193176}
   toadImage1: {fileID: 21300000, guid: 8cc0ad039b5c8d148bddd740c21710fd, type: 3}

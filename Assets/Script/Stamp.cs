@@ -52,20 +52,30 @@ public class Stamp : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
         List<RaycastResult> results = new List<RaycastResult>();
         graphicRaycaster.Raycast(pointerEventData, results);
 
+        
+
         if (results.Count > 1 && results[1].gameObject.name == "StampArea")
         {
             Debug.Log("스탬프 영역");
+            Identity identity = canvas.transform.Find("Identity(Clone)").GetComponent<Identity>();
 
-            seal = Instantiate(sealPrefab, currentPos, Quaternion.identity);
-            seal.transform.parent = parent.transform;
+            // 도장을 찍은 적이 없다면
+            if (identity.GetPermit() == 0)
+            {
+                // 인장 오브젝트 스폰
+                seal = Instantiate(sealPrefab, currentPos, Quaternion.identity);
+                seal.transform.parent = parent.transform;
 
-            // requestManager.DecisionComplete(permit);
+                identity.SetPermit(permit ? 1 : -1);   // 신원서 오브젝트에 승인 여부 세팅
+
+                // requestManager.DecisionComplete(permit);
+            }
         }
         else
         {
             Debug.Log("null");
         }
-        this.transform.position = defaultPos;
+        this.transform.position = defaultPos;   // 제자리로 돌리기
     }
 
 

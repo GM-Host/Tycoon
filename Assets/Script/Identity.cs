@@ -9,6 +9,7 @@ public class Identity : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     private float height, width;
     private float dragTime;     // 드래그한 시간
     private bool isCloseUp;   // 현재 확대 상태인지
+    private int permit; // 승인 여부 (거절 : -1, 승인 : 1, 미완 : 0)
     //private static Vector2 defaultPos;
 
     void Start()
@@ -53,5 +54,20 @@ public class Identity : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             GameObject.Find("Canvas").transform.Find("CloseUpIdentity").gameObject.SetActive(true);
         }
         dragTime = 0;
+    }
+
+    public void SetPermit(int _permit)
+    {
+        permit = _permit;
+    }
+
+    public int GetPermit()
+    {
+        return permit;
+    }
+
+    public void ReleaseCloseUp()
+    {
+        isCloseUp = false;
     }
 }
