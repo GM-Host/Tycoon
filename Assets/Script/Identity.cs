@@ -7,8 +7,8 @@ public class Identity : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 {
     [SerializeField]
     [Range(0,1)]
-    private float characterAreaY, deskAreaY;
-    private float characterHeight, deskHeight;
+    private float deskAreaY;
+    private float deskHeight;
     private float dragTime;     // 드래그한 시간
     private bool isCloseUp;   // 현재 확대 상태인지
     private bool sealing;   // 인장이 찍혔는지 여부
@@ -21,7 +21,6 @@ public class Identity : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     void Start()
     {
-        characterHeight = Screen.height * characterAreaY;
         deskHeight = Screen.height * deskAreaY;
 
         canvas = GameObject.Find("Canvas");
@@ -49,27 +48,24 @@ public class Identity : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         if (!isCloseUp)
         {
             Vector2 currentPos = eventData.position;
-
-            // 캐릭터보다 높은 경우
-            if (currentPos.y> characterHeight)
-            {
-                this.transform.position = defaultPos;   // 원위치로 이동
-                return;
-            }
-
             this.transform.position = pointerEventData.position = currentPos;
 
             List<RaycastResult> results = new List<RaycastResult>();
             graphicRaycaster.Raycast(pointerEventData, results);
 
-            if (results.Count > 1 && results[1].gameObject.name == "Character" && sealing)  // 인장이 찍힌 신원서를 캐릭터에게 주는 경우
+            if (currentPos.y > deskHeight)    // 책상 외부인 경우
             {
-                GameObject.Find("RequestManager").GetComponent<RequestManager>().DecisionComplete(permit);
+                if (results.Count > 1 && results[1].gameObject.name == "Character" && sealing)  // 인장이 찍힌 신원서를 캐릭터에게 주는 경우
+                {
+                    GameObject.Find("RequestManager").GetComponent<RequestManager>().DecisionComplete(permit);
+                }
+                else
+                {
+                    this.transform.position = defaultPos;   // 원위치로 이동
+                }
             }
-            else if (currentPos.y > deskHeight)    // 책상이나 캐릭터 영역이 아닌 경우
-            {
-                this.transform.position = defaultPos;   // 원위치로 이동
-            }
+
+            
         }
     }
 
