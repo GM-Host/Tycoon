@@ -13,10 +13,13 @@ public class RequestManager : MonoBehaviour
     [SerializeField]
     private Vector2 spawnPaperPos;
     [SerializeField]
-    private GameObject expansionPaper;
+    private GameObject closeUpIdentity;
     [SerializeField]
     private GameObject parent;  // paper 오브젝트의 부모 오브젝트(캔버스)
-    private GameObject paper;
+    [SerializeField]
+    private GameObject identityPrefab;  // 신분증 프리팹
+
+    private GameObject identity;
 
     private float trueRatio = 0.6f;
 
@@ -30,10 +33,10 @@ public class RequestManager : MonoBehaviour
     public void VisitGuest()
     {
         // 신원서 오브젝트 스폰
-        paper = Instantiate(Resources.Load("paper") as GameObject, Vector2.zero, Quaternion.identity);
-        paper.transform.parent = parent.transform;
-        paper.transform.localPosition = spawnPaperPos;
-        paper.transform.SetSiblingIndex(1); // 2번째로 렌더링 (closeup보다 먼저)
+        identity = Instantiate(identityPrefab, Vector2.zero, Quaternion.identity);
+        identity.transform.parent = parent.transform;
+        identity.transform.localPosition = spawnPaperPos;
+        identity.transform.SetSiblingIndex(1); // 2번째로 렌더링 (closeup보다 먼저)
 
         // 신원서 생성
         correct = new System.Random().NextDouble() < trueRatio ? true : false;
@@ -61,8 +64,8 @@ public class RequestManager : MonoBehaviour
             else
                 UpdateScore(-1);
         }
-        Destroy(paper);
-        expansionPaper.SetActive(false);
+        Destroy(identity);
+        closeUpIdentity.SetActive(false);
         VisitGuest();
     }
 }

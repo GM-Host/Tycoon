@@ -1,14 +1,14 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Paper : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class Identity : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [SerializeField]
     [Range(0,1)]
     private float areaY;
     private float height, width;
     private float dragTime;     // 드래그한 시간
-    private bool isExpansion;   // 현재 확대 상태인지
+    private bool isCloseUp;   // 현재 확대 상태인지
     //private static Vector2 defaultPos;
 
     void Start()
@@ -24,7 +24,7 @@ public class Paper : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
 
     void IDragHandler.OnDrag(PointerEventData eventData)
     {
-        if (!isExpansion)
+        if (!isCloseUp)
         {
             Vector2 currentPos = eventData.position;
             currentPos.x = Mathf.Clamp(currentPos.x, 0, width);
@@ -36,7 +36,7 @@ public class Paper : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
 
     void IEndDragHandler.OnEndDrag(PointerEventData eventData)
     {
-        if (!isExpansion)
+        if (!isCloseUp)
         {
             Vector2 currentPos = eventData.position;
             currentPos.x = Mathf.Clamp(currentPos.x, 0, width);
@@ -49,8 +49,8 @@ public class Paper : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
     {
         if (dragTime == 0)  // 드래그 없이 클릭만 한 경우
         {
-            isExpansion = true;
-            GameObject.Find("Canvas").transform.Find("ExpansionPaper").gameObject.SetActive(true);
+            isCloseUp = true;
+            GameObject.Find("Canvas").transform.Find("CloseUpIdentity").gameObject.SetActive(true);
         }
         dragTime = 0;
     }

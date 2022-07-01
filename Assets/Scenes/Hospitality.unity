@@ -615,8 +615,9 @@ MonoBehaviour:
   guestSpeciesText: {fileID: 859656848}
   guestProfessionText: {fileID: 626669440}
   spawnPaperPos: {x: 0, y: -50}
-  expansionPaper: {fileID: 2038412070}
+  closeUpIdentity: {fileID: 2038412070}
   parent: {fileID: 1493612705}
+  identityPrefab: {fileID: 699149914106712991, guid: a5a61fc6a2b054f4eb9ab6e56bfa4b26, type: 3}
 --- !u!1 &507715046
 GameObject:
   m_ObjectHideFlags: 0
@@ -1632,7 +1633,7 @@ MonoBehaviour:
   stampAnimator: {fileID: 390244956}
   expansionPaper: {fileID: 2038412070}
   stamps: {fileID: 390244954}
-  toad: {fileID: 0}
+  toad: {fileID: 624193176}
   toadImage1: {fileID: 21300000, guid: 8cc0ad039b5c8d148bddd740c21710fd, type: 3}
   toadImage2: {fileID: 21300000, guid: 52b2ba822bf0f7844b660309051823dc, type: 3}
 --- !u!4 &1142085209
@@ -2605,7 +2606,7 @@ GameObject:
   - component: {fileID: 2038412073}
   - component: {fileID: 2038412072}
   m_Layer: 5
-  m_Name: ExpansionPaper
+  m_Name: CloseUpIdentity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
