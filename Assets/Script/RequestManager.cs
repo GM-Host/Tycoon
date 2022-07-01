@@ -49,7 +49,7 @@ public class RequestManager : MonoBehaviour
         identity.transform.SetSiblingIndex(2); // 3번째로 렌더링 (background, character보다 먼저)
 
         // 신원서 생성
-        correct = new System.Random().NextDouble() < trueRatio ? true : false;
+        correct = new System.Random(System.Guid.NewGuid().GetHashCode()).NextDouble() < trueRatio ? true : false;
         guest = guestDB.CreateGuest(correct);
 
         guestNameText.text = guest.GetName();

@@ -99,34 +99,49 @@ public class GuestDB : MonoBehaviour
         List<string> localList = speciesToLocal[species];
         local = localList[Random.Range(0, localList.Count)];
 
-        if (correct)    // 지역에 따른 올바른 세력, 직업에 따른 올바른 인장 설정
+        // 지역에 따른 올바른 세력, 직업에 따른 올바른 인장 설정
+        List<string> partyList = localToParty[local];
+        party = partyList[Random.Range(0, partyList.Count)];
+
+        professionSeal = professionToSeal[profession];
+
+        // 지역에 맞지 않는 세력 or 직업에 맞지 않는 인장 설정
+        if (!correct)
         {
-            List<string> partyList = localToParty[local];
-            party = partyList[Random.Range(0, partyList.Count)];
+            int wrongKind = new System.Random(System.Guid.NewGuid().GetHashCode()).Next(0, 2);
 
-            professionSeal = professionToSeal[profession];
-        }
-        else    // 지역에 맞지 않는 세력, 직업에 맞지 않는 인장 설정
-        {
-            // 현재 지역과 다른 지역 정하기
-            string wrongLocal = allLocalList[Random.Range(0, allLocalList.Count)];
-            while (wrongLocal == local)
-                wrongLocal = allLocalList[Random.Range(0, allLocalList.Count)];
+            switch (wrongKind)
+            {
+                case 0: // 현재 지역과 다른 지역 정하기
 
-            // 다른 지역의 세력 정하기
-            List<string> wrongPartyList = localToParty[wrongLocal];
-            party = wrongPartyList[Random.Range(0, wrongPartyList.Count)];
+                    Debug.Log("지역=세력");
+                    
+                    string wrongLocal = allLocalList[Random.Range(0, allLocalList.Count)];
+                    while (wrongLocal == local)
+                        wrongLocal = allLocalList[Random.Range(0, allLocalList.Count)];
 
-            //-------------------------------------------------------------------------
+                    // 다른 지역의 세력 정하기
+                    List<string> wrongPartyList = localToParty[wrongLocal];
+                    party = wrongPartyList[Random.Range(0, wrongPartyList.Count)];
 
-            // 현재 직업과 다른 직업 정하기
-            count = System.Enum.GetValues(typeof(ProfessionType)).Length;
-            ProfessionType wrongProfession = (ProfessionType)Random.Range(0, count);
-            while (wrongProfession == profession)
-                wrongProfession = (ProfessionType)Random.Range(0, count);
+                    break;
 
-            // 다른 직업의 인장으로 설정
-            professionSeal = professionToSeal[wrongProfession];
+                case 1: // 현재 직업과 다른 직업 정하기
+
+                    Debug.Log("직업=인장");
+                    
+                    count = System.Enum.GetValues(typeof(ProfessionType)).Length;
+                    ProfessionType wrongProfession = (ProfessionType)Random.Range(0, count);
+                    while (wrongProfession == profession)
+                        wrongProfession = (ProfessionType)Random.Range(0, count);
+
+                    // 다른 직업의 인장으로 설정
+                    professionSeal = professionToSeal[wrongProfession];
+
+                    break;
+                default:
+                    break;
+            }
         }
 
         return new Guest(name, local, party, species, profession, professionSeal);
