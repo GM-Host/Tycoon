@@ -1641,8 +1641,8 @@ MonoBehaviour:
   expansionPaper: {fileID: 2038412070}
   stamps: {fileID: 390244954}
   toad: {fileID: 624193176}
-  toadImage1: {fileID: -4178046375966092550, guid: affcabdc61c53e2469ae736cf5a3198d, type: 3}
-  toadImage2: {fileID: -7200132072931614835, guid: 97fddea125e4e31458df6632b752583c, type: 3}
+  toadImage1: {fileID: 21300000, guid: 8cc0ad039b5c8d148bddd740c21710fd, type: 3}
+  toadImage2: {fileID: 21300000, guid: 52b2ba822bf0f7844b660309051823dc, type: 3}
 --- !u!4 &1142085209
 Transform:
   m_ObjectHideFlags: 0
