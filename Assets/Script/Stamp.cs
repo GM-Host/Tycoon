@@ -60,15 +60,13 @@ public class Stamp : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
             Identity identity = canvas.transform.Find("Identity(Clone)").GetComponent<Identity>();
 
             // 도장을 찍은 적이 없다면
-            if (identity.GetPermit() == 0)
+            if (!identity.Sealing())
             {
                 // 인장 오브젝트 스폰
                 seal = Instantiate(sealPrefab, currentPos, Quaternion.identity);
                 seal.transform.parent = parent.transform;
 
-                identity.SetPermit(permit ? 1 : -1);   // 신원서 오브젝트에 승인 여부 세팅
-
-                // requestManager.DecisionComplete(permit);
+                identity.SetPermit(permit);   // 신원서 오브젝트에 승인 여부 세팅
             }
         }
         else

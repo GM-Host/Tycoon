@@ -15,6 +15,8 @@ public class RequestManager : MonoBehaviour
     [SerializeField]
     private GameObject closeUpIdentity;
     [SerializeField]
+    private GameObject stampArea;   // 인장 삭제를 위한 부모 오브젝트
+    [SerializeField]
     private GameObject parent;  // paper 오브젝트의 부모 오브젝트(캔버스)
     [SerializeField]
     private GameObject identityPrefab;  // 신분증 프리팹
@@ -36,7 +38,7 @@ public class RequestManager : MonoBehaviour
         identity = Instantiate(identityPrefab, Vector2.zero, Quaternion.identity);
         identity.transform.parent = parent.transform;
         identity.transform.localPosition = spawnPaperPos;
-        identity.transform.SetSiblingIndex(1); // 2번째로 렌더링 (closeup보다 먼저)
+        identity.transform.SetSiblingIndex(2); // 3번째로 렌더링 (background, character보다 먼저)
 
         // 신원서 생성
         correct = new System.Random().NextDouble() < trueRatio ? true : false;
@@ -64,7 +66,8 @@ public class RequestManager : MonoBehaviour
             else
                 UpdateScore(-1);
         }
-        Destroy(identity);
+        Destroy(identity);  // 축소 신원서 삭제
+        Destroy(stampArea.transform.GetChild(0).gameObject);   // 인장 삭제
         closeUpIdentity.SetActive(false);
         VisitGuest();
     }
