@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Guest : MonoBehaviour
+public class Guest
 {
     private string guestName;
     private string guestLocal;

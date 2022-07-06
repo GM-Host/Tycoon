@@ -11,7 +11,7 @@ public class GuestDB : MonoBehaviour
         Mage,       // 마법사
         Bard,       // 음유시인
         Priest,     // 사제
-        //Astrologian,// 점성술사
+        Astrologian,// 점성술사
         Hunter,     // 사냥꾼
     }
 
@@ -36,6 +36,8 @@ public class GuestDB : MonoBehaviour
 
     private List<string> nameList = new List<string>() { "발라드", "이안하트", "디르크", "무에르테", "샤카" };
     private List<string> allLocalList = new List<string>() { "아인요르드", "람다", "에르페", "오브리제", "카리알굴", "사몰레아", "오클리드" };
+
+    // 종족에 따른 지역
     private Dictionary<SpeciesType, List<string>> speciesToLocal = new Dictionary<SpeciesType, List<string>>()
     {
         { SpeciesType.Human, new List<string>() { "아인요르드", "람다", "에르페", "오브리제"}},
@@ -47,10 +49,22 @@ public class GuestDB : MonoBehaviour
         { SpeciesType.Reve, new List<string>() { "아인요르드", "람다", "에르페", "오브리제", "카리알굴", "사몰레아", "오클리드" } }
     };
 
+    // 지역에 존재하지 않는 직업 목록
+    private Dictionary<string, List<ProfessionType>> professionNotInLocal = new Dictionary<string, List<ProfessionType>>()
+    {
+        { "에르페", new List<ProfessionType>() { ProfessionType.Astrologian}},
+        { "람다", new List<ProfessionType>() {} },
+        { "아인요르드", new List<ProfessionType>() { ProfessionType.Priest} },
+        { "오브리제", new List<ProfessionType>() { ProfessionType.Priest } },
+        { "사몰레아", new List<ProfessionType>() { ProfessionType.Warrior, ProfessionType.Priest } },
+        { "오클리드", new List<ProfessionType>() { ProfessionType.Mage } },
+        { "카리알굴", new List<ProfessionType>() { ProfessionType.Assassin, ProfessionType.Hunter } },
+    };
+
     // 직업-인장
     [SerializeField]
-    private List<Sprite> professionSealList;
-    private Dictionary<ProfessionType, Sprite> professionToSeal;
+    private List<Sprite> professionSealList;    // 인장 이미지 리스트
+    private Dictionary<ProfessionType, Sprite> professionToSeal;    // 직업에 따른 인장 이미지
 
     private Dictionary<string, List<string>> localToParty = new Dictionary<string, List<string>>()
     {
@@ -87,35 +101,43 @@ public class GuestDB : MonoBehaviour
         // 이름 랜덤
         name = nameList[Random.Range(0, nameList.Count)];
 
-        // 직업 랜덤
-        int count = System.Enum.GetValues(typeof(ProfessionType)).Length;
-        profession = (ProfessionType)Random.Range(0, count);
-
         // 종족 랜덤
-        count = System.Enum.GetValues(typeof(SpeciesType)).Length;
+        int count = System.Enum.GetValues(typeof(SpeciesType)).Length;
         species = (SpeciesType)Random.Range(0, count);
 
         // 종족에 따른 지역 설정
         List<string> localList = speciesToLocal[species];
         local = localList[Random.Range(0, localList.Count)];
 
-        // 지역에 따른 올바른 세력, 직업에 따른 올바른 인장 설정
+        // 지역에 따른 올바른 세력 설정
         List<string> partyList = localToParty[local];
         party = partyList[Random.Range(0, partyList.Count)];
 
+        // 지역에 따른 올바른 직업 설정
+        count = System.Enum.GetValues(typeof(ProfessionType)).Length;
+        do
+        {
+            profession = (ProfessionType)Random.Range(0, count);
+        } while (professionNotInLocal[local].Exists(x=>x==profession)); // 지역에 맞지 않는 직업이면 다시 설정
+
+        // 직업에 따른 올바른 인장 설정
         professionSeal = professionToSeal[profession];
 
-        // 지역에 맞지 않는 세력 or 직업에 맞지 않는 인장 설정
+        // 지역에 맞지 않는 세력 or 직업에 맞지 않는 인장 or 지역에 맞지 않는 직업 설정
         if (!correct)
         {
-            int wrongKind = new System.Random(System.Guid.NewGuid().GetHashCode()).Next(0, 2);
+            int wrongKind;
+            if (professionNotInLocal[local].Count == 0) // 지역에 존재하지 않는 직업이 없다면 지역에 맞지 않는 직업 설정 불가능
+                wrongKind = new System.Random(System.Guid.NewGuid().GetHashCode()).Next(0, 2);
+            else
+                wrongKind = new System.Random(System.Guid.NewGuid().GetHashCode()).Next(0, 3);
 
             switch (wrongKind)
             {
-                case 0: // 현재 지역과 다른 지역 정하기
-
+                case 0: // 지역 세력 불일치
                     Debug.Log("지역=세력");
-                    
+
+                    // 현재 지역과 다른 지역 정하기
                     string wrongLocal = allLocalList[Random.Range(0, allLocalList.Count)];
                     while (wrongLocal == local)
                         wrongLocal = allLocalList[Random.Range(0, allLocalList.Count)];
@@ -126,10 +148,10 @@ public class GuestDB : MonoBehaviour
 
                     break;
 
-                case 1: // 현재 직업과 다른 직업 정하기
-
+                case 1: // 직업 인장 불일치
                     Debug.Log("직업=인장");
-                    
+
+                    // 현재 직업과 다른 직업 정하기
                     count = System.Enum.GetValues(typeof(ProfessionType)).Length;
                     ProfessionType wrongProfession = (ProfessionType)Random.Range(0, count);
                     while (wrongProfession == profession)
@@ -139,6 +161,17 @@ public class GuestDB : MonoBehaviour
                     professionSeal = professionToSeal[wrongProfession];
 
                     break;
+
+                case 2: // 지역 직업 불일치
+                    Debug.Log("지역=직업");
+
+                    count = professionNotInLocal[local].Count;
+                    do
+                    {
+                        profession = professionNotInLocal[local][Random.Range(0, count)];
+                    } while (!professionNotInLocal[local].Exists(x => x == profession)); // 지역에 맞지 않는 직업이 아니면 다시 설정
+                    break;
+
                 default:
                     break;
             }

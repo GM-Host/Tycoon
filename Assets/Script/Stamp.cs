@@ -64,7 +64,7 @@ public class Stamp : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
             {
                 // 인장 오브젝트 스폰
                 seal = Instantiate(sealPrefab, currentPos, Quaternion.identity);
-                seal.transform.parent = parent.transform;
+                seal.transform.SetParent(parent.transform);
 
                 identity.SetPermit(permit);   // 신원서 오브젝트에 승인 여부 세팅
             }
