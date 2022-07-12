@@ -80,8 +80,7 @@ public class GuestDB : MonoBehaviour
 
     private List<string> speciesText = new List<string>() { "인간", "드워프", "엘프", "레브" };
     //private static List<string> speciesText = new List<string>() { "인간", "드워프", "엘프", "비스트페이스", "오크", "고블린", "레브" };
-    private List<string> professionText = new List<string>() { "전사", "암살자", "마법사", "음유시인", "사제", "사냥꾼" };
-    //private List<string> professionText = new List<string>() { "전사", "암살자", "마법사", "음유시인", "사제", "점성술사", "사냥꾼" };
+    private List<string> professionText = new List<string>() { "전사", "암살자", "마법사", "음유시인", "사제", "점성술사", "사냥꾼" };
 
     private void Start()
     {
