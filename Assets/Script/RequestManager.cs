@@ -32,6 +32,8 @@ public class RequestManager : MonoBehaviour
     private Image professionSeal;
     [SerializeField]
     private GameObject identityPrefab;  // 신분증 프리팹
+    [SerializeField]
+    private DialogManager dialogManager;    // 대화 출력을 위한 DialogManager 오브젝트
 
     // Start is called before the first frame update
     void Start()
@@ -47,17 +49,21 @@ public class RequestManager : MonoBehaviour
         identity.transform.SetParent(parent.transform);
         identity.transform.localPosition = spawnPaperPos;
         identity.transform.SetSiblingIndex(2); // 3번째로 렌더링 (background, character보다 먼저)
-
-        // 신원서 생성
+        
+        // 신원서 데이터 생성
         correct = new System.Random(System.Guid.NewGuid().GetHashCode()).NextDouble() < trueRatio ? true : false;
         guest = guestDB.CreateGuest(correct);
-
+        
+        // 신원서(클로즈업)에 표시
         guestNameText.text = guest.GetName();
         guestLocalText.text = guest.GetLocal();
         guestPartyText.text = guest.GetParty();
         guestSpeciesText.text = guestDB.GetSpeciesText(guest.GetSpecies());
         guestProfessionText.text = guestDB.GetProfessiosText(guest.GetProfession());
         professionSeal.sprite = guest.GetProfessionSeal();
+        
+        // 안내 대화 출력
+        dialogManager.StartGuideDialog(guest.GetProfession());
     }
 
     public void UpdateScore(int num)

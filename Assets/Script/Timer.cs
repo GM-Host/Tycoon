@@ -37,7 +37,7 @@ public class Timer : MonoBehaviour
         if (currentTime < maxTime)
         {
             timerText.text = "남은 시간 : " + (maxTime - (int)currentTime).ToString() + "초";
-            Debug.Log(currentTime);
+            //Debug.Log(currentTime);
         }
         else if (!isEnded)
         {
