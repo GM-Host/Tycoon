@@ -71,9 +71,15 @@ public class RequestManager : MonoBehaviour
         if (decision)   // 승인한 경우
         {
             if (correct)
+            {
                 UpdateScore(1);
+                HospitalityScore.Instance.correctAnswer++;
+            }
             else
+            {
                 UpdateScore(-1);
+                HospitalityScore.Instance.wrongAnswer++;
+            }
         }
         Destroy(identity);  // 축소 신원서 삭제
         Destroy(stampArea.transform.GetChild(0).gameObject);   // 인장 삭제
