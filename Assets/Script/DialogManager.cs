@@ -7,7 +7,10 @@ using UnityEngine;
 public class DialogManager : MonoBehaviour
 {
     [SerializeField]
-    private Vector2 spawnPos, spawnPos2;
+    private float spawnTime;
+    [SerializeField]
+    private Vector2 spawnPos, spawnPos2;    // 말풍선 위치
+
     // 필요한 컴포넌트
     [SerializeField]
     private DialogData dialogData;
@@ -65,7 +68,7 @@ public class DialogManager : MonoBehaviour
 
                 index++;
             }
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(spawnTime);
         }
     }
 }

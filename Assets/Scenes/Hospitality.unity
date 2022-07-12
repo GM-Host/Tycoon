@@ -1625,7 +1625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 678bf50dc7f320341bdabbacce6db233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTime: 60
+  maxTime: 20
   timerText: {fileID: 1329866935}
 --- !u!4 &875581247
 Transform:
@@ -1746,6 +1746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d2f3dc383510a4d92ff187ccdee66a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnTime: 2
   spawnPos: {x: -200, y: 300}
   spawnPos2: {x: 200, y: 300}
   dialogData: {fileID: 1111052615}
