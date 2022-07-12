@@ -36,7 +36,7 @@ public class Timer : MonoBehaviour
         currentTime = Time.time - startTime;
         if (currentTime < maxTime)
         {
-            timerText.text = (maxTime - (int)currentTime).ToString();
+            timerText.text = "남은 시간 : " + (maxTime - (int)currentTime).ToString() + "초";
             Debug.Log(currentTime);
         }
         else if (!isEnded)
@@ -49,7 +49,7 @@ public class Timer : MonoBehaviour
     {
         Debug.Log("End");
         currentTime = maxTime;
-        timerText.text = (maxTime - (int)currentTime).ToString();
+        timerText.text = "남은 시간 : " + (maxTime - (int)currentTime).ToString() + "초";
         isEnded = true;
 
         EndGame();
@@ -59,7 +59,7 @@ public class Timer : MonoBehaviour
     {
         startTime = Time.time;
         currentTime = 0;
-        timerText.text = (maxTime - (int)currentTime).ToString();
+        timerText.text = "남은 시간 : " + (maxTime - (int)currentTime).ToString() + "초";
         isEnded = false;
         Debug.Log("Start");
     }
