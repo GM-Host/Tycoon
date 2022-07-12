@@ -44,7 +44,7 @@ public class RequestManager : MonoBehaviour
     {
         // 신원서 오브젝트 스폰
         identity = Instantiate(identityPrefab, Vector2.zero, Quaternion.identity);
-        identity.transform.parent = parent.transform;
+        identity.transform.SetParent(parent.transform);
         identity.transform.localPosition = spawnPaperPos;
         identity.transform.SetSiblingIndex(2); // 3번째로 렌더링 (background, character보다 먼저)
 
