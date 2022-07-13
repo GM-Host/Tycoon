@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class DialogManager : MonoBehaviour
 {
+    public bool isRunning;  // 대화 진행 중인지 여부
+
     [SerializeField]
     private float spawnTime;
     [SerializeField]
@@ -33,18 +35,6 @@ public class DialogManager : MonoBehaviour
         Debug.Log("StartGuideDialog");
         currentProfession = (int)profession;
         StartCoroutine("GuideDialogCoroutine");
-    }
-
-    public void StartPermissionDialog(GuestDB.ProfessionType profession)
-    {
-        Debug.Log("StartPermissionDialog");
-        StartCoroutine("PermissionDialogCoroutine");
-    }
-
-    public void StartRefuseDialog(GuestDB.ProfessionType profession)
-    {
-        Debug.Log("StartRefuseDialog");
-        StartCoroutine("RefuseDialogCoroutine");
     }
 
     IEnumerator GuideDialogCoroutine()
@@ -86,7 +76,7 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    IEnumerator PermissionDialogCoroutine()
+    public IEnumerator PermissionDialogCoroutine()
     {
         int id = currentProfession;
         int index = 0;
@@ -125,7 +115,7 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    IEnumerator RefuseDialogCoroutine()
+    public IEnumerator RefuseDialogCoroutine()
     {
         int id = currentProfession;
         int index = 0;

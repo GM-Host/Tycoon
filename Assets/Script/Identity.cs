@@ -57,15 +57,14 @@ public class Identity : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             {
                 if (results.Count > 1 && results[1].gameObject.name == "Character" && sealing)  // 인장이 찍힌 신원서를 캐릭터에게 주는 경우
                 {
-                    GameObject.Find("RequestManager").GetComponent<RequestManager>().DecisionComplete(permit);
+                    RequestManager requestManager = GameObject.Find("RequestManager").GetComponent<RequestManager>();
+                    requestManager.StartCoroutine(requestManager.DecisionComplete(permit));
                 }
                 else
                 {
                     this.transform.position = defaultPos;   // 원위치로 이동
                 }
             }
-
-            
         }
     }
 

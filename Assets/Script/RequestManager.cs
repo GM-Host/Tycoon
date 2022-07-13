@@ -72,8 +72,12 @@ public class RequestManager : MonoBehaviour
         scoreText.text = score.ToString();
     }
 
-    public void DecisionComplete(bool decision)
+    public IEnumerator DecisionComplete(bool decision)
     {
+        Destroy(identity);  // 축소 신원서 삭제
+        Destroy(stampArea.transform.GetChild(0).gameObject);   // 인장 삭제
+        closeUpIdentity.SetActive(false);
+
         if (decision)   // 승인한 경우
         {
             if (correct)
@@ -86,13 +90,14 @@ public class RequestManager : MonoBehaviour
                 UpdateScore(-1);
                 HospitalityScore.Instance.wrongAnswer++;
             }
-            dialogManager.StartPermissionDialog(guest.GetProfession()); // 승인 대화 출력
+            yield return dialogManager.StartCoroutine(dialogManager.PermissionDialogCoroutine());   // 승인 대화 출력
         }
         else    // 거절한 경우
-            dialogManager.StartRefuseDialog(guest.GetProfession()); // 거절 대화 출력
-        Destroy(identity);  // 축소 신원서 삭제
-        Destroy(stampArea.transform.GetChild(0).gameObject);   // 인장 삭제
-        closeUpIdentity.SetActive(false);
+        {
+            yield return dialogManager.StartCoroutine(dialogManager.RefuseDialogCoroutine());   // 거절 대화 출력
+        }
+
+        // dialogManager의 코루틴이 종료되면 호출
         VisitGuest();
     }
 }
