@@ -1625,7 +1625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 678bf50dc7f320341bdabbacce6db233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxTime: 20
+  maxTime: 120
   timerText: {fileID: 1329866935}
 --- !u!4 &875581247
 Transform:
@@ -1752,6 +1752,8 @@ MonoBehaviour:
   dialogData: {fileID: 1111052615}
   speechBubblePrefab: {fileID: 2004994924981617745, guid: 5ac3648ca92496f4aa74e0ac1a2a4f15, type: 3}
   speechBubblePrefab2: {fileID: 2004994924981617745, guid: 55eab86669aed9d42b280ab65b5a2e24, type: 3}
+  permitSpeechBubble: {fileID: 2004994924981617745, guid: d52b6cea51f805c4f8638aa82f94a441, type: 3}
+  refuseSpeechBubble: {fileID: 2004994924981617745, guid: eaa1d8cfbb4ef3e4d83443c20b303724, type: 3}
   parent: {fileID: 1493612705}
 --- !u!114 &1111052615
 MonoBehaviour:

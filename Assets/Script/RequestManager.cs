@@ -86,7 +86,10 @@ public class RequestManager : MonoBehaviour
                 UpdateScore(-1);
                 HospitalityScore.Instance.wrongAnswer++;
             }
+            dialogManager.StartPermissionDialog(guest.GetProfession()); // 승인 대화 출력
         }
+        else    // 거절한 경우
+            dialogManager.StartRefuseDialog(guest.GetProfession()); // 거절 대화 출력
         Destroy(identity);  // 축소 신원서 삭제
         Destroy(stampArea.transform.GetChild(0).gameObject);   // 인장 삭제
         closeUpIdentity.SetActive(false);
