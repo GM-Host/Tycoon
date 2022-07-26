@@ -10,7 +10,7 @@ public class Interaction : MonoBehaviour
     [SerializeField]
     private GameObject closeUp;
     [SerializeField]
-    private GameObject closeUpIdentity;
+    private GameObject closeUpIdentity, closeUpTierSeal;
     [SerializeField]
     private GameObject stamps;
     [SerializeField]
@@ -20,11 +20,22 @@ public class Interaction : MonoBehaviour
 
     private bool stampActive;
 
+    // 배경(CloseUp 오브젝트) 클릭 -> 클로즈업 해제
     public void ClickCloseUp()
     {
         closeUp.SetActive(false);
-        closeUpIdentity.SetActive(false);
-        GameObject.Find("Canvas").transform.Find("Identity(Clone)").GetComponent<Identity>().ReleaseCloseUp();  // 클로즈업 해제
+
+        if (closeUpIdentity.activeSelf == true) // 신원서 클로즈업 해제
+        {
+            closeUpIdentity.SetActive(false);
+            GameObject.Find("Canvas").transform.Find("Identity(Clone)").GetComponent<SpawnObject>().ReleaseCloseUp();
+        }
+        else    // 증표 클로즈업 해제
+        {
+            closeUpTierSeal.SetActive(false);
+            GameObject.Find("Canvas").transform.Find("TierSeal(Clone)").GetComponent<SpawnObject>().ReleaseCloseUp();
+        }
+
     }
 
     public void ClickToad()
