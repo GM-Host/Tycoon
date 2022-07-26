@@ -66,6 +66,10 @@ public class GuestDB : MonoBehaviour
     private List<Sprite> professionSealList;    // 인장 이미지 리스트
     private Dictionary<ProfessionType, Sprite> professionToSeal;    // 직업에 따른 인장 이미지
 
+    // 티어-증표
+    [SerializeField]
+    private List<Sprite> tierSealList;    // 증표 이미지 리스트
+
     private Dictionary<string, List<string>> localToParty = new Dictionary<string, List<string>>()
     {
         { "아인요르드", new List<string>() { "서리갈기", "강철발톱", "거인숨결", "천둥포효", "눈발바닥"}},
@@ -95,7 +99,8 @@ public class GuestDB : MonoBehaviour
         string name, local, party;
         SpeciesType species;
         ProfessionType profession;
-        Sprite professionSeal;
+        Sprite professionSeal, tierSeal;
+        int tier;
 
         // 이름 랜덤
         name = nameList[Random.Range(0, nameList.Count)];
@@ -122,14 +127,20 @@ public class GuestDB : MonoBehaviour
         // 직업에 따른 올바른 인장 설정
         professionSeal = professionToSeal[profession];
 
+        // 티어 랜덤
+        tier = Random.Range(0, 3);
+
+        // 티어에 따른 올바른 증표 설정
+        tierSeal = tierSealList[tier];
+
         // 지역에 맞지 않는 세력 or 직업에 맞지 않는 인장 or 지역에 맞지 않는 직업 설정
         if (!correct)
         {
             int wrongKind;
             if (professionNotInLocal[local].Count == 0) // 지역에 존재하지 않는 직업이 없다면 지역에 맞지 않는 직업 설정 불가능
-                wrongKind = new System.Random(System.Guid.NewGuid().GetHashCode()).Next(0, 2);
-            else
                 wrongKind = new System.Random(System.Guid.NewGuid().GetHashCode()).Next(0, 3);
+            else
+                wrongKind = new System.Random(System.Guid.NewGuid().GetHashCode()).Next(0, 4);
 
             switch (wrongKind)
             {
@@ -161,7 +172,21 @@ public class GuestDB : MonoBehaviour
 
                     break;
 
-                case 2: // 지역 직업 불일치
+                case 2: // 티어 증표 불일치
+                    Debug.Log("티어=증표");
+
+                    // 현재 티어와 다른 티어 정하기
+                    count = tierSealList.Count;
+                    int wrongTier = Random.Range(0, count);
+                    while (tier == wrongTier)
+                        wrongTier = Random.Range(0, count);
+
+                    // 다른 티어의 증표로 설정
+                    tierSeal = tierSealList[wrongTier];
+
+                    break;
+
+                case 3: // 지역 직업 불일치
                     Debug.Log("지역=직업");
 
                     count = professionNotInLocal[local].Count;
@@ -175,8 +200,8 @@ public class GuestDB : MonoBehaviour
                     break;
             }
         }
-
-        return new Guest(name, local, party, species, profession, professionSeal);
+        
+        return new Guest(name, local, party, species, profession, professionSeal, ++tier, tierSeal);
     }
 
     public string GetSpeciesText(SpeciesType species)

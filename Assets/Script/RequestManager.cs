@@ -9,7 +9,7 @@ public class RequestManager : MonoBehaviour
     private Guest guest;
     public bool correct;
     private int score;
-    public TextMeshProUGUI scoreText, guestNameText, guestLocalText, guestPartyText, guestSpeciesText, guestProfessionText;
+    public TextMeshProUGUI scoreText, guestNameText, guestLocalText, guestPartyText, guestSpeciesText, guestProfessionText, guestTierText;
 
     [SerializeField]
     private Vector2 spawnPaperPos;
@@ -29,7 +29,7 @@ public class RequestManager : MonoBehaviour
     [SerializeField]
     private GameObject parent;  // paper 오브젝트의 부모 오브젝트(캔버스)
     [SerializeField]
-    private Image professionSeal;
+    private Image guestProfessionSeal, guestTierSeal;     // 직업 인장 이미지, 티어 증표 이미지
     [SerializeField]
     private GameObject identityPrefab;  // 신분증 프리팹
     [SerializeField]
@@ -38,6 +38,7 @@ public class RequestManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UpdateDate();   // 날짜 증가
         UpdateScore(0);
         VisitGuest();
     }
@@ -60,10 +61,18 @@ public class RequestManager : MonoBehaviour
         guestPartyText.text = guest.GetParty();
         guestSpeciesText.text = guestDB.GetSpeciesText(guest.GetSpecies());
         guestProfessionText.text = guestDB.GetProfessiosText(guest.GetProfession());
-        professionSeal.sprite = guest.GetProfessionSeal();
-        
+        guestProfessionSeal.sprite = guest.GetProfessionSeal();
+        guestTierText.text=guest.GetTier().ToString();
+        guestTierSeal.sprite = guest.GetTierSeal();
+
+
         // 안내 대화 출력
         dialogManager.StartGuideDialog(guest.GetProfession());
+    }
+
+    public void UpdateDate()
+    {
+        DataController.Instance.gameData.date++;    // 날짜 증가
     }
 
     public void UpdateScore(int num)

@@ -10,9 +10,11 @@ public class Guest
     private GuestDB.SpeciesType guestSpecies;
     private GuestDB.ProfessionType guestProfession;
     private Sprite professionSeal;
+    private int tier;
+    private Sprite tierSeal;
 
     // »ý¼ºÀÚ
-    public Guest(string _name, string _local, string _party, GuestDB.SpeciesType _species, GuestDB.ProfessionType _profession, Sprite _professionSeal)
+    public Guest(string _name, string _local, string _party, GuestDB.SpeciesType _species, GuestDB.ProfessionType _profession, Sprite _professionSeal, int _tier, Sprite _tierSeal)
     {
         guestName = _name;
         guestLocal = _local;
@@ -20,6 +22,8 @@ public class Guest
         guestSpecies = _species;
         guestProfession = _profession;
         professionSeal = _professionSeal;
+        tier = _tier;
+        tierSeal = _tierSeal;
     }
 
     public string GetName()
@@ -50,5 +54,15 @@ public class Guest
     public Sprite GetProfessionSeal()
     {
         return professionSeal;
+    }
+
+    public int GetTier()
+    {
+        return tier;
+    }
+
+    public Sprite GetTierSeal()
+    {
+        return tierSeal;
     }
 }
