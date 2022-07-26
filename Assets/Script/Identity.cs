@@ -73,7 +73,8 @@ public class Identity : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         if (dragTime == 0)  // 드래그 없이 클릭만 한 경우
         {
             isCloseUp = true;
-            canvas.transform.Find("CloseUpIdentity").gameObject.SetActive(true);
+            canvas.transform.Find("CloseUp").gameObject.SetActive(true);
+            canvas.transform.Find("CloseUp").Find("CloseUpIdentity").gameObject.SetActive(true);
         }
         dragTime = 0;
     }

@@ -8,6 +8,8 @@ public class Interaction : MonoBehaviour
     [SerializeField]
     private Animator stampAnimator;
     [SerializeField]
+    private GameObject closeUp;
+    [SerializeField]
     private GameObject closeUpIdentity;
     [SerializeField]
     private GameObject stamps;
@@ -18,8 +20,9 @@ public class Interaction : MonoBehaviour
 
     private bool stampActive;
 
-    public void ClickBackground()
+    public void ClickCloseUp()
     {
+        closeUp.SetActive(false);
         closeUpIdentity.SetActive(false);
         GameObject.Find("Canvas").transform.Find("Identity(Clone)").GetComponent<Identity>().ReleaseCloseUp();  // 클로즈업 해제
     }
