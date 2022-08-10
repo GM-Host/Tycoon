@@ -14,7 +14,8 @@ public class Timer : MonoBehaviour
     private bool isEnded;
 
     // 필요한 컴포넌트
-    public TextMeshProUGUI timerText;
+    [SerializeField]
+    private TextMeshProUGUI timerText;
 
     private void Start()
     {

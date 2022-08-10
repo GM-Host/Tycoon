@@ -8,8 +8,7 @@ public class RequestManager : MonoBehaviour
 {
     private Guest guest;    // 생성한 모험가 정보
     private bool correct;   // 모험가 진위 여부
-    private int score;      // 현재 점수
-    private bool decision;  // 
+    private bool decision;  // 승인/거절 여부
     private GameObject identity, tierSeal;  // 스폰한 신원서, 증표 오브젝트
 
     private float trueRatio = 0.6f;
@@ -33,14 +32,13 @@ public class RequestManager : MonoBehaviour
     [SerializeField]
     private DialogManager dialogManager;    // 대화 출력을 위한 DialogManager 오브젝트
     [SerializeField]
-    private TextMeshProUGUI scoreText, guestNameText, guestLocalText, guestPartyText, guestSpeciesText, guestProfessionText, guestTierText;
+    private TextMeshProUGUI guestNameText, guestLocalText, guestPartyText, guestSpeciesText, guestProfessionText, guestTierText;
 
 
     // Start is called before the first frame update
     void Start()
     {
         UpdateDate();   // 날짜 증가
-        UpdateScore(0);
         VisitGuest();
     }
 
@@ -80,13 +78,7 @@ public class RequestManager : MonoBehaviour
 
     public void UpdateDate()
     {
-        DataController.Instance.gameData.date++;    // 날짜 증가
-    }
-
-    public void UpdateScore(int num)
-    {
-        score += num;
-        scoreText.text = score.ToString();
+        DataController.Instance.gameData.UpdateDate();    // 날짜 증가
     }
 
     public void SendIdentity(bool _decision)
@@ -120,12 +112,10 @@ public class RequestManager : MonoBehaviour
         {
             if (correct)
             {
-                UpdateScore(1);
                 HospitalityScore.Instance.correctAnswer++;
             }
             else
             {
-                UpdateScore(-1);
                 HospitalityScore.Instance.wrongAnswer++;
             }
             yield return dialogManager.StartCoroutine(dialogManager.PermissionDialogCoroutine());   // 승인 대화 출력
