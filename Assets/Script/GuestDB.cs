@@ -35,12 +35,14 @@ public class GuestDB : MonoBehaviour
     }
 
     private List<string> nameList = new List<string>() { "발라드", "이안하트", "디르크", "무에르테", "샤카" };
-    private List<string> allLocalList = new List<string>() { "아인요르드", "람다", "에르페", "오브리제", "카리알굴", "사몰레아", "오클리드" };
+    private List<string> allLocalList = new List<string>() { "아인요르드", "람다", "에르페", "카리알굴", "사몰레아", "오클리드" };
+    //private List<string> allLocalList = new List<string>() { "아인요르드", "람다", "에르페", "오브리제", "카리알굴", "사몰레아", "오클리드" };
 
     // 종족에 따른 지역
     private Dictionary<SpeciesType, List<string>> speciesToLocal = new Dictionary<SpeciesType, List<string>>()
     {
-        { SpeciesType.Human, new List<string>() { "아인요르드", "람다", "에르페", "오브리제"}},
+        { SpeciesType.Human, new List<string>() { "아인요르드", "람다", "에르페"}},
+        //{ SpeciesType.Human, new List<string>() { "아인요르드", "람다", "에르페", "오브리제"}},
         { SpeciesType.Dwarf, new List<string>() {"카리알굴"} },
         { SpeciesType.Elf, new List<string>() {"사몰레아", "오클리드"} },
         //{ SpeciesType.Beastface, new List<string>() {"temp" } },
@@ -55,7 +57,7 @@ public class GuestDB : MonoBehaviour
         { "에르페", new List<ProfessionType>() { ProfessionType.Astrologian}},
         { "람다", new List<ProfessionType>() {} },
         { "아인요르드", new List<ProfessionType>() { ProfessionType.Priest} },
-        { "오브리제", new List<ProfessionType>() { ProfessionType.Priest } },
+        //{ "오브리제", new List<ProfessionType>() { ProfessionType.Priest } },
         { "사몰레아", new List<ProfessionType>() { ProfessionType.Warrior, ProfessionType.Priest } },
         { "오클리드", new List<ProfessionType>() { ProfessionType.Mage } },
         { "카리알굴", new List<ProfessionType>() { ProfessionType.Assassin, ProfessionType.Hunter } },
@@ -75,7 +77,7 @@ public class GuestDB : MonoBehaviour
         { "아인요르드", new List<string>() { "서리갈기", "강철발톱", "거인숨결", "천둥포효", "눈발바닥"}},
         { "람다", new List<string>() { "노래하는 사과", "걷는 양동이", "일하는 설계자", "날개달린 소" } },
         { "에르페", new List<string>() { "태양 교단", "달 교단", "제국 기사단", "아르웬의 안식" } },
-        { "오브리제", new List<string>() {"temp" } },
+        //{ "오브리제", new List<string>() {"temp" } },
         { "카리알굴", new List<string>() { "망치", "모루", "쐐기", "광산" } },
         { "사몰레아", new List<string>() { "뿌리", "기둥", "가지", "잎사귀" } },
         { "오클리드", new List<string>() { "개", "고양이", "올빼미", "매" } },
