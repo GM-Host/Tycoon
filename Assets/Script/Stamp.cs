@@ -15,15 +15,14 @@ public class Stamp : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
     private PointerEventData pointerEventData;
 
     private static Vector2 defaultPos;  // 도장 기존 위치
-    private GameObject seal;
+    private GameObject seal;    // 스폰한 인장 오브젝트
+    private GameObject parent;  // 스폰한 인장 오브젝트의 부모 오브젝트(stamp area)
 
     // 필요한 컴포넌트
     [SerializeField]
     private RequestManager requestManager;
     [SerializeField]
     private Canvas canvas;
-    [SerializeField]
-    private GameObject parent;  // seal 오브젝트의 부모 오브젝트(stamp area)
 
     void Start()
     {
@@ -64,6 +63,7 @@ public class Stamp : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
             {
                 // 인장 오브젝트 스폰
                 seal = Instantiate(sealPrefab, currentPos, Quaternion.identity);
+                parent = requestManager.localIdentity.transform.Find("StampArea").gameObject;
                 seal.transform.SetParent(parent.transform);
 
                 identity.SetPermit(permit);   // 신원서 오브젝트에 승인 여부 세팅

@@ -12,8 +12,6 @@ public class Interaction : MonoBehaviour
     [SerializeField]
     private GameObject closeUpIdentity, closeUpTierSeal;
     [SerializeField]
-    private GameObject stamps;
-    [SerializeField]
     private GameObject toad;
     [SerializeField]
     private Sprite toadImage1, toadImage2;
@@ -25,13 +23,15 @@ public class Interaction : MonoBehaviour
     {
         closeUp.SetActive(false);
 
-        if (closeUpIdentity.activeSelf == true) // 신원서 클로즈업 해제
+        if (closeUpIdentity.activeSelf == true) // 신분증 클로즈업 상태
         {
+            // 신분증 클로즈업 해제
             closeUpIdentity.SetActive(false);
             GameObject.Find("Canvas").transform.Find("Identity(Clone)").GetComponent<SpawnObject>().ReleaseCloseUp();
         }
-        else    // 증표 클로즈업 해제
+        else    // 증표 클로즈업 상태
         {
+            // 증표 클로즈업 해제
             closeUpTierSeal.SetActive(false);
             GameObject.Find("Canvas").transform.Find("TierSeal(Clone)").GetComponent<SpawnObject>().ReleaseCloseUp();
         }

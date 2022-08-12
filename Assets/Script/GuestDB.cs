@@ -48,7 +48,8 @@ public class GuestDB : MonoBehaviour
         //{ SpeciesType.Beastface, new List<string>() {"temp" } },
         //{ SpeciesType.Oak, new List<string>() {"temp" } },
         //{ SpeciesType.Goblin, new List<string>() {"temp" } },
-        { SpeciesType.Reve, new List<string>() { "아인요르드", "람다", "에르페", "오브리제", "카리알굴", "사몰레아", "오클리드" } }
+        //{ SpeciesType.Reve, new List<string>() { "아인요르드", "람다", "에르페", "오브리제", "카리알굴", "사몰레아", "오클리드" } }
+        { SpeciesType.Reve, new List<string>() { "아인요르드", "람다", "에르페", "카리알굴", "사몰레아", "오클리드" } }
     };
 
     // 지역에 존재하지 않는 직업 목록

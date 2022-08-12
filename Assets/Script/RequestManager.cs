@@ -6,10 +6,13 @@ using UnityEngine.UI;
 
 public class RequestManager : MonoBehaviour
 {
+    public GameObject localIdentity;    // 현재 모험가 지역의 신분증
+
     private Guest guest;    // 생성한 모험가 정보
     private bool correct;   // 모험가 진위 여부
     private bool decision;  // 승인/거절 여부
     private GameObject identity, tierSeal;  // 스폰한 신원서, 증표 오브젝트
+    private GameObject stampArea;           // 인장 삭제를 위한 부모 오브젝트 (스탬프 영역)
 
     private float trueRatio = 0.6f;
 
@@ -22,17 +25,13 @@ public class RequestManager : MonoBehaviour
     [SerializeField]
     private GameObject closeUpIdentity;    // 클로즈업 오브젝트 (신원서)
     [SerializeField]
-    private GameObject stampArea;   // 인장 삭제를 위한 부모 오브젝트
-    [SerializeField]
     private GameObject parent;  // paper 오브젝트의 부모 오브젝트(캔버스)
-    [SerializeField]
-    private Image guestProfessionSeal, guestTierSeal;     // 직업 인장 이미지, 티어 증표 이미지
     [SerializeField]
     private GameObject identityPrefab, tierSealPrefab;  // 신분증 프리팹, 증표 프리팹
     [SerializeField]
     private DialogManager dialogManager;    // 대화 출력을 위한 DialogManager 오브젝트
     [SerializeField]
-    private TextMeshProUGUI guestNameText, guestLocalText, guestPartyText, guestSpeciesText, guestProfessionText, guestTierText;
+    private Image guestTierSeal;    // 티어 증표 이미지
 
 
     // Start is called before the first frame update
@@ -59,21 +58,48 @@ public class RequestManager : MonoBehaviour
         // 신원서 데이터 생성
         correct = new System.Random(System.Guid.NewGuid().GetHashCode()).NextDouble() < trueRatio ? true : false;
         guest = guestDB.CreateGuest(correct);
-        
-        // 신원서(클로즈업)에 표시
-        guestNameText.text = guest.GetName();
-        guestLocalText.text = guest.GetLocal();
-        guestPartyText.text = guest.GetParty();
-        guestSpeciesText.text = guestDB.GetSpeciesText(guest.GetSpecies());
-        guestProfessionText.text = guestDB.GetProfessiosText(guest.GetProfession());
-        guestProfessionSeal.sprite = guest.GetProfessionSeal();
-        guestTierText.text=guest.GetTier().ToString();
 
-        // 증표 이미지 세팅
-        guestTierSeal.sprite=guest.GetTierSeal();
+        Setting();
 
         // 안내 대화 출력
         dialogManager.StartGuideDialog(guest.GetProfession());
+    }
+
+    // 신원서(클로즈업) 및 증표 세팅
+    private void Setting()
+    {
+        List<TextMeshProUGUI> textList = new List<TextMeshProUGUI>();   // 이름, 세력, 종족, 티어, 직업 텍스트
+
+        // 모험가 지역의 신분증 활성화
+        Debug.Log(guest.GetLocal());
+        localIdentity = closeUpIdentity.transform.Find(guest.GetLocal()).gameObject;
+        localIdentity.SetActive(true);
+
+        // 텍스트 가져오기
+        // 이름, 세력, 종족, 티어 텍스트
+        for (int i = 0; i < 4; i++)
+        {
+            textList.Add(localIdentity.transform.GetChild(i).GetComponent<TextMeshProUGUI>());
+        }
+        // 직업 텍스트
+        textList.Add(localIdentity.transform.GetChild(4).GetChild(0).GetComponent<TextMeshProUGUI>());
+
+        // 스탬프 영역 가져오기 (추후 인장 삭제를 위해)
+        stampArea = localIdentity.transform.Find("StampArea").gameObject;
+
+
+        // 신원서(클로즈업)에 표시
+        textList[0].text = guest.GetName();
+        textList[1].text = guest.GetParty();
+        textList[2].text = guestDB.GetSpeciesText(guest.GetSpecies());
+        textList[3].text = guest.GetTier().ToString();
+        textList[4].text = guestDB.GetProfessiosText(guest.GetProfession());
+        // 직업 인장 이미지 표시
+        Image guestProfessionSeal = localIdentity.transform.GetChild(4).GetChild(1).GetComponent<Image>();
+        guestProfessionSeal.sprite = guest.GetProfessionSeal();
+
+        // 증표 이미지 표시
+        guestTierSeal.sprite = guest.GetTierSeal();
     }
 
     public void UpdateDate()
@@ -103,7 +129,10 @@ public class RequestManager : MonoBehaviour
     private void CheckComplete()
     {
         if (identity == null && tierSeal == null)     // 신원서, 증표 오브젝트 모두 없음
+        {
             StartCoroutine("DecisionComplete");
+            localIdentity.SetActive(false); // 클로즈업 지역 신원서 오브젝트 비활성화
+        }
     }
 
     private IEnumerator DecisionComplete()
