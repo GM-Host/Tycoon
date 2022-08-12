@@ -367,6 +367,7 @@ MonoBehaviour:
   correctText: {fileID: 1367267212}
   wrongText: {fileID: 620263204}
   goldText: {fileID: 440314814}
+  hospitalityButton: {fileID: 650667524}
 --- !u!4 &604651666
 Transform:
   m_ObjectHideFlags: 0
@@ -533,7 +534,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &650667525
 RectTransform:
   m_ObjectHideFlags: 0

@@ -12,6 +12,8 @@ public class CalculateManager : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI dateText, correctText, wrongText, goldText;
+    [SerializeField]
+    private GameObject hospitalityButton;   // 접객화면 이동 버튼
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +24,7 @@ public class CalculateManager : MonoBehaviour
         goldText.text = DataController.Instance.gameData.gold.ToString();
     }
 
+    // 접객화면 이동 버튼 클릭
     public void ClickHospitality()
     {
         SceneManager.LoadScene("Hospitality");
@@ -34,9 +37,11 @@ public class CalculateManager : MonoBehaviour
         {
             UpdateGold();
             update = !update;
+            hospitalityButton.SetActive(true);  // 접객화면 이동 버튼 활성화
         }
     }
 
+    // 골드 갱신
     private void UpdateGold()
     {
         int gold = HospitalityScore.Instance.correctAnswer * correctGold - HospitalityScore.Instance.wrongAnswer * wrongGold; // 골드 증감량
