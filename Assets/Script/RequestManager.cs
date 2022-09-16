@@ -23,13 +23,13 @@ public class RequestManager : MonoBehaviour
     [SerializeField]
     private GuestDB guestDB;
     [SerializeField]
+    private DialogueManager dialogueManager;    // 모험가 안내/승인/거절 대화 출력을 위함
+    [SerializeField]
     private GameObject closeUpIdentity;    // 클로즈업 오브젝트 (신원서)
     [SerializeField]
     private GameObject parent;  // paper 오브젝트의 부모 오브젝트(캔버스)
     [SerializeField]
     private GameObject identityPrefab, tierSealPrefab;  // 신분증 프리팹, 증표 프리팹
-    [SerializeField]
-    private DialogManager dialogManager;    // 대화 출력을 위한 DialogManager 오브젝트
     [SerializeField]
     private Image guestTierSeal;    // 티어 증표 이미지
 
@@ -62,7 +62,7 @@ public class RequestManager : MonoBehaviour
         Setting();
 
         // 안내 대화 출력
-        dialogManager.StartGuideDialog(guest.GetProfession());
+        dialogueManager.StartCoroutine(dialogueManager.GuestDialogueCoroutine(guest.GetProfession(), 0));
     }
 
     // 신원서(클로즈업) 및 증표 세팅
@@ -130,7 +130,7 @@ public class RequestManager : MonoBehaviour
     {
         if (identity == null && tierSeal == null)     // 신원서, 증표 오브젝트 모두 없음
         {
-            StartCoroutine("DecisionComplete");
+            StartCoroutine(DecisionComplete());
             localIdentity.SetActive(false); // 클로즈업 지역 신원서 오브젝트 비활성화
         }
     }
@@ -147,11 +147,11 @@ public class RequestManager : MonoBehaviour
             {
                 HospitalityScore.Instance.wrongAnswer++;
             }
-            yield return dialogManager.StartCoroutine(dialogManager.PermissionDialogCoroutine());   // 승인 대화 출력
+            yield return dialogueManager.StartCoroutine(dialogueManager.GuestDialogueCoroutine(guest.GetProfession(), 1));   // 승인 대화 출력
         }
         else    // 거절한 경우
         {
-            yield return dialogManager.StartCoroutine(dialogManager.RefuseDialogCoroutine());   // 거절 대화 출력
+            yield return dialogueManager.StartCoroutine(dialogueManager.GuestDialogueCoroutine(guest.GetProfession(), 2));   // 거절 대화 출력
         }
 
         // dialogManager의 코루틴이 종료되면 호출

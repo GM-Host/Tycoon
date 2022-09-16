@@ -1017,11 +1017,11 @@ MonoBehaviour:
   spawnIdentityPos: {x: -100, y: -200}
   spawnTierSealPos: {x: 100, y: -200}
   guestDB: {fileID: 457596890}
+  dialogueManager: {fileID: 1111052614}
   closeUpIdentity: {fileID: 955842969}
   parent: {fileID: 1493612705}
   identityPrefab: {fileID: 699149914106712991, guid: a5a61fc6a2b054f4eb9ab6e56bfa4b26, type: 3}
   tierSealPrefab: {fileID: 699149914106712991, guid: 65c1b4d5fda3bf344be59661867471c9, type: 3}
-  dialogManager: {fileID: 1111052614}
   guestTierSeal: {fileID: 2008741996}
 --- !u!114 &457596890
 MonoBehaviour:
@@ -3165,7 +3165,7 @@ GameObject:
   - component: {fileID: 1111052615}
   - component: {fileID: 1111052614}
   m_Layer: 0
-  m_Name: Dialog
+  m_Name: Dialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3187,11 +3187,10 @@ MonoBehaviour:
   spawnTime: 2
   spawnPos: {x: -200, y: 300}
   spawnPos2: {x: 200, y: 300}
-  dialogData: {fileID: 1111052615}
-  speechBubblePrefab: {fileID: 2004994924981617745, guid: 5ac3648ca92496f4aa74e0ac1a2a4f15, type: 3}
-  speechBubblePrefab2: {fileID: 2004994924981617745, guid: 55eab86669aed9d42b280ab65b5a2e24, type: 3}
-  permitSpeechBubble: {fileID: 2004994924981617745, guid: d52b6cea51f805c4f8638aa82f94a441, type: 3}
-  refuseSpeechBubble: {fileID: 2004994924981617745, guid: eaa1d8cfbb4ef3e4d83443c20b303724, type: 3}
+  guestBubblePrefab: {fileID: 2004994924981617745, guid: 5ac3648ca92496f4aa74e0ac1a2a4f15, type: 3}
+  myBubblePrefab: {fileID: 2004994924981617745, guid: 55eab86669aed9d42b280ab65b5a2e24, type: 3}
+  permitBubblePrefab: {fileID: 2004994924981617745, guid: d52b6cea51f805c4f8638aa82f94a441, type: 3}
+  refuseBubblePrefab: {fileID: 2004994924981617745, guid: eaa1d8cfbb4ef3e4d83443c20b303724, type: 3}
   parent: {fileID: 1493612705}
 --- !u!114 &1111052615
 MonoBehaviour:
@@ -3202,9 +3201,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1111052613}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eca83e5a3b35c8342b8ba5abe9b6b060, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d762a7b327a0674c9d01f1b15161d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  csvFile: {fileID: 4900000, guid: 84a1b5859bfa8394f84bdaa423d2fba4, type: 3}
 --- !u!4 &1111052616
 Transform:
   m_ObjectHideFlags: 0
