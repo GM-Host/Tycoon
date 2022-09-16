@@ -3185,6 +3185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRunning: 0
   spawnTime: 2
+  deleteTime: 5
   spawnPos: {x: -200, y: 300}
   spawnPos2: {x: 200, y: 300}
   guestBubblePrefab: {fileID: 2004994924981617745, guid: 5ac3648ca92496f4aa74e0ac1a2a4f15, type: 3}

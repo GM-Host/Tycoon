@@ -53,12 +53,10 @@ public class DialogueParse : MonoBehaviour
 
             TalkData talkData;
             talkData.name = rowValues[1]; // 캐릭터 이름이 있는 B열
-            Debug.Log(talkData.name);
 
             do // talkData 하나를 만드는 반복문
             {
                 contextList.Add(rowValues[2].ToString());
-                Debug.Log(rowValues[2].ToString());
                 if (++i < rows.Length) rowValues =
                          rows[i].Split(new char[] { ',' });
                 else break;
