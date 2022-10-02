@@ -71,29 +71,27 @@ public class RequestManager : MonoBehaviour
         List<TextMeshProUGUI> textList = new List<TextMeshProUGUI>();   // 이름, 세력, 종족, 티어, 직업 텍스트
 
         // 모험가 지역의 신분증 활성화
-        Debug.Log(guest.GetLocal());
         localIdentity = closeUpIdentity.transform.Find(guest.GetLocal()).gameObject;
         localIdentity.SetActive(true);
 
         // 텍스트 가져오기
         // 이름, 세력, 종족, 티어 텍스트
         for (int i = 0; i < 4; i++)
-        {
             textList.Add(localIdentity.transform.GetChild(i).GetComponent<TextMeshProUGUI>());
-        }
+
         // 직업 텍스트
         textList.Add(localIdentity.transform.GetChild(4).GetChild(0).GetComponent<TextMeshProUGUI>());
 
         // 스탬프 영역 가져오기 (추후 인장 삭제를 위해)
         stampArea = localIdentity.transform.Find("StampArea").gameObject;
 
-
         // 신원서(클로즈업)에 표시
         textList[0].text = guest.GetName();
         textList[1].text = guest.GetParty();
-        textList[2].text = guest.GetSpecies();
+        textList[2].text = guest.GetSpecies().ToString();
         textList[3].text = guest.GetTier().ToString();
-        textList[4].text = guestDB.GetProfessiosText(guest.GetProfession());
+        textList[4].text = guest.GetProfession().ToString();
+
         // 직업 인장 이미지 표시
         Image guestProfessionSeal = localIdentity.transform.GetChild(4).GetChild(1).GetComponent<Image>();
         guestProfessionSeal.sprite = guest.GetProfessionSeal();

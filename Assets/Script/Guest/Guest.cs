@@ -7,14 +7,14 @@ public class Guest
     private string guestName;
     private string guestLocal;
     private string guestParty;
-    private string guestSpecies;
-    private GuestDB.ProfessionType guestProfession;
+    private GuestParse.SpeciesType guestSpecies;
+    private GuestParse.ProfessionType guestProfession;
     private Sprite professionSeal;
     private int tier;
     private Sprite tierSeal;
 
     // »ý¼ºÀÚ
-    public Guest(string _name, string _local, string _party, string _species, GuestDB.ProfessionType _profession, Sprite _professionSeal, int _tier, Sprite _tierSeal)
+    public Guest(string _name, string _local, string _party, GuestParse.SpeciesType _species, GuestParse.ProfessionType _profession, Sprite _professionSeal, int _tier, Sprite _tierSeal)
     {
         guestName = _name;
         guestLocal = _local;
@@ -41,12 +41,12 @@ public class Guest
         return guestParty;
     }
 
-    public string GetSpecies()
+    public GuestParse.SpeciesType GetSpecies()
     {
         return guestSpecies;
     }
 
-    public GuestDB.ProfessionType GetProfession()
+    public GuestParse.ProfessionType GetProfession()
     {
         return guestProfession;
     }

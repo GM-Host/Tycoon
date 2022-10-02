@@ -21,7 +21,7 @@ public class DialogueManager : MonoBehaviour
 
     // code : 0->안내, 1->승인, 2->거절
     // code에 따른 대화 출력
-    public IEnumerator GuestDialogueCoroutine(GuestDB.ProfessionType _profession, int code)
+    public IEnumerator GuestDialogueCoroutine(GuestParse.ProfessionType _profession, int code)
     {
         string profession = _profession.ToString();
         TalkData[] talkDatas = DialogueParse.GetDialogue(profession + code.ToString());  // 대화 데이터 가져오기
