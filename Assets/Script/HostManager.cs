@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RequestManager : MonoBehaviour
+public class HostManager : MonoBehaviour
 {
     public GameObject localIdentity;    // 현재 모험가 지역의 신분증
 
@@ -21,7 +21,7 @@ public class RequestManager : MonoBehaviour
 
     // 필요한 컴포넌트
     [SerializeField]
-    private GuestDB guestDB;
+    private GuestManager guestManager;
     [SerializeField]
     private DialogueManager dialogueManager;    // 모험가 안내/승인/거절 대화 출력을 위함
     [SerializeField]
@@ -57,7 +57,7 @@ public class RequestManager : MonoBehaviour
 
         // 신원서 데이터 생성
         correct = new System.Random(System.Guid.NewGuid().GetHashCode()).NextDouble() < trueRatio ? true : false;
-        guest = guestDB.CreateGuest(correct);
+        guest = guestManager.CreateGuest(correct);
 
         Setting();
 

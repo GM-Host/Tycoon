@@ -1057,7 +1057,7 @@ GameObject:
   - component: {fileID: 457596889}
   - component: {fileID: 457596891}
   m_Layer: 0
-  m_Name: RequestManager
+  m_Name: HostManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1092,7 +1092,7 @@ MonoBehaviour:
   localIdentity: {fileID: 0}
   spawnIdentityPos: {x: -100, y: -200}
   spawnTierSealPos: {x: 100, y: -200}
-  guestDB: {fileID: 457596890}
+  guestManager: {fileID: 457596890}
   dialogueManager: {fileID: 1111052614}
   closeUpIdentity: {fileID: 955842969}
   parent: {fileID: 1493612705}
@@ -3004,7 +3004,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   permit: 0
   sealPrefab: {fileID: 4985661695315008360, guid: 65d6c6cace835f44ea6710e557752133, type: 3}
-  requestManager: {fileID: 457596889}
+  hostManager: {fileID: 457596889}
   canvas: {fileID: 1493612708}
 --- !u!114 &800379070
 MonoBehaviour:
@@ -6912,7 +6912,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   permit: 1
   sealPrefab: {fileID: 4985661695315008360, guid: ed31207631a5086448787e1cebb8c5ba, type: 3}
-  requestManager: {fileID: 457596889}
+  hostManager: {fileID: 457596889}
   canvas: {fileID: 1493612708}
 --- !u!114 &1778204188
 MonoBehaviour:

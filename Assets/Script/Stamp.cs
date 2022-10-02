@@ -20,7 +20,7 @@ public class Stamp : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
 
     // 필요한 컴포넌트
     [SerializeField]
-    private RequestManager requestManager;
+    private HostManager hostManager;
     [SerializeField]
     private Canvas canvas;
 
@@ -63,7 +63,7 @@ public class Stamp : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHan
             {
                 // 인장 오브젝트 스폰
                 seal = Instantiate(sealPrefab, currentPos, Quaternion.identity);
-                parent = requestManager.localIdentity.transform.Find("StampArea").gameObject;
+                parent = hostManager.localIdentity.transform.Find("StampArea").gameObject;
                 seal.transform.SetParent(parent.transform);
 
                 identity.SetPermit(permit);   // 신원서 오브젝트에 승인 여부 세팅

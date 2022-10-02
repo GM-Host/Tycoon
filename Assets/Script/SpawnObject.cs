@@ -58,14 +58,14 @@ public class SpawnObject : MonoBehaviour, IBeginDragHandler, IEndDragHandler, ID
             if (currentPos.y > deskHeight)    // 책상 외부인 경우
             {
                 Identity identity = gameObject.GetComponent<Identity>();
-                RequestManager requestManager = GameObject.Find("RequestManager").GetComponent<RequestManager>();
+                HostManager hostManager = GameObject.Find("HostManager").GetComponent<HostManager>();
                 if (results.Count > 1 && results[1].gameObject.name == "Character" && identity != null && identity.sealing)  // 인장이 찍힌 신원서를 캐릭터에게 건내는 경우
                 {
-                    requestManager.SendIdentity(identity.permit);
+                    hostManager.SendIdentity(identity.permit);
                 }
                 else if (results.Count > 1 && results[1].gameObject.name == "Character" && identity == null)    // 도장을 캐릭터에게 건내는 경우
                 {
-                    requestManager.SendTierSeal();
+                    hostManager.SendTierSeal();
                 }
                 else
                 {

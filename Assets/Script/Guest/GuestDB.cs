@@ -2,127 +2,199 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 모험가 데이터 불러오기
 public class GuestDB : MonoBehaviour
 {
-    private List<string> nameList = new List<string>() { "발라드", "이안하트", "디르크", "무에르테", "샤카" };
-
-    // 직업-인장
-    [SerializeField]
-    private List<Sprite> professionSealList;    // 인장 이미지 리스트
-    private Dictionary<GuestParse.ProfessionType, Sprite> professionToSeal = new Dictionary<GuestParse.ProfessionType, Sprite>();    // 직업에 따른 인장 이미지
-
-    // 티어-증표
-    [SerializeField]
-    private List<Sprite> tierSealList;    // 증표 이미지 리스트
-
-
-    private void Start()
+    public enum ProfessionType
     {
-        for (int i = 0; i < professionSealList.Count; i++)
-            professionToSeal.Add((GuestParse.ProfessionType) i, professionSealList[i]);
+        Warrior,    // 전사
+        Assassin,   // 암살자
+        Mage,       // 마법사
+        Bard,       // 음유시인
+        Priest,     // 사제
+        Astrologian,// 점성술사
+        Hunter,     // 사냥꾼
     }
 
-    public Guest CreateGuest(bool correct)
+    public enum SpeciesType
     {
-        int tier;
-        string name, local, party;
-        GuestParse.SpeciesType species;
-        GuestParse.ProfessionType profession;
-        Sprite professionSeal, tierSeal;
+        Human,
+        Dwarf,
+        Elf,
+    }
 
-        // 이름 랜덤
-        name = nameList[Random.Range(0, nameList.Count)];
+    public enum MoneyType
+    {
+        Gold,
+        Crown,
+        Sealing,
+        Deek,
+    }
 
-        // 종족 랜덤
-        species = GuestParse.GetRandomSpecies();
+    private static Dictionary<SpeciesType, string[]> localDictionary = new Dictionary<SpeciesType, string[]>();   // 종족에 따른 지역
+    private static Dictionary<string, string[]> partyDictionary = new Dictionary<string, string[]>();   // 지역에 따른 세력
+    private static Dictionary<string, ProfessionType[]> professionDictionary = new Dictionary<string, ProfessionType[]>();   // 지역에 따른 직업
+    private static Dictionary<string, ProfessionType[]> nonProfessionDictionary = new Dictionary<string, ProfessionType[]>();   // 지역에 따라 없는 직업
 
-        // 종족에 따른 지역 설정
-        local = GuestParse.GetRandomLocal(species);
+    [SerializeField] private TextAsset csvFile1 = null; // 종족-지역-세력 데이터
+    [SerializeField] private TextAsset csvFile2 = null; // 지역-직업 데이터
 
-        // 지역에 따른 올바른 세력 설정
-        party = GuestParse.GetRandomParty(local);
+    private void Awake()
+    {
+        SetGuestData();
+        SetProfessionData();
+    }
 
-        // 지역에 따른 올바른 직업 설정
-        profession = GuestParse.GetRandomProfession(local);
+    // 종족 랜덤 리턴
+    public static SpeciesType GetRandomSpecies()
+    {
+        int count = System.Enum.GetValues(typeof(SpeciesType)).Length;
+        SpeciesType species = (SpeciesType)Random.Range(0, count);
 
-        // 직업에 따른 올바른 인장 설정
-        professionSeal = professionToSeal[profession];
+        return species;
+    }
 
-        // 티어 랜덤
-        tier = Random.Range(0, 3);
+    // 종족에 따른 지역 리스트 리턴
+    public static string[] GetLocalList(SpeciesType species)
+    {
+        return localDictionary[species];
+    }
 
-        // 티어에 따른 올바른 증표 설정
-        tierSeal = tierSealList[tier];
+    // 종족에 따른 지역 랜덤 리턴
+    public static string GetRandomLocal(SpeciesType species)
+    {
+        string[] localList = GetLocalList(species);
+        return localList[Random.Range(0, localList.Length)];
+    }
 
-        // 지역에 맞지 않는 세력 or 직업에 맞지 않는 인장 or 지역에 맞지 않는 직업 설정
-        if (!correct)
+    // 지역에 따른 세력 리스트 리턴
+    public static string[] GetPartyList(string local)
+    {
+        return partyDictionary[local];
+    }
+
+    // 지역에 따른 세력 랜덤 리턴
+    public static string GetRandomParty(string local)
+    {
+        string[] partyList = GetPartyList(local);
+        return partyList[Random.Range(0, partyList.Length)];
+    }
+
+    // 해당 지역의 직업 리스트 리턴
+    public static ProfessionType[] GetProfessionList(string local)
+    {
+        return professionDictionary[local];
+    }
+
+    // 지역에 따른 올바른 직업 랜덤 리턴
+    public static ProfessionType GetRandomProfession(string local)
+    {
+        ProfessionType[] professionList = GetProfessionList(local);
+        return professionList[Random.Range(0, professionList.Length)];
+    }
+
+    // 지역에 없는 틀린 직업 랜덤 리턴
+    public static ProfessionType GetWrongRandomProfession(string local)
+    {
+        ProfessionType[] wrongProfessionList = nonProfessionDictionary[local];
+        if (wrongProfessionList.Length == 0)
+            return (ProfessionType) (-1);
+        else
+            return wrongProfessionList[Random.Range(0, wrongProfessionList.Length)];
+    }
+
+    // csvFile2(GuestDataFile) 파싱
+    public void SetGuestData()
+    {
+        // 아래 한 줄 빼기
+        string csvText = csvFile1.text.Substring(0, csvFile1.text.Length - 1);
+        // 줄바꿈(한 줄)을 기준으로 csv 파일을 쪼개서 string배열에 줄 순서대로 담음
+        string[] rows = csvText.Split(new char[] { '\n' });
+
+        // 엑셀 파일 1번째 줄은 편의를 위한 분류이므로 i = 1부터 시작
+        for (int i = 1; i < rows.Length; i++)
         {
-            int wrongKind;
+            // A, B, C열을 쪼개서 배열에 담음
+            string[] rowValues = rows[i].Split(new char[] { ',' });
 
-            // 지역에 존재하지 않는 직업이 없다면 지역에 맞지 않는 직업 설정 불가능
-            if (GuestParse.GetWrongRandomProfession(local) == (GuestParse.ProfessionType) (-1))
-                wrongKind = new System.Random(System.Guid.NewGuid().GetHashCode()).Next(0, 3);
-            else
-                wrongKind = new System.Random(System.Guid.NewGuid().GetHashCode()).Next(0, 4);
+            // 유효한 이벤트 이름이 나올때까지 반복
+            if (rowValues[0].Trim() == "" || rowValues[0].Trim() == "end") continue;
 
-            switch (wrongKind)
+            SpeciesType species = (SpeciesType) System.Enum.Parse(typeof(SpeciesType), rowValues[0]);
+            string[] localDatas = GetLocalDatas(rows, ref i, rowValues);
+
+            localDictionary.Add(species, localDatas);
+        }
+    }
+
+    string[] GetLocalDatas(string[] rows, ref int i, string[] rowValues)
+    {
+        List<string> localList = new List<string>();
+
+        while (rowValues[0].Trim() != "end") // localList 하나를 만드는 반복문
+        {
+            string local = rowValues[1];
+            List<string> partyList = new List<string>();
+            for (int j = 2; j < rowValues.Length; j++)
             {
-                case 0: // 지역 세력 불일치
-                    Debug.Log("지역=세력");
+                if (rowValues[j].Trim() == "") break;   // 빈칸인 경우
+                partyList.Add(rowValues[j]);
+            }
 
-                    // 현재 지역과 다른 지역 정하기
-                    string wrongLocal;
-                    do
-                    {
-                        wrongLocal = GuestParse.GetRandomLocal(species);
-                    } while (wrongLocal == local);
+            localList.Add(local);
+            partyDictionary.Add(local, partyList.ToArray());
 
-                    // 다른 지역의 세력 정하기
-                    party = GuestParse.GetRandomParty(wrongLocal);
+            if (++i < rows.Length) rowValues =
+                         rows[i].Split(new char[] { ',' });
+            else break;
+        }
 
+        return localList.ToArray();
+    }
+
+    // csvFile2(ProfessionDataFile) 파싱
+    public void SetProfessionData()
+    {
+        // 아래 한 줄 빼기
+        string csvText = csvFile2.text.Substring(0, csvFile2.text.Length - 1);
+        // 줄바꿈(한 줄)을 기준으로 csv 파일을 쪼개서 string배열에 줄 순서대로 담음
+        string[] rows = csvText.Split(new char[] { '\n' });
+
+        // 엑셀 파일 2번째 줄부터 시작
+        for (int i = 2; i < rows.Length; i++)
+        {
+            // A, B, C열을 쪼개서 배열에 담음
+            string[] rowValues = rows[i].Split(new char[] { ',' });
+            if (rowValues[0] == "") continue;
+            SetProfessionDictionary(rowValues);
+        }
+    }
+
+    // professionDictionary, nonProfessionDictionary 생성
+    private void SetProfessionDictionary(string[] rowValues)
+    {
+        List<ProfessionType> professionList = new List<ProfessionType>();
+        List<ProfessionType> nonProfessionList = new List<ProfessionType>();
+
+        string local = rowValues[0];
+        for (int i = 1; i < rowValues.Length; i++)
+        {
+            ProfessionType profession = (ProfessionType) (i - 1);
+            switch (char.Parse(rowValues[i].Trim()))
+            {
+                case 'o':
+                case 'O':
+                    professionList.Add(profession);
                     break;
-
-                case 1: // 직업 인장 불일치
-                    Debug.Log("직업=인장");
-
-                    // 현재 직업과 다른 직업 정하기
-                    GuestParse.ProfessionType wrongProfession;
-                    do
-                    {
-                        wrongProfession=GuestParse.GetRandomProfession(local);
-                    } while (wrongProfession == profession);
-
-                    // 다른 직업의 인장으로 설정
-                    professionSeal = professionToSeal[wrongProfession];
-
+                case 'x':
+                case 'X':
+                    nonProfessionList.Add(profession);
                     break;
-
-                case 2: // 티어 증표 불일치
-                    Debug.Log("티어=증표");
-
-                    // 현재 티어와 다른 티어 정하기
-                    int count = tierSealList.Count;
-                    int wrongTier = Random.Range(0, count);
-                    while (tier == wrongTier)
-                        wrongTier = Random.Range(0, count);
-
-                    // 다른 티어의 증표로 설정
-                    tierSeal = tierSealList[wrongTier];
-
-                    break;
-
-                case 3: // 지역 직업 불일치
-                    Debug.Log("지역=직업");
-
-                    profession = GuestParse.GetWrongRandomProfession(local);    // 해당 지역에 없는 직업 설정
-
-                    break;
-
                 default:
                     break;
             }
         }
-        
-        return new Guest(name, local, party, species, profession, professionSeal, ++tier, tierSeal);
+        professionDictionary.Add(local, professionList.ToArray());
+        nonProfessionDictionary.Add(local, nonProfessionList.ToArray());
     }
 }
