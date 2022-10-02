@@ -91,7 +91,7 @@ public class RequestManager : MonoBehaviour
         // 신원서(클로즈업)에 표시
         textList[0].text = guest.GetName();
         textList[1].text = guest.GetParty();
-        textList[2].text = guestDB.GetSpeciesText(guest.GetSpecies());
+        textList[2].text = guest.GetSpecies();
         textList[3].text = guest.GetTier().ToString();
         textList[4].text = guestDB.GetProfessiosText(guest.GetProfession());
         // 직업 인장 이미지 표시
