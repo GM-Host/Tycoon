@@ -17,6 +17,12 @@ public class CalculationUI : MonoBehaviour
         
     }
 
+    // Trigger if the parchment is clicked
+    public void ClickedParchment()
+    {
+        StartCoroutine(ScaleUpAndMove(parchment));
+    }
+
 
     [Header("Curtain UI")]
     public RectTransform LeftCurtain;
@@ -32,6 +38,45 @@ public class CalculationUI : MonoBehaviour
                 curtain.anchoredPosition += 
                         new Vector2(dir * speedOfCurtain * Time.deltaTime, 0);
                 if(Mathf.Abs(curtain.anchoredPosition.x) > 380)
+                {
+                    isStart = false;
+                    break;
+                }
+            }
+            yield return null;
+        }
+    }
+
+    [Header("Parchment UI")]
+    public RectTransform parchment;
+    // 반대 코드 통합 필요
+    private IEnumerator ScaleUpAndMove(RectTransform parchment)
+    {
+        bool isStart = true;
+        bool isPosY = true;
+        while(true)
+        {
+            if(isStart == true)
+            {
+                // Scale Up
+                parchment.sizeDelta += 
+                        new Vector2(speedOfCurtain * Time.deltaTime, speedOfCurtain * Time.deltaTime);
+                // Roatate
+                parchment.transform.Rotate(new Vector3(0,0,50f * Time.deltaTime));
+                // Translate
+                if(isPosY == true)
+                {
+                    parchment.anchoredPosition += 
+                        new Vector2(0, speedOfCurtain * Time.deltaTime);
+
+                }
+                if(parchment.anchoredPosition.y > 0)    // Translate until
+                {
+                    isPosY = false;
+                }
+
+                // Scale up and rotate until
+                if(parchment.sizeDelta.x > 500 && parchment.rotation.z > 0)
                 {
                     isStart = false;
                     break;
