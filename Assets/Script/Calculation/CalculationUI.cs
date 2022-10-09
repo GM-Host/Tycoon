@@ -18,9 +18,11 @@ public class CalculationUI : MonoBehaviour
     }
 
     // Trigger if the parchment is clicked
+    private int isSized = 1;
     public void ClickedParchment()
     {
-        StartCoroutine(ScaleUpAndMove(parchment));
+        StartCoroutine(ScaleUpAndMove(parchment, isSized));
+        isSized = -isSized;
     }
 
 
@@ -49,8 +51,7 @@ public class CalculationUI : MonoBehaviour
 
     [Header("Parchment UI")]
     public RectTransform parchment;
-    // 반대 코드 통합 필요
-    private IEnumerator ScaleUpAndMove(RectTransform parchment)
+    private IEnumerator ScaleUpAndMove(RectTransform parchment, int dir)
     {
         bool isStart = true;
         bool isPosY = true;
@@ -58,25 +59,27 @@ public class CalculationUI : MonoBehaviour
         {
             if(isStart == true)
             {
+                print(parchment.sizeDelta.x + " : " + parchment.sizeDelta.y);
                 // Scale Up
                 parchment.sizeDelta += 
-                        new Vector2(speedOfCurtain * Time.deltaTime, speedOfCurtain * Time.deltaTime);
+                        new Vector2(dir * speedOfCurtain * Time.deltaTime, dir * speedOfCurtain * Time.deltaTime);
                 // Roatate
-                parchment.transform.Rotate(new Vector3(0,0,50f * Time.deltaTime));
+                parchment.transform.Rotate(new Vector3(0,0, dir * 50f * Time.deltaTime));
                 // Translate
                 if(isPosY == true)
                 {
                     parchment.anchoredPosition += 
-                        new Vector2(0, speedOfCurtain * Time.deltaTime);
+                        new Vector2(0, dir * speedOfCurtain * Time.deltaTime);
 
                 }
-                if(parchment.anchoredPosition.y > 0)    // Translate until
+                if(parchment.anchoredPosition.y > 0 || parchment.anchoredPosition.y < -365)    // Translate until
                 {
                     isPosY = false;
                 }
 
                 // Scale up and rotate until
-                if(parchment.sizeDelta.x > 500 && parchment.rotation.z > 0)
+                if((parchment.sizeDelta.x > 500 && parchment.rotation.z > 0) || 
+                (parchment.sizeDelta.x < 91))
                 {
                     isStart = false;
                     break;
