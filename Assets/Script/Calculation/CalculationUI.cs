@@ -9,6 +9,7 @@ public class CalculationUI : MonoBehaviour
     {
         StartCoroutine(OpenCurtain(LeftCurtain, -1));
         StartCoroutine(OpenCurtain(RightCurtain, 1));
+        isFirstCal = true;
     }
 
     // Update is called once per frame
@@ -19,10 +20,23 @@ public class CalculationUI : MonoBehaviour
 
     // Trigger if the parchment is clicked
     private int isSized = 1;
+    private bool isOpened = true;
+    private bool isFirstCal = true;
+    [Header("First Settlement UI")]
+    public GameObject firstSettleWindow;
     public void ClickedParchment()
     {
         StartCoroutine(ScaleUpAndMove(parchment, isSized));
+        openedImg.SetActive(isOpened);
+        openedWindow.SetActive(isOpened);
         isSized = -isSized;
+        if(!isOpened && isFirstCal)
+        {
+            firstSettleWindow.SetActive(true);
+            // Call First Settle Coroutine
+            isFirstCal = false;
+        }
+        isOpened = !isOpened;
     }
 
 
@@ -51,6 +65,8 @@ public class CalculationUI : MonoBehaviour
 
     [Header("Parchment UI")]
     public RectTransform parchment;
+    public GameObject openedImg;
+    public GameObject openedWindow;
     private IEnumerator ScaleUpAndMove(RectTransform parchment, int dir)
     {
         bool isStart = true;
