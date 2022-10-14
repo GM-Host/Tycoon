@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CalculationUI : MonoBehaviour
 {
+    // For Checking First Calculation
+    private bool isFirstCal = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,21 +25,23 @@ public class CalculationUI : MonoBehaviour
     // Trigger if the parchment is clicked
     private int isSized = 1;
     private bool isOpened = true;
-    private bool isFirstCal = true;
-    [Header("First Settlement UI")]
-    public GameObject firstSettleWindow;
     public void ClickedParchment()
     {
-        StartCoroutine(ScaleUpAndMove(parchment, isSized));
-        openedImg.SetActive(isOpened);
-        openedWindow.SetActive(isOpened);
-        isSized = -isSized;
+        // Animation & 정산 내역 띄우기
+        StartCoroutine(Animate(parchment, isSized));
+        CalculateToday();
+
+        // 첫번째 정산 - 정산 완료 및 골드 증감 연출
         if(!isOpened && isFirstCal)
         {
+            // Set as visible
             firstSettleWindow.SetActive(true);
-            // Call First Settle Coroutine
+            StartCoroutine(CompletedSettlement(outputWindow));
             isFirstCal = false;
         }
+
+        // Switch
+        isSized = -isSized;
         isOpened = !isOpened;
     }
 
@@ -67,7 +73,7 @@ public class CalculationUI : MonoBehaviour
     public RectTransform parchment;
     public GameObject openedImg;
     public GameObject openedWindow;
-    private IEnumerator ScaleUpAndMove(RectTransform parchment, int dir)
+    private IEnumerator Animate(RectTransform parchment, int dir)
     {
         bool isStart = true;
         bool isPosY = true;
@@ -75,7 +81,6 @@ public class CalculationUI : MonoBehaviour
         {
             if(isStart == true)
             {
-                print(parchment.sizeDelta.x + " : " + parchment.sizeDelta.y);
                 // Scale Up
                 parchment.sizeDelta += 
                         new Vector2(dir * speedOfCurtain * Time.deltaTime, dir * speedOfCurtain * Time.deltaTime);
@@ -103,5 +108,80 @@ public class CalculationUI : MonoBehaviour
             }
             yield return null;
         }
+    }
+
+    [Header("Completed Settlement UI")]
+    public GameObject firstSettleWindow;
+    public GameObject outputWindow;
+    public TMP_Text outputNum;
+    public TMP_Text gold;
+    private IEnumerator CompletedSettlement(GameObject outputWindow)
+    {
+        // Calcuate Gross Output
+        if(output > 0)
+            outputNum.text = "+" + output.ToString();
+        else outputNum.text = output.ToString();
+
+
+        bool isStart = true;
+        float xSpeed = .1f, ySpeed = .1f;
+        print(outputWindow.transform.position);
+        while(true)
+        {
+            if(isStart == true)
+            {
+                // Translation
+                //outputWindow.anchoredPosition += new Vector2(xSpeed * speedOfCurtain * Time.deltaTime, 0);
+                outputWindow.transform.Translate(new Vector3(xSpeed * Time.deltaTime, ySpeed * Time.deltaTime, 0));
+                // Stop condition
+                if(outputWindow.transform.position.x > 1720f)
+                    xSpeed=0f;
+                if(outputWindow.transform.position.y > 850f)
+                    ySpeed=0f;
+                if(xSpeed==0 && ySpeed==0)
+                {
+                    isStart = false;
+                    break;
+                }
+            }
+        }
+
+        // Update Gold
+        gold.text = (int.Parse(gold.text) + output).ToString();
+
+        // Wait 2s and set as invisible
+        yield return new WaitForSeconds(2.0f);
+        firstSettleWindow.SetActive(false);
+        yield return null;
+    }
+
+    
+    [Header("Texts of Calculation")]
+    public TMP_Text priceOfAccept;
+    public TMP_Text priceOfFine;
+    public TMP_Text sumOfIncome, sumOfOutcome;
+    private int output;
+    private void CalculateToday()
+    {
+        // Load Data from today's work
+        CalculateManager.Instance.LoadData();
+        
+        // Open Window
+        openedImg.SetActive(isOpened);
+        openedWindow.SetActive(isOpened);
+
+        int temp, income = 0, outcome = 0;
+        // Calculate Income
+        temp = CalculateManager.Instance.priceOfAccept;
+        income += temp;     priceOfAccept.text = temp.ToString();
+
+        sumOfIncome.text = income.ToString();
+        // Calculate Outcome
+        temp = CalculateManager.Instance.priceOfFine;
+        outcome += temp;    priceOfFine.text = temp.ToString();
+
+        sumOfOutcome.text = outcome.ToString();
+        // Final output
+        output = income - outcome;
     }
 }

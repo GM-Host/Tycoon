@@ -5,15 +5,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class CalculateManager : MonoBehaviour
+public class CalculateManagerOld : MonoBehaviour
 {
-    private bool update;    // °ñµå ¾÷µ¥ÀÌÆ® Çß´ÂÁö ¿©ºÎ
+    private bool update;    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ß´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private int correctGold = 10, wrongGold = 10;
 
     [SerializeField]
     private TextMeshProUGUI dateText, correctText, wrongText, goldText;
     [SerializeField]
-    private GameObject hospitalityButton;   // Á¢°´È­¸é ÀÌµ¿ ¹öÆ°
+    private GameObject hospitalityButton;   // ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½Æ°
 
     // Start is called before the first frame update
     void Start()
@@ -24,28 +24,28 @@ public class CalculateManager : MonoBehaviour
         goldText.text = DataController.Instance.gameData.gold.ToString();
     }
 
-    // Á¢°´È­¸é ÀÌµ¿ ¹öÆ° Å¬¸¯
+    // ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½Æ° Å¬ï¿½ï¿½
     public void ClickHospitality()
     {
         SceneManager.LoadScene("Hospitality");
     }
 
-    // ÆÇ³Ú Å¬¸¯
+    // ï¿½Ç³ï¿½ Å¬ï¿½ï¿½
     public void ClickPanel()
     {
         if (!update)
         {
             UpdateGold();
             update = !update;
-            hospitalityButton.SetActive(true);  // Á¢°´È­¸é ÀÌµ¿ ¹öÆ° È°¼ºÈ­
+            hospitalityButton.SetActive(true);  // ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½Æ° È°ï¿½ï¿½È­
         }
     }
 
-    // °ñµå °»½Å
+    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private void UpdateGold()
     {
-        int gold = HospitalityScore.Instance.correctAnswer * correctGold - HospitalityScore.Instance.wrongAnswer * wrongGold; // °ñµå Áõ°¨·®
-        DataController.Instance.gameData.UpdateGold(gold);                  // °ñµå ¾÷µ¥ÀÌÆ®
-        goldText.text = DataController.Instance.gameData.gold.ToString();   // °»½ÅµÈ °ñµå Ç¥½Ã
+        int gold = HospitalityScore.Instance.correctAnswer * correctGold - HospitalityScore.Instance.wrongAnswer * wrongGold; // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        DataController.Instance.gameData.UpdateGold(gold);                  // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+        goldText.text = DataController.Instance.gameData.gold.ToString();   // ï¿½ï¿½ï¿½Åµï¿½ ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
     }
 }
