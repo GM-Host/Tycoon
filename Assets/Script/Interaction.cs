@@ -18,8 +18,8 @@ public class Interaction : MonoBehaviour
 
     private bool stampActive;
 
-    // 배경(CloseUp 오브젝트) 클릭 -> 클로즈업 해제
-    public void ClickCloseUp()
+    // 배경(BlurPanel 오브젝트) 클릭 -> 클로즈업 해제
+    public void ClickBlurPanel()
     {
         closeUp.SetActive(false);
 
