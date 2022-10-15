@@ -29,10 +29,9 @@ public class Book : MonoBehaviour
     public void TurnOver(bool right)
     {
         Debug.Log("책 넘기기 시도");
+
         int offset = right ? 2 : -2;
-        Debug.Log(offset);
-        int nextPage = backgrounds.Count + offset;
-        Debug.Log(nextPage);
+        int nextPage = curPage + offset;
 
         // J : 책 넘기기 가능
         if (nextPage >= 0 && nextPage < backgrounds.Count)
@@ -61,16 +60,18 @@ public class Book : MonoBehaviour
         rightObj = Resources.Load<GameObject>("Book/Page" + (curPage + 1).ToString());
 
         if (leftObj != null)
-            SpawnContents(leftObj, LeftBackground);
+            leftObj = SpawnContents(leftObj, LeftBackground);
         if (rightObj != null)
-            SpawnContents(rightObj, RightBackground);
+            rightObj = SpawnContents(rightObj, RightBackground);
     }
 
-    // J : 컨텐츠 오브젝트 스폰
-    private void SpawnContents(GameObject obj, Image background)
+    // J : 컨텐츠 오브젝트 스폰, 생성한 컨텐츠 오브젝트 리턴
+    private GameObject SpawnContents(GameObject obj, Image background)
     {
-        obj = Instantiate(obj, Vector2.zero, Quaternion.identity);
-        obj.transform.parent = background.transform;
-        obj.transform.localPosition = Vector2.zero;
+        GameObject createObj = Instantiate(obj, Vector2.zero, Quaternion.identity);
+        createObj.transform.parent = background.transform;
+        createObj.transform.localPosition = Vector2.zero;
+
+        return createObj;
     }
 }
