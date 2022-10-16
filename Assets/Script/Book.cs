@@ -19,20 +19,26 @@ public class Book : MonoBehaviour
     void Awake()
     {
         // J : 버튼 리스너 설정
-        LeftBackground.gameObject.GetComponentInChildren<Button>().onClick.AddListener(delegate { TurnOver(false); });
-        RightBackground.gameObject.GetComponentInChildren<Button>().onClick.AddListener(delegate { TurnOver(true); });
+        LeftBackground.gameObject.GetComponentInChildren<Button>().onClick.AddListener(delegate { TryTurnOver(false); });
+        RightBackground.gameObject.GetComponentInChildren<Button>().onClick.AddListener(delegate { TryTurnOver(true); });
 
         SetPage();
     }
 
     // J : 책 넘기기 시도
-    public void TurnOver(bool right)
+    private void TryTurnOver(bool right)
     {
-        Debug.Log("책 넘기기 시도");
-
         int offset = right ? 2 : -2;
         int nextPage = curPage + offset;
 
+        TurnOver(nextPage);
+    }
+
+    // J : 왼쪽/오른쪽 넘기기 or 건너뛰기 이동
+    public void TurnOver(int nextPage)
+    {
+        Debug.Log("책 넘기기");
+        
         // J : 책 넘기기 가능
         if (nextPage >= 0 && nextPage < backgrounds.Count)
         {
