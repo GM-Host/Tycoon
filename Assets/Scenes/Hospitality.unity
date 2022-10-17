@@ -1841,8 +1841,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: db050a526718a214495c59461db7a650, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3818,9 +3818,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1058753331}
+  - component: {fileID: 1058753334}
   - component: {fileID: 1058753333}
   - component: {fileID: 1058753332}
-  - component: {fileID: 1058753334}
   m_Layer: 5
   m_Name: CloseUpBook
   m_TagString: Untagged
@@ -3909,10 +3909,17 @@ MonoBehaviour:
   - {fileID: 21300000, guid: db050a526718a214495c59461db7a650, type: 3}
   - {fileID: 21300000, guid: 2f22d4679a0b6ac49b9478e61034b3f3, type: 3}
   - {fileID: 21300000, guid: db050a526718a214495c59461db7a650, type: 3}
-  - {fileID: 21300000, guid: db121a970ff9816499ecc7b7722ee26c, type: 3}
-  - {fileID: 21300000, guid: 46411feea5294ef4284eccf7cb50a245, type: 3}
+  - {fileID: 21300000, guid: 9db93cda656cbbd41a818d6b68c1c47c, type: 3}
+  - {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 21300000, guid: f95e40c2a536c5e459c21b2ec34fa06b, type: 3}
+  - {fileID: 21300000, guid: f95e40c2a536c5e459c21b2ec34fa06b, type: 3}
   LeftBackground: {fileID: 670790112}
   RightBackground: {fileID: 556732638}
+  MoveLeft: {fileID: 498918898}
+  MoveRight: {fileID: 1382717665}
+  canvas: {fileID: 1493612708}
 --- !u!1 &1111052613
 GameObject:
   m_ObjectHideFlags: 0
