@@ -68,6 +68,6 @@ public class Timer : MonoBehaviour
     private void EndGame()
     {
         Debug.Log("End Game");
-        SceneManager.LoadScene("Calculate");
+        SceneManager.LoadScene("RestingPlace");
     }
 }
