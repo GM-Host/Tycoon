@@ -29,9 +29,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8401234957602260766}
-  - {fileID: 7525082888526204311}
-  - {fileID: 7968567185891221904}
+  - {fileID: 6086463179077287739}
+  - {fileID: 5653795510415137205}
+  - {fileID: 5228168621911897522}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -85,6 +85,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2519617670267381775}
     m_Modifications:
+    - target: {fileID: 3264052281206034388, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c48003aa9be14974ea973bb9a3f5b6f7, type: 3}
+    - target: {fileID: 6695111557213656296, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 7632394921545491631, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
+      propertyPath: m_text
+      value: "\uC804\uC0AC"
+      objectReference: {fileID: 0}
     - target: {fileID: 8937825362802011340, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
       propertyPath: m_Name
       value: BookProfessionSeal
@@ -175,9 +187,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
---- !u!224 &8401234957602260766 stripped
+--- !u!224 &6086463179077287739 stripped
 RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8937825362802011341, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6695111557213656296, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
   m_PrefabInstance: {fileID: 621116861877087187}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1341933544727579997
@@ -187,6 +199,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2519617670267381775}
     m_Modifications:
+    - target: {fileID: 3264052281206034388, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 30306e666047aa94883c50a1471380c0, type: 3}
+    - target: {fileID: 6695111557213656296, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7632394921545491631, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
+      propertyPath: m_text
+      value: "\uC554\uC0B4\uC790"
+      objectReference: {fileID: 0}
     - target: {fileID: 8937825362802011340, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
       propertyPath: m_Name
       value: BookProfessionSeal_2
@@ -285,9 +309,9 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 1149c5058ac08e1439921e27776c955c, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
---- !u!224 &7968567185891221904 stripped
+--- !u!224 &5653795510415137205 stripped
 RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8937825362802011341, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6695111557213656296, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
   m_PrefabInstance: {fileID: 1341933544727579997}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1470425091198411098
@@ -297,6 +321,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2519617670267381775}
     m_Modifications:
+    - target: {fileID: 3264052281206034388, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1149c5058ac08e1439921e27776c955c, type: 3}
+    - target: {fileID: 6695111557213656296, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6695111557213656296, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -250
+      objectReference: {fileID: 0}
+    - target: {fileID: 7632394921545491631, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
+      propertyPath: m_text
+      value: "\uB9C8\uBC95\uC0AC"
+      objectReference: {fileID: 0}
     - target: {fileID: 8937825362802011340, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
       propertyPath: m_Name
       value: BookProfessionSeal_1
@@ -395,8 +435,8 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 30306e666047aa94883c50a1471380c0, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
---- !u!224 &7525082888526204311 stripped
+--- !u!224 &5228168621911897522 stripped
 RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8937825362802011341, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6695111557213656296, guid: a5c02224503e55045be4d0a26641cc97, type: 3}
   m_PrefabInstance: {fileID: 1470425091198411098}
   m_PrefabAsset: {fileID: 0}
