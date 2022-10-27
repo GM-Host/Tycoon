@@ -5,27 +5,12 @@ using UnityEngine;
 
 public class CalculateManager : MonoBehaviour
 {
-    public static CalculateManager Instance = null;
-    private void Awake()
-    {
-        if(Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-
-        else
-        {
-            // Destroy new one
-            if(Instance != this) Destroy(this.gameObject);
-        }
-    }
-
+    public static CalculateManager Instance;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Instance = this;
     }
 
     // Update is called once per frame
@@ -47,6 +32,12 @@ public class CalculateManager : MonoBehaviour
 
         // 수입, 지출 계산
         CalculateToday();
+    }
+
+    // 정산 화면에서 
+    public void UpdateGold(int gold)
+    {
+        DataController.Instance.gameData.UpdateGold(gold);
     }
 
 
