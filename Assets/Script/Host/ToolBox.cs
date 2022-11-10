@@ -8,6 +8,8 @@ public class ToolBox : MonoBehaviour
     private Queue<GameObject> toolQueue = new Queue<GameObject>();
 
     [SerializeField]
+    private Transform tools;
+    [SerializeField]
     private Animator doorAnimator;
     [SerializeField]
     private Animator wheelAnimator;
@@ -17,7 +19,6 @@ public class ToolBox : MonoBehaviour
     void Start()
     {
         // J : 도구 상자 내 모든 도구 인큐
-        Transform tools = transform.GetChild(0);
         foreach (Transform tool in tools)
             toolQueue.Enqueue(tool.gameObject);
 
