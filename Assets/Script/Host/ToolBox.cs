@@ -6,13 +6,14 @@ public class ToolBox : MonoBehaviour
 {
 
     private Queue<GameObject> toolQueue = new Queue<GameObject>();
+    private bool isDoorOpen;
 
+    [SerializeField]
+    private GameObject smoke;
     [SerializeField]
     private Transform tools;
     [SerializeField]
-    private Animator doorAnimator;
-    [SerializeField]
-    private Animator wheelAnimator;
+    private Animator doorAnimator, wheelAnimator, smokeAnimator;
 
 
     // Start is called before the first frame update
@@ -30,6 +31,10 @@ public class ToolBox : MonoBehaviour
     {
         // J : 상자 뚜껑 여닫기
         doorAnimator.SetTrigger("Change");
+
+        isDoorOpen = !isDoorOpen;   // J : 플래그 변경
+        if (isDoorOpen) // J : 여는 경우
+            StartCoroutine(SmokeCoroutine());   // J : 연기 발생
     }
 
     // J : 도구 변경 버튼 클릭
@@ -46,5 +51,20 @@ public class ToolBox : MonoBehaviour
 
         // J : 원판 회전
         wheelAnimator.SetTrigger("Rotate");
+    }
+
+    // J : 연기 애니메이션 코루틴
+    private IEnumerator SmokeCoroutine()
+    {
+        // J : 연기 발생
+        smoke.SetActive(true);
+        smokeAnimator.SetTrigger("Smoke");
+
+        // J : 애니메이션 종료까지 대기
+        while (smokeAnimator.IsInTransition(0) == false)
+            yield return new WaitForEndOfFrame();
+
+        // J : Smoke 오브젝트 비활성화
+        smoke.SetActive(false);
     }
 }
