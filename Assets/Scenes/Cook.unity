@@ -236,8 +236,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0, y: 0.000050545}
+  m_SizeDelta: {x: 450, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &128167224
 MonoBehaviour:
@@ -1932,6 +1932,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cleanBtn: {fileID: 2098651350}
   deleteBtn: {fileID: 640147538}
+  noelleText: {fileID: 128167224}
   boilingBtn: {fileID: 1766560512}
   steamingBtn: {fileID: 670178106}
   boildownBtn: {fileID: 423131166}

@@ -4,17 +4,23 @@ using UnityEngine;
 
 public class CookManager : MonoBehaviour
 {
+    public static CookManager Instance;
+    private List<Dictionary<string, object>> data;
     // Start is called before the first frame update
     void Start()
     {
-        List<Dictionary<string, object>> data = CSVReader.Read("NoelleDialog");
-        print("This is data[0][대사_ID]"+data[0]["대사_ID"]+"end");print("This is data[1]"+data[1]+"end");
+        // Singleton
+        Instance = this;
+        // Read Noelle Dialog Database
+        data = CSVReader.Read("NoelleDialog");
+        //print("This is data[0][대사_ID]"+data[0]["대사_ID"]+"end");print("This is data[1]"+data[0]+"end");
     }
 
     public string DialogNoelle()
     {
+        int random = Random.Range(0, data.Count);
         
-        return "";
+        return data[random]["대사"].ToString();
     }
     // Update is called once per frame
     void Update()

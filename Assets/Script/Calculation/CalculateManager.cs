@@ -13,12 +13,6 @@ public class CalculateManager : MonoBehaviour
         Instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private int date, gold_old;
     private int correct, wrong;
     // 정산 화면에서 양피지 클릭 시 호출

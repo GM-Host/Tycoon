@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CookUI : MonoBehaviour
@@ -14,12 +15,16 @@ public class CookUI : MonoBehaviour
         actionBtn_Noel = !actionBtn_Noel;
         cleanBtn.SetActive(actionBtn_Noel);
         deleteBtn.SetActive(actionBtn_Noel);
+
+        
+        PrintDialogNoel();
         
     }
-
-    public void PrintDialogNoel()
+    [Header("Noelle Text")]
+    public TMP_Text noelleText;
+    private void PrintDialogNoel()
     {
-        //CookManager.
+        noelleText.text = CookManager.Instance.DialogNoelle();
     }
 
     [Header("Cooking Buttons")]
