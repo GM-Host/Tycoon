@@ -24,7 +24,7 @@ public class CookUI : MonoBehaviour
     public TMP_Text noelleText;
     private void PrintDialogNoel()
     {
-        noelleText.text = CookManager.Instance.DialogNoelle();
+        noelleText.text = CookDataParse.Instance.DialogNoelle();
     }
 
     [Header("Cooking Buttons")]
