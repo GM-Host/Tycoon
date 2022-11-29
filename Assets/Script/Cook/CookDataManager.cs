@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CookDataParse : MonoBehaviour
+public class CookDataManager : MonoBehaviour
 {
-    public static CookDataParse Instance;
+    public static CookDataManager Instance;
     private List<Dictionary<string, object>> data;
     // Start is called before the first frame update
     void Start()
