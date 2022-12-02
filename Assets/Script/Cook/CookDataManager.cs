@@ -21,7 +21,9 @@ public class CookDataManager : MonoBehaviour
     public List<Inventory> curInv = new List<Inventory>();
 
     // Noelle Dialog Data
-    private List<Dictionary<string, object>> data;
+    private List<Dictionary<string, object>> dialogData;
+    // Flavor Data
+    private List<Dictionary<string, object>> flavorData;
 
     public static CookDataManager Instance;
     // Start is called before the first frame update
@@ -31,7 +33,8 @@ public class CookDataManager : MonoBehaviour
         Instance = this;
 
         // Read Noelle Dialog Database
-        data = CSVReader.Read("NoelleDialog");
+        dialogData = CSVReader.Read("NoelleDialog");
+        flavorData = CSVReader.Read("Flavor");
 
         // test
         Inventory food0001 = new Inventory();
@@ -39,6 +42,11 @@ public class CookDataManager : MonoBehaviour
         food0001.count = 4;
         food0001.name = "건식 전투식량 블럭";
         curInv.Add(food0001);
+        Inventory food0003 = new Inventory();
+        food0003.imgId = "food0003";
+        food0003.count = 6;
+        food0003.name = "굽은 뿔 산양 위장주머니";
+        curInv.Add(food0003);
     }
 
     /**************************
@@ -46,9 +54,9 @@ public class CookDataManager : MonoBehaviour
     **************************/
     public string DialogNoelle()
     {
-        int random = Random.Range(0, data.Count);
+        int random = Random.Range(0, dialogData.Count);
         
-        return data[random]["대사"].ToString();
+        return dialogData[random]["대사"].ToString();
     }
 
     /**************************
@@ -90,6 +98,22 @@ public class CookDataManager : MonoBehaviour
             }
         }
     }
+
+    private void ItemUnselect(Inventory item)
+    {
+        print("ItemUnselect Initial");
+        Inventory temp;
+        if(curInv.Find(temp => temp.imgId == item.imgId) == null)    // 현재 inven에 없는 아이템인 경우
+        {
+            curInv.Add(item);
+        }
+        else
+            curInv.Find(temp => temp.imgId == item.imgId).count++;
+        // update Inventory
+        InventoryUI invUI = FindObjectOfType<InventoryUI>();
+        invUI.updateInv();
+    }
+
 
     /**************************
         # 8 -> # CDM -> # 6
@@ -133,21 +157,9 @@ public class CookDataManager : MonoBehaviour
 
     }
     
-    private void ItemUnselect(Inventory item)
-    {
-        print("ItemUnselect Initial");
-        Inventory temp;
-        if(curInv.Find(temp => temp.imgId == item.imgId) == null)    // 현재 inven에 없는 아이템인 경우
-        {
-            curInv.Add(item);
-        }
-        else
-            curInv.Find(temp => temp.imgId == item.imgId).count++;
-        // update Inventory
-        InventoryUI invUI = FindObjectOfType<InventoryUI>();
-        invUI.updateInv();
-    }
-
+    /**************************
+        # 7 -> # CDM -> # 6
+    **************************/
     public void OperSelected(CookObject oper)
     {
         if(order != Order.Operation || numOfObj == 6)
@@ -161,6 +173,39 @@ public class CookDataManager : MonoBehaviour
         curCook.Add(oper);
         cookUI.ShowObject(oper, curCook.Count-1);
         numOfObj++;
+    }
+
+    /**************************
+        # 5 -> # CDM -> # 10
+    **************************/
+    public void MakeResult()
+    {
+        //List<CookObject> recipe0001 = new List<CookObject>();
+        ResultUI resultUI = FindObjectOfType<ResultUI>();
+        // Recipe0001
+        if(curCook[0].id == "food0001" && curCook[1].id == "Steaming" && curCook.Count == 2)
+        {
+            resultUI.ShowResult("Success");
+        }
+        // Recipe0003
+        else if(curCook[0].id == "food0003" && curCook[1].id == "Boiling" && curCook.Count == 2)
+        {
+            resultUI.ShowResult("Success");
+        }
+        else
+            resultUI.ShowResult("Fail");
+        // Clean History
+        CleanHistory(1);
+    }
+
+    
+    /**************************
+        # 8 -> # CDM -> # 9
+    **************************/
+    public void SendFlavorData(int itemId)
+    {
+        FlavorUI flavorUI = FindObjectOfType<FlavorUI>();
+        flavorUI.PrintFlavor(flavorData[itemId - 1]["플레이버_텍스트"].ToString());
     }
 
     // Update is called once per frame

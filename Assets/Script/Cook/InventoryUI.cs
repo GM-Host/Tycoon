@@ -54,6 +54,8 @@ public class InventoryUI : MonoBehaviour
             temp.GetComponent<ItemUI>().item = item;
         }
     }
+
+    
     // Update is called once per frame
     void Update()
     {

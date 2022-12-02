@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class ItemUI : MonoBehaviour
@@ -11,6 +12,7 @@ public class ItemUI : MonoBehaviour
     public void ClickedItem()
     {
         CookDataManager.Instance.ItemSelected(item);
+        CookDataManager.Instance.SendFlavorData(int.Parse(Regex.Replace(item.imgId, @"\D", "")));
     }
 
     // Start is called before the first frame update

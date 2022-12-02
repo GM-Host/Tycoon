@@ -53,7 +53,7 @@ public class CookUI : MonoBehaviour
 
     
     /********************
-        # 7, 8 -> # 6
+    # 7, 8 -> CDM -> # 6
     ********************/
     public Object objImg;
     public void ShowObject(CookDataManager.CookObject obj, int orderNum)
@@ -65,10 +65,22 @@ public class CookUI : MonoBehaviour
         orderImg.color = new Color(orderImg.color.r, orderImg.color.g, orderImg.color.b, 1);
     }
 
+    /********************
+         # 7 -> # 6
+    ********************/
     public void ClickedCook(GameObject category)
     {
         CookDataManager.CookObject operation = new CookDataManager.CookObject();
         operation.id = category.name;
         CookDataManager.Instance.OperSelected(operation);
     }
+
+    /********************
+         # 5 -> # CDM
+    ********************/
+    public void ClickedBell()
+    {
+        CookDataManager.Instance.MakeResult();
+    }
+
 }
