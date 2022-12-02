@@ -20,7 +20,7 @@ public class NoelleUI : MonoBehaviour
         deleteBtn.SetActive(actionBtn_Noel);
 
         
-        PrintDialogNoel();
+        PrintDialog();
         
     }
 
@@ -36,21 +36,25 @@ public class NoelleUI : MonoBehaviour
     }
 
     /********************
-        # 2 -> # CDM
+        # CDM -> # 2
     ********************/
     [Header("Noelle Text")]
     public TMP_Text noelleText;
-    private void PrintDialogNoel()
+    private void PrintDialog()
     {
         // history 없을 때만 대화 출력
         if (!CookDataManager.Instance.hasHistory)
             noelleText.text = CookDataManager.Instance.DialogNoelle();
     }
+    public void DeleteDialog()
+    {
+        noelleText.text = "";
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        PrintDialogNoel();
+        PrintDialog();
     }
 
 }
