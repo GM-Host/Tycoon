@@ -20,4 +20,30 @@ public class CookUI : MonoBehaviour
         
     }
 
+    /********************
+         # 4 -> # 6
+    ********************/
+    [Header("History")]
+    public GameObject history;
+    public void cleanHistory()
+    {
+        Transform[] childList = history.GetComponentsInChildren<Transform>();
+        if(childList != null)
+        {
+            foreach(RectTransform child in childList)
+            {
+                if(child != history.transform)
+                    Destroy(child.gameObject);
+            }
+        }
+    }
+
+    public void deleteHistory(string lastId)
+    {
+        Transform lastChild = history.transform.Find(lastId);
+        Destroy(lastChild.gameObject);
+    }
+
+    
+    public GameObject dialog;
 }

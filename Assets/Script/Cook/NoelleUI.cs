@@ -24,25 +24,33 @@ public class NoelleUI : MonoBehaviour
         
     }
 
+    
     /********************
-        # CDM -> # 2
+        # 4 -> # 6
+    ********************/
+    public void ClickedCDBtn(GameObject button)
+    {
+        int cleanAll = -1;
+        cleanAll = button.name=="Clean" ? 1 : 0;
+        CookDataManager.Instance.CleanHistory(cleanAll);
+    }
+
+    /********************
+        # 2 -> # CDM
     ********************/
     [Header("Noelle Text")]
     public TMP_Text noelleText;
     private void PrintDialogNoel()
     {
-        noelleText.text = CookDataManager.Instance.DialogNoelle();
+        // history 없을 때만 대화 출력
+        if (!CookDataManager.Instance.hasHistory)
+            noelleText.text = CookDataManager.Instance.DialogNoelle();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        PrintDialogNoel();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
