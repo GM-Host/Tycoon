@@ -1128,6 +1128,7 @@ MonoBehaviour:
   localIdentity: {fileID: 0}
   spawnIdentityPos: {x: 225, y: -260}
   spawnTierSealPos: {x: 425, y: -260}
+  sibilinIndex: 3
   guestManager: {fileID: 457596890}
   dialogueManager: {fileID: 1111052614}
   closeUpIdentity: {fileID: 955842969}

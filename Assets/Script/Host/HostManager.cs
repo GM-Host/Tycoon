@@ -18,6 +18,8 @@ public class HostManager : MonoBehaviour
 
     [SerializeField]
     private Vector2 spawnIdentityPos, spawnTierSealPos;     // 신원서, 증표 오브젝트의 스폰 위치
+    [SerializeField]
+    private int sibilinIndex;
 
     // 필요한 컴포넌트
     [SerializeField]
@@ -47,13 +49,13 @@ public class HostManager : MonoBehaviour
         identity = Instantiate(identityPrefab, Vector2.zero, Quaternion.identity);
         identity.transform.SetParent(parent.transform);
         identity.transform.localPosition = spawnIdentityPos;
-        identity.transform.SetSiblingIndex(2); // 3번째로 렌더링 (background, character 이후)
+        identity.transform.SetSiblingIndex(sibilinIndex); // sibilinIndex번째로 렌더링
 
         // 증표 오브젝트 스폰
         tierSeal = Instantiate(tierSealPrefab, Vector2.zero, Quaternion.identity);
         tierSeal.transform.SetParent(parent.transform);
         tierSeal.transform.localPosition = spawnTierSealPos;
-        tierSeal.transform.SetSiblingIndex(3); // 4번째로 렌더링 (background, character 이후)
+        tierSeal.transform.SetSiblingIndex(sibilinIndex); // sibilinIndex번째로 렌더링
 
         // 신원서 데이터 생성
         correct = new System.Random(System.Guid.NewGuid().GetHashCode()).NextDouble() < trueRatio ? true : false;
