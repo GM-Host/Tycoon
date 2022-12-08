@@ -71,4 +71,10 @@ public class Interaction : MonoBehaviour
     {
         Debug.Log("벨 클릭");
     }
+
+    // 망치 클릭
+    public void ClickHammer()
+    {
+        Debug.Log("망치 클릭");
+    }
 }
