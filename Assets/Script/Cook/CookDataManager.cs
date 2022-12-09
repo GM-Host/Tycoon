@@ -24,6 +24,8 @@ public class CookDataManager : MonoBehaviour
     private List<Dictionary<string, object>> dialogData;
     // Flavor Data
     private List<Dictionary<string, object>> flavorData;
+    // Recipe Data
+    private List<Dictionary<string, object>> recipeData;
 
     public static CookDataManager Instance;
     // Start is called before the first frame update
@@ -35,6 +37,7 @@ public class CookDataManager : MonoBehaviour
         // Read Noelle Dialog Database
         dialogData = CSVReader.Read("NoelleDialog");
         flavorData = CSVReader.Read("Flavor");
+        recipeData = CSVReader.Read("Recipe");
 
         // test
         Inventory food0001 = new Inventory();
