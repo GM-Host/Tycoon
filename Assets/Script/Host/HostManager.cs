@@ -56,7 +56,7 @@ public class HostManager : MonoBehaviour
         Setting();
 
         // 안내 대화 출력
-        dialogueManager.StartCoroutine(dialogueManager.GuestDialogueCoroutine(guest.GetProfession(), 0));
+        dialogueManager.StartCoroutine(dialogueManager.GuestDialogueCoroutine(guest.Profession, 0));
     }
 
     // 신원서(클로즈업) 및 증표 세팅
@@ -65,7 +65,7 @@ public class HostManager : MonoBehaviour
         List<TextMeshProUGUI> textList = new List<TextMeshProUGUI>();   // 이름, 세력, 종족, 티어, 직업 텍스트
 
         // 모험가 지역의 신분증 활성화
-        localIdentity = closeUpIdentity.transform.Find(guest.GetLocal()).gameObject;
+        localIdentity = closeUpIdentity.transform.Find(guest.Local).gameObject;
         localIdentity.SetActive(true);
 
         // 텍스트 가져오기
@@ -80,23 +80,23 @@ public class HostManager : MonoBehaviour
         stampArea = localIdentity.transform.Find("StampArea").gameObject;
 
         // 신원서(클로즈업)에 표시
-        textList[0].text = guest.GetName();
-        textList[1].text = guest.GetParty();
-        textList[2].text = guest.GetSpecies().ToString();
-        textList[3].text = guest.GetTier().ToString();
-        textList[4].text = guest.GetProfession().ToString();
+        textList[0].text = guest.Name;
+        textList[1].text = guest.Party;
+        textList[2].text = guest.Species.ToString();
+        textList[3].text = guest.Tier.ToString();
+        textList[4].text = guest.Profession.ToString();
 
         // 직업 인장 이미지 표시
         Image guestProfessionSeal = localIdentity.transform.GetChild(4).GetChild(1).GetComponent<Image>();
-        guestProfessionSeal.sprite = guest.GetProfessionSeal();
+        guestProfessionSeal.sprite = guest.ProfessionSeal;
 
         // 증표 이미지 표시
-        guestTierSeal.sprite = guest.GetTierSeal();
+        guestTierSeal.sprite = guest.TierSeal;
     }
 
     public void UpdateDate()
     {
-        DataController.Instance.gameData.UpdateDate();    // 날짜 증가
+        DataController.Instance.gameData.UpdateDate();    // 날짜 업데이트
     }
 
     public void SendIdentity(bool _decision)
@@ -141,11 +141,11 @@ public class HostManager : MonoBehaviour
                 billAnimator.SetTrigger("Print");   // 고지서 출력
 
             }
-            yield return dialogueManager.StartCoroutine(dialogueManager.GuestDialogueCoroutine(guest.GetProfession(), 1));   // 승인 대화 출력
+            yield return dialogueManager.StartCoroutine(dialogueManager.GuestDialogueCoroutine(guest.Profession, 1));   // 승인 대화 출력
         }
         else    // 거절한 경우
         {
-            yield return dialogueManager.StartCoroutine(dialogueManager.GuestDialogueCoroutine(guest.GetProfession(), 2));   // 거절 대화 출력
+            yield return dialogueManager.StartCoroutine(dialogueManager.GuestDialogueCoroutine(guest.Profession, 2));   // 거절 대화 출력
         }
 
         // dialogManager의 코루틴이 종료되면 호출
