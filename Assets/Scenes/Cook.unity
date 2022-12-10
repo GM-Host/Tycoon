@@ -444,6 +444,7 @@ GameObject:
   - component: {fileID: 167777639}
   - component: {fileID: 167777638}
   - component: {fileID: 167777637}
+  - component: {fileID: 167777640}
   m_Layer: 5
   m_Name: Roasting
   m_TagString: Untagged
@@ -565,6 +566,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 167777635}
   m_CullTransparentMesh: 1
+--- !u!114 &167777640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167777635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1699e3b9f3d9dc144b255ef5b1994247, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cookingObj: {fileID: 0}
 --- !u!1 &207795158
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,6 +725,7 @@ GameObject:
   - component: {fileID: 423131170}
   - component: {fileID: 423131169}
   - component: {fileID: 423131168}
+  - component: {fileID: 423131171}
   m_Layer: 5
   m_Name: BoilDown
   m_TagString: Untagged
@@ -832,6 +847,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423131166}
   m_CullTransparentMesh: 1
+--- !u!114 &423131171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423131166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1699e3b9f3d9dc144b255ef5b1994247, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cookingObj: {fileID: 0}
 --- !u!1 &446158143
 GameObject:
   m_ObjectHideFlags: 0
@@ -1398,6 +1426,7 @@ GameObject:
   - component: {fileID: 670178110}
   - component: {fileID: 670178109}
   - component: {fileID: 670178108}
+  - component: {fileID: 670178111}
   m_Layer: 5
   m_Name: Steaming
   m_TagString: Untagged
@@ -1519,6 +1548,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670178106}
   m_CullTransparentMesh: 1
+--- !u!114 &670178111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670178106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1699e3b9f3d9dc144b255ef5b1994247, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cookingObj: {fileID: 0}
 --- !u!1 &682443889
 GameObject:
   m_ObjectHideFlags: 0
@@ -1802,6 +1844,7 @@ GameObject:
   - component: {fileID: 805398315}
   - component: {fileID: 805398314}
   - component: {fileID: 805398313}
+  - component: {fileID: 805398316}
   m_Layer: 5
   m_Name: Frying
   m_TagString: Untagged
@@ -1923,6 +1966,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805398311}
   m_CullTransparentMesh: 1
+--- !u!114 &805398316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805398311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1699e3b9f3d9dc144b255ef5b1994247, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cookingObj: {fileID: 0}
 --- !u!1 &837208390
 GameObject:
   m_ObjectHideFlags: 0
@@ -2067,6 +2123,7 @@ GameObject:
   - component: {fileID: 843300384}
   - component: {fileID: 843300383}
   - component: {fileID: 843300382}
+  - component: {fileID: 843300385}
   m_Layer: 5
   m_Name: StirFrying
   m_TagString: Untagged
@@ -2188,6 +2245,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 843300380}
   m_CullTransparentMesh: 1
+--- !u!114 &843300385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843300380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1699e3b9f3d9dc144b255ef5b1994247, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cookingObj: {fileID: 0}
 --- !u!1 &870427237
 GameObject:
   m_ObjectHideFlags: 0
@@ -3777,6 +3847,7 @@ GameObject:
   - component: {fileID: 1766560516}
   - component: {fileID: 1766560515}
   - component: {fileID: 1766560514}
+  - component: {fileID: 1766560517}
   m_Layer: 5
   m_Name: Boiling
   m_TagString: Untagged
@@ -3898,6 +3969,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1766560512}
   m_CullTransparentMesh: 1
+--- !u!114 &1766560517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766560512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1699e3b9f3d9dc144b255ef5b1994247, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cookingObj: {fileID: 0}
 --- !u!1 &1829068949
 GameObject:
   m_ObjectHideFlags: 0

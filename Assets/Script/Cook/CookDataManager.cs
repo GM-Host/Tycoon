@@ -7,18 +7,28 @@ public class CookDataManager : MonoBehaviour
     // History Object Class
     public class CookObject {
         public string id;
-        public Inventory itemInfo = null;
+        public CookInventory itemInfo = null;
     }
     public List<CookObject> curCook = new List<CookObject>();
 
-    // Inventory Information Class    
-    public class Inventory
+    // Inventory Information Class
+    public class CookInventory
     {
         public string imgId;
         public int count = 0;
         public string name;
     }
-    public List<Inventory> curInv = new List<Inventory>();
+
+    // 드래그 중인 아이템 정보 갱신
+    public CookInventory draggingItem;
+    public bool ok = false;
+    public void DraggingItem(CookInventory item)
+    {
+        draggingItem = item;
+    }
+
+    public Dictionary<string, CookInventory> curInv = new Dictionary<string, CookInventory>();
+
 
     // Noelle Dialog Data
     private List<Dictionary<string, object>> dialogData;
@@ -40,16 +50,16 @@ public class CookDataManager : MonoBehaviour
         recipeData = CSVReader.Read("Recipe");
 
         // test
-        Inventory food0001 = new Inventory();
+        CookInventory food0001 = new CookInventory();
         food0001.imgId = "food0001";
         food0001.count = 4;
         food0001.name = "건식 전투식량 블럭";
-        curInv.Add(food0001);
-        Inventory food0003 = new Inventory();
+        curInv.Add(food0001.imgId, food0001);
+        CookInventory food0003 = new CookInventory();
         food0003.imgId = "food0003";
         food0003.count = 6;
         food0003.name = "굽은 뿔 산양 위장주머니";
-        curInv.Add(food0003);
+        curInv.Add(food0003.imgId, food0003);
     }
 
     /**************************
@@ -102,16 +112,20 @@ public class CookDataManager : MonoBehaviour
         }
     }
 
-    private void ItemUnselect(Inventory item)
+
+    private void ItemUnselect(CookInventory item)
     {
-        print("ItemUnselect Initial");
-        Inventory temp;
-        if(curInv.Find(temp => temp.imgId == item.imgId) == null)    // 현재 inven에 없는 아이템인 경우
+        print("ItemUnselect Initial Stage");
+        CookInventory temp;
+        if(!curInv.ContainsKey(item.imgId))    // 현재 inven에 없는 아이템인 경우
         {
-            curInv.Add(item);
+            curInv.Add(item.imgId, item);
         }
         else
-            curInv.Find(temp => temp.imgId == item.imgId).count++;
+        {
+            curInv.TryGetValue(item.imgId, out temp);
+            temp.count++;
+        }
         // update Inventory
         InventoryUI invUI = FindObjectOfType<InventoryUI>();
         invUI.updateInv();
@@ -125,7 +139,7 @@ public class CookDataManager : MonoBehaviour
     public bool hasHistory = false;
     public enum Order {Food, Operation};
     public Order order = Order.Food;
-    public void ItemSelected(Inventory item)
+    public void ItemSelected(CookInventory item)
     {
         if(order != Order.Food || numOfObj == 6)
             return;
@@ -145,18 +159,11 @@ public class CookDataManager : MonoBehaviour
 
 
         // update Inventory
-        if(item.count > 1)
-        {
-            item.count--;
-        }
-        else
-        {
-            item.count--;
-        }
+        item.count--;
         InventoryUI invUI = FindObjectOfType<InventoryUI>();
         invUI.updateInv();
         if(item.count==0)
-            curInv.Remove(item);
+            curInv.Remove(item.imgId);
 
     }
     
@@ -185,6 +192,12 @@ public class CookDataManager : MonoBehaviour
     {
         //List<CookObject> recipe0001 = new List<CookObject>();
         ResultUI resultUI = FindObjectOfType<ResultUI>();
+
+        //recipeData.Find(match => )
+
+
+
+
         // Recipe0001
         if(curCook[0].id == "food0001" && curCook[1].id == "Steaming" && curCook.Count == 2)
         {
