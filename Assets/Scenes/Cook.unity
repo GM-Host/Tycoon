@@ -578,7 +578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1699e3b9f3d9dc144b255ef5b1994247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookingObj: {fileID: 0}
+  category: {fileID: 167777635}
 --- !u!1 &207795158
 GameObject:
   m_ObjectHideFlags: 0
@@ -859,7 +859,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1699e3b9f3d9dc144b255ef5b1994247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookingObj: {fileID: 0}
+  category: {fileID: 423131166}
 --- !u!1 &446158143
 GameObject:
   m_ObjectHideFlags: 0
@@ -1560,7 +1560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1699e3b9f3d9dc144b255ef5b1994247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookingObj: {fileID: 0}
+  category: {fileID: 670178106}
 --- !u!1 &682443889
 GameObject:
   m_ObjectHideFlags: 0
@@ -1978,7 +1978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1699e3b9f3d9dc144b255ef5b1994247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookingObj: {fileID: 0}
+  category: {fileID: 805398311}
 --- !u!1 &837208390
 GameObject:
   m_ObjectHideFlags: 0
@@ -2257,7 +2257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1699e3b9f3d9dc144b255ef5b1994247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookingObj: {fileID: 0}
+  category: {fileID: 843300380}
 --- !u!1 &870427237
 GameObject:
   m_ObjectHideFlags: 0
@@ -2352,7 +2352,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &876377490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3791,7 +3791,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1729265219}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
   m_Name: 
@@ -3981,7 +3981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1699e3b9f3d9dc144b255ef5b1994247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookingObj: {fileID: 0}
+  category: {fileID: 1766560512}
 --- !u!1 &1829068949
 GameObject:
   m_ObjectHideFlags: 0
@@ -4090,6 +4090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3451b0df6deea2e4897b969436b8f065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ok: 0
   numOfObj: 0
   hasHistory: 0
   order: 0
