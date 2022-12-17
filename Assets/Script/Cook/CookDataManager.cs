@@ -21,7 +21,6 @@ public class CookDataManager : MonoBehaviour
 
     // 드래그 중인 아이템 정보 갱신
     public CookInventory draggingItem;
-    public bool ok = false;
     public void DraggingItem(CookInventory item)
     {
         draggingItem = item;

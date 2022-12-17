@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public CookDataManager.CookInventory item;
+    public bool isDroppedOnCook = false;
     /********************
         # 8 -> # CDM
     ********************/
@@ -16,32 +17,37 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         CookDataManager.Instance.SendFlavorData(int.Parse(Regex.Replace(item.imgId, @"\D", "")));
     }
 
+    /// 현재 오브젝트를 드래그하기 시작할 때 1회 호출
     public void OnBeginDrag(PointerEventData eventData)
     {
-        
+        // 드래그 직전 현재 위치 저장
+        original = this.transform;
+        // 드래그 중인 아이템 정보 갱신
         CookDataManager.Instance.DraggingItem(item);
-        CookDataManager.Instance.ok=false;
     }
 
+    /// 현재 오브젝트를 드래그 중일 때 매 프레임 호출
     public void OnDrag(PointerEventData eventData)
     {
         this.transform.position = eventData.position;
     }
 
+    /// 현재 오브젝트의 드래그를 종료할 때 1회 호출
     public void OnEndDrag(PointerEventData eventData)
     {
-        // drop 되지 않았을 때, 원위치로 복귀
-        if(!CookDataManager.Instance.ok)
+        // cook 연산에 제대로 드롭됐을 때
+        if(isDroppedOnCook)
         {
-            this.transform.position = original.position;
+            
         }
     }
+
 
     private Transform original;
     // Start is called before the first frame update
     void Start()
     {
-        original = this.transform;
+        
     }
 
     // Update is called once per frame
