@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class ItemUI : MonoBehaviour//, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public CookDataManager.CookInventory item;
     public bool isDroppedOnCook = false;
@@ -13,41 +13,51 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     ********************/
     public void ClickedItem()
     {
-        // CookDataManager.Instance.ItemSelected(item);
+        CookDataManager.Instance.ItemSelected(item);
         CookDataManager.Instance.SendFlavorData(int.Parse(Regex.Replace(item.imgId, @"\D", "")));
     }
 
-    /// 현재 오브젝트를 드래그하기 시작할 때 1회 호출
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        // 드래그 직전 현재 위치 저장
-        original = this.transform;
-        // 드래그 중인 아이템 정보 갱신
-        CookDataManager.Instance.DraggingItem(item);
-    }
+    // /// 현재 오브젝트를 드래그하기 시작할 때 1회 호출
+    // public void OnBeginDrag(PointerEventData eventData)
+    // {
+    //     // flavor description
+    //     CookDataManager.Instance.SendFlavorData(int.Parse(Regex.Replace(item.imgId, @"\D", "")));
 
-    /// 현재 오브젝트를 드래그 중일 때 매 프레임 호출
-    public void OnDrag(PointerEventData eventData)
-    {
-        this.transform.position = eventData.position;
-    }
+    //     // 드래그 직전 현재 위치와 부모 저장
+    //     original = transform.position;
+    //     origin_parent = transform.parent;
+    //     transform.SetParent(canvas);
 
-    /// 현재 오브젝트의 드래그를 종료할 때 1회 호출
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        // cook 연산에 제대로 드롭됐을 때
-        if(isDroppedOnCook)
-        {
-            
-        }
-    }
+    //     // 드래그 중인 아이템 정보 갱신
+    //     CookDataManager.Instance.DraggingItem(item);
+    // }
 
+    // /// 현재 오브젝트를 드래그 중일 때 매 프레임 호출
+    // public void OnDrag(PointerEventData eventData)
+    // {
+    //     this.transform.position = eventData.position;
+    // }
 
-    private Transform original;
-    // Start is called before the first frame update
-    void Start()
-    {
+    // /// 현재 오브젝트의 드래그를 종료할 때 1회 호출
+    // public void OnEndDrag(PointerEventData eventData)
+    // {
         
+    //     if(transform.parent == canvas)
+    //     {
+    //         transform.SetParent(origin_parent);
+    //     }
+        
+    //     this.transform.position = original;
+    // }
+
+
+    private Vector3 original;
+    private Transform origin_parent;
+    private Transform canvas;
+    // Start is called before the first frame update
+    private void Awake() 
+    {
+        canvas		= FindObjectOfType<Canvas>().transform;    
     }
 
     // Update is called once per frame

@@ -192,7 +192,7 @@ public class CookDataManager : MonoBehaviour
         //List<CookObject> recipe0001 = new List<CookObject>();
         ResultUI resultUI = FindObjectOfType<ResultUI>();
 
-        //recipeData.Find(match => )
+        print(recipeData.Find(match => match["재료1_ID"].ToString() == curCook[0].id));
 
 
 

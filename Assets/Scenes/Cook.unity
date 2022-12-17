@@ -443,8 +443,8 @@ GameObject:
   - component: {fileID: 167777636}
   - component: {fileID: 167777639}
   - component: {fileID: 167777638}
-  - component: {fileID: 167777637}
   - component: {fileID: 167777640}
+  - component: {fileID: 167777637}
   m_Layer: 5
   m_Name: Roasting
   m_TagString: Untagged
@@ -542,9 +542,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -724,8 +724,8 @@ GameObject:
   - component: {fileID: 423131167}
   - component: {fileID: 423131170}
   - component: {fileID: 423131169}
-  - component: {fileID: 423131168}
   - component: {fileID: 423131171}
+  - component: {fileID: 423131168}
   m_Layer: 5
   m_Name: BoilDown
   m_TagString: Untagged
@@ -823,9 +823,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1425,8 +1425,8 @@ GameObject:
   - component: {fileID: 670178107}
   - component: {fileID: 670178110}
   - component: {fileID: 670178109}
-  - component: {fileID: 670178108}
   - component: {fileID: 670178111}
+  - component: {fileID: 670178108}
   m_Layer: 5
   m_Name: Steaming
   m_TagString: Untagged
@@ -1524,9 +1524,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1843,8 +1843,8 @@ GameObject:
   - component: {fileID: 805398312}
   - component: {fileID: 805398315}
   - component: {fileID: 805398314}
-  - component: {fileID: 805398313}
   - component: {fileID: 805398316}
+  - component: {fileID: 805398313}
   m_Layer: 5
   m_Name: Frying
   m_TagString: Untagged
@@ -1942,9 +1942,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2122,8 +2122,8 @@ GameObject:
   - component: {fileID: 843300381}
   - component: {fileID: 843300384}
   - component: {fileID: 843300383}
-  - component: {fileID: 843300382}
   - component: {fileID: 843300385}
+  - component: {fileID: 843300382}
   m_Layer: 5
   m_Name: StirFrying
   m_TagString: Untagged
@@ -2221,9 +2221,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2405,7 +2405,7 @@ RectTransform:
   - {fileID: 911358730}
   - {fileID: 207795159}
   m_Father: {fileID: 1123966737}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2589,7 +2589,7 @@ RectTransform:
   - {fileID: 1295136073}
   - {fileID: 682443892}
   m_Father: {fileID: 1123966737}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2856,10 +2856,10 @@ RectTransform:
   m_Children:
   - {fileID: 750936299}
   - {fileID: 1522254019}
+  - {fileID: 876377492}
   - {fileID: 1337837566}
   - {fileID: 1679441721}
   - {fileID: 922414959}
-  - {fileID: 876377492}
   - {fileID: 504958988}
   - {fileID: 837208391}
   m_Father: {fileID: 0}
@@ -3278,7 +3278,7 @@ RectTransform:
   - {fileID: 805398312}
   - {fileID: 843300381}
   m_Father: {fileID: 1123966737}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3700,7 +3700,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1123966737}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3846,8 +3846,8 @@ GameObject:
   - component: {fileID: 1766560513}
   - component: {fileID: 1766560516}
   - component: {fileID: 1766560515}
-  - component: {fileID: 1766560514}
   - component: {fileID: 1766560517}
+  - component: {fileID: 1766560514}
   m_Layer: 5
   m_Name: Boiling
   m_TagString: Untagged
@@ -3945,9 +3945,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4090,7 +4090,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3451b0df6deea2e4897b969436b8f065, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ok: 0
   numOfObj: 0
   hasHistory: 0
   order: 0
