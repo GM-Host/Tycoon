@@ -527,6 +527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveRange: {x: 450, y: 250}
+  animator: {fileID: 713294744}
 --- !u!95 &713294744
 Animator:
   serializedVersion: 3
@@ -674,6 +675,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveRange: {x: 600, y: 320}
+  animator: {fileID: 1214985962}
 --- !u!95 &1214985962
 Animator:
   serializedVersion: 3
@@ -944,6 +946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveRange: {x: 600, y: 400}
+  animator: {fileID: 1835306847}
 --- !u!95 &1835306847
 Animator:
   serializedVersion: 3
