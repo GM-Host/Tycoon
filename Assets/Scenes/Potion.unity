@@ -448,9 +448,10 @@ GameObject:
   - component: {fileID: 713294740}
   - component: {fileID: 713294742}
   - component: {fileID: 713294741}
+  - component: {fileID: 713294744}
   - component: {fileID: 713294743}
   m_Layer: 5
-  m_Name: Grind
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -495,7 +496,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7a648d1a7b81a794da01789d29bc8727, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3255cab8984ff1e4ba1ef42b9aa9d411, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -526,6 +527,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveRange: {x: 450, y: 250}
+--- !u!95 &713294744
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 713294739}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4daa56e615415e14a8fa2c74e5824478, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &789369083
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,9 +595,10 @@ GameObject:
   - component: {fileID: 1214985958}
   - component: {fileID: 1214985960}
   - component: {fileID: 1214985959}
+  - component: {fileID: 1214985962}
   - component: {fileID: 1214985961}
   m_Layer: 5
-  m_Name: Mill
+  m_Name: Sharpen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -599,7 +620,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -903.86035, y: -192}
+  m_AnchoredPosition: {x: -903.86035, y: -200}
   m_SizeDelta: {x: 420, y: 372}
   m_Pivot: {x: 0.47652283, y: 0.5}
 --- !u!114 &1214985959
@@ -622,9 +643,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6a54abc83faf2634dbcadacbb1c9b88c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 21ec801f380d64d45876387dbc353ff4, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -653,6 +674,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveRange: {x: 600, y: 320}
+--- !u!95 &1214985962
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1214985957}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a878b0ba67533234594ae9344d2a5b2c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!224 &1456575832 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7780857989704803383, guid: 21c4f8fc4c2d1df429b4e4b406088fab, type: 3}
@@ -825,6 +865,7 @@ GameObject:
   - component: {fileID: 1835306843}
   - component: {fileID: 1835306845}
   - component: {fileID: 1835306844}
+  - component: {fileID: 1835306847}
   - component: {fileID: 1835306846}
   m_Layer: 5
   m_Name: Boil
@@ -849,8 +890,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -469.00012, y: -195}
-  m_SizeDelta: {x: 454, y: 441}
+  m_AnchoredPosition: {x: -469.00012, y: -42}
+  m_SizeDelta: {x: 454, y: 741}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1835306844
 MonoBehaviour:
@@ -872,9 +913,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 31da1eb82c2d9f549b23d6a2a598e0c1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cc68d3d7501074d429caaca8242758c5, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -903,6 +944,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveRange: {x: 600, y: 400}
+--- !u!95 &1835306847
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835306842}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c0a10a5f4bf4778438e68ce9c0f33316, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &7780857988877447535
 PrefabInstance:
   m_ObjectHideFlags: 0
