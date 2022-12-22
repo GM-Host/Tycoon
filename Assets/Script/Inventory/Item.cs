@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //[CreateAssetMenu(fileName = "New Item", menuName = "New Item/item")]
-public abstract class Item : ScriptableObject
+public class Item : ScriptableObject
 {
     public enum ItemType  // J : 아이템 유형
     {

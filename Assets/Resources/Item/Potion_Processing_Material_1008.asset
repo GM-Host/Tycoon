@@ -16,4 +16,4 @@ MonoBehaviour:
   itemType: 0
   itemImage: {fileID: 21300000, guid: 171f5dc1411021148add8c8cd284c49d, type: 3}
   state: 0
-  raw: 0
+  process: 0
