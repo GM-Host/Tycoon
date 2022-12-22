@@ -12,9 +12,9 @@ public class PotionManager : MonoBehaviour
     void Start()
     {
         // J : 임의로 재료 생성
-        inventoryDict["Tomato"] = 2;
-        inventoryDict["Tulip"] = 1;
-        inventoryDict["Coconut"] = 3;
+        inventoryDict["Potion_Processing_Material_1008"] = 1;
+        inventoryDict["Potion_Processing_Material_1009"] = 2;
+        inventoryDict["Potion_Processing_Material_1010"] = 3;
 
 
         SetInventory();
