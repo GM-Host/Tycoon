@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 7377859db54f982458eb83b12a8f0c78, type: 3}
   m_Name: Potion_Processing_Material_1008
-  m_EditorClassIdentifier: Assembly-CSharp::PotionItem
+  m_EditorClassIdentifier: 
   itemName: "\uD2A4\uB9BD"
   itemType: 0
   itemImage: {fileID: 21300000, guid: 171f5dc1411021148add8c8cd284c49d, type: 3}

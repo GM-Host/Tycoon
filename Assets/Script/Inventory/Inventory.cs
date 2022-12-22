@@ -22,7 +22,7 @@ public class Inventory : MonoBehaviour
             {
                 if (slots[i].item.itemName == _item.itemName)   // J : 이미 인벤토리에 있는 아이템
                 {
-                    slots[i].SetSlotCount(_count);  // J : 개수 증가
+                    slots[i].SetSlotCount(_count);  // J : 개수 업데이트
                     return;
                 }
             }
