@@ -360,6 +360,7 @@ GameObject:
   - component: {fileID: 303100906}
   - component: {fileID: 303100908}
   - component: {fileID: 303100907}
+  - component: {fileID: 303100909}
   m_Layer: 5
   m_Name: DropItem
   m_TagString: Untagged
@@ -424,6 +425,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 303100905}
   m_CullTransparentMesh: 1
+--- !u!114 &303100909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303100905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30f61e31c4415cc46bc93b794b9918b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &713294739
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,8 +525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d04cdcf487ff1a45ad6c250e11cd6e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  track: {x: 450, y: 250}
-  DropItem: {fileID: 303100905}
+  moveRange: {x: 450, y: 250}
 --- !u!1 &789369083
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,8 +652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d04cdcf487ff1a45ad6c250e11cd6e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  track: {x: 600, y: 320}
-  DropItem: {fileID: 303100905}
+  moveRange: {x: 600, y: 320}
 --- !u!224 &1456575832 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7780857989704803383, guid: 21c4f8fc4c2d1df429b4e4b406088fab, type: 3}
@@ -891,8 +902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d04cdcf487ff1a45ad6c250e11cd6e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  track: {x: 600, y: 400}
-  DropItem: {fileID: 303100905}
+  moveRange: {x: 600, y: 400}
 --- !u!1001 &7780857988877447535
 PrefabInstance:
   m_ObjectHideFlags: 0
