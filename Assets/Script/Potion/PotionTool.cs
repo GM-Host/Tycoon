@@ -7,7 +7,10 @@ using UnityEngine.EventSystems;
 public class PotionTool : MonoBehaviour, IDropHandler
 {
     [SerializeField] private Vector2 moveRange; // J : (아이템이 떨어지기 시작하는 위치, 멈추는 위치) <-y축 기준
+
+    // 필요한 컴포넌트
     [SerializeField] private Animator animator;
+    [SerializeField] private PotionManager PotionManager;
 
     // 이 슬롯에 무언가 마우스 드롭
     public void OnDrop(PointerEventData eventData)
@@ -18,6 +21,7 @@ public class PotionTool : MonoBehaviour, IDropHandler
 
             DropItem.instance.Drop(transform.position.x, moveRange);
             animator.SetTrigger("Work");
+            PotionManager.processed++;
         }
     }
 }
