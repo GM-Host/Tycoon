@@ -446,7 +446,7 @@ GameObject:
   - component: {fileID: 167777640}
   - component: {fileID: 167777637}
   m_Layer: 5
-  m_Name: Roasting
+  m_Name: roast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -727,7 +727,7 @@ GameObject:
   - component: {fileID: 423131171}
   - component: {fileID: 423131168}
   m_Layer: 5
-  m_Name: BoilDown
+  m_Name: boildown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1428,7 +1428,7 @@ GameObject:
   - component: {fileID: 670178111}
   - component: {fileID: 670178108}
   m_Layer: 5
-  m_Name: Steaming
+  m_Name: steam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1846,7 +1846,7 @@ GameObject:
   - component: {fileID: 805398316}
   - component: {fileID: 805398313}
   m_Layer: 5
-  m_Name: Frying
+  m_Name: fry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2125,7 +2125,7 @@ GameObject:
   - component: {fileID: 843300385}
   - component: {fileID: 843300382}
   m_Layer: 5
-  m_Name: StirFrying
+  m_Name: stirfry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3849,7 +3849,7 @@ GameObject:
   - component: {fileID: 1766560517}
   - component: {fileID: 1766560514}
   m_Layer: 5
-  m_Name: Boiling
+  m_Name: boil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
