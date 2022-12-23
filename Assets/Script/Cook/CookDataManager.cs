@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class CookDataManager : MonoBehaviour
@@ -35,6 +36,7 @@ public class CookDataManager : MonoBehaviour
     private List<Dictionary<string, object>> flavorData;
     // Recipe Data
     private List<Dictionary<string, object>> recipeData;
+    private List<Dictionary<string, object>> findRecipe;
 
     public static CookDataManager Instance;
     // Start is called before the first frame update
@@ -47,6 +49,7 @@ public class CookDataManager : MonoBehaviour
         dialogData = CSVReader.Read("NoelleDialog");
         flavorData = CSVReader.Read("Flavor");
         recipeData = CSVReader.Read("Recipe");
+        findRecipe = CSVReader.Read("findRecipe");
 
         // test
         CookInventory food0001 = new CookInventory();
@@ -191,24 +194,56 @@ public class CookDataManager : MonoBehaviour
     {
         //List<CookObject> recipe0001 = new List<CookObject>();
         ResultUI resultUI = FindObjectOfType<ResultUI>();
+        string recipe = "";
 
-        print(recipeData.Find(match => match["재료1_ID"].ToString() == curCook[0].id));
-
-
-
-
-        // Recipe0001
-        if(curCook[0].id == "food0001" && curCook[1].id == "Steaming" && curCook.Count == 2)
+        for (int i = 1 ; i <= 3 ; i++)
         {
-            resultUI.ShowResult("Success");
+            // "레시피N"
+            string column = "레시피";
+            bool isRecipeCor = true;
+            column += i.ToString();
+            recipe = findRecipe[int.Parse(Regex.Replace(curCook[0].id, @"\D", "")) - 1][column].ToString();
+            
+            // 레시피 찾았을 때
+            if(recipe != "")
+            {
+                // 해당 레시피 행
+                int row = int.Parse(Regex.Replace(recipe, @"\D", "")) - 1 ;
+                // 해당 레시피 과정 수
+                int count = int.Parse(recipeData[row]["과정_Count"].ToString());
+
+                if(count * 2 != curCook.Count || recipeData[row]["과정1"].ToString() != curCook[1].id)
+                    continue;  // 과정 수 틀리거나, 첫번째 과정 틀렸을 때 다음 레시피 탐색
+                
+
+                // 과정 수 맞으면 나머지 모든 재료와 과정 확인하기
+                for(int j = 2 ; j <= count && isRecipeCor==true ; j++)
+                {
+                    if(curCook[j].id != recipeData[row]["재료"+j.ToString()+"_ID"].ToString()
+                    || curCook[j+1].id != recipeData[row]["과정"+j.ToString()].ToString())
+                    isRecipeCor = false;
+                }
+                
+                // 레시피 내용 중 틀린 게 있을 때
+                if(!isRecipeCor)
+                    continue;   // 다음 레시피 탐색
+                // 레시피 모든 내용 맞았을 때
+                else
+                {
+                    print("Success!! : " + recipeData[row]["요리_이름"].ToString());
+                    resultUI.ShowResult("Success", count);
+                    break;
+                }
+                
+            }
+
+            // 레시피 없을 때
+            else
+            {
+                print("Fail to find recipe...");
+            }
         }
-        // Recipe0003
-        else if(curCook[0].id == "food0003" && curCook[1].id == "Boiling" && curCook.Count == 2)
-        {
-            resultUI.ShowResult("Success");
-        }
-        else
-            resultUI.ShowResult("Fail");
+        
         // Clean History
         CleanHistory(1);
     }

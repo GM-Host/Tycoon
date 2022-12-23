@@ -7,7 +7,7 @@ public class ResultUI : MonoBehaviour
 {
     public Image resultFood;
     public Sprite successImg, failedImg;
-    public void ShowResult(string result)
+    public void ShowResult(string result, int count)
     {
         if(result == "Success")
             resultFood.sprite = successImg;
