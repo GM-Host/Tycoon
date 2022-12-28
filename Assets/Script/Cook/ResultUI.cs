@@ -5,14 +5,22 @@ using UnityEngine.UI;
 
 public class ResultUI : MonoBehaviour
 {
-    public Image resultFood;
+    public GameObject result1, result2, result3;
+    public Sprite stirfry1, boil1, fry1,
+                stirfry2, boil2, fry2,
+                stirfry3, boil3, fry3;
     public Sprite successImg, failedImg;
-    public void ShowResult(string result, int count)
+    public void ShowResult(string result, string [] processes, int count)
     {
         if(result == "Success")
-            resultFood.sprite = successImg;
-        else
-            resultFood.sprite = failedImg;
+            switch(count)
+            {
+                case 1:
+                result1.SetActive(true);
+                //result1.GetComponentsInChildren<Image>()[0].sprite = 
+
+                break;
+            }
     }
 
     // Start is called before the first frame update

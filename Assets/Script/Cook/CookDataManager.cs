@@ -207,29 +207,33 @@ public class CookDataManager : MonoBehaviour
             // 레시피 찾았을 때
             if(recipe != "")
             {
+                // 중간 과정 저장 배열
+                string [] processes = new string[3];
                 // 해당 레시피 행
                 int row = int.Parse(Regex.Replace(recipe, @"\D", "")) - 1 ;
                 // 해당 레시피 과정 수
                 int count = int.Parse(recipeData[row]["과정_Count"].ToString());
                 if(count * 2 != curCook.Count || recipeData[row]["과정1_ID"].ToString() != curCook[1].id)
                     continue;  // 과정 수 틀리거나, 첫번째 과정 틀렸을 때 다음 레시피 탐색
-                
+                processes[0] = curCook[1].id;
 
                 // 과정 수 맞으면 나머지 모든 재료와 과정 확인하기
-                for(int j = 2 ; j <= count && isRecipeCor==true ; j++)
+                for(int j = 2 ; j <= count && isRecipeCor==true ; j=j+2)
                 {
-                    if(curCook[j].id != recipeData[row]["재료"+j.ToString()+"_ID"].ToString()
-                    || curCook[j+1].id != recipeData[row]["과정"+j.ToString()+"_ID"].ToString())
+                    if(curCook[j].id != recipeData[row]["재료"+(j/2+1).ToString()+"_ID"].ToString()
+                    || curCook[j+1].id != recipeData[row]["과정"+(j/2+1).ToString()+"_ID"].ToString())
                     isRecipeCor = false;
+                    if(isRecipeCor)
+                        processes[j/2] = curCook[j+1].id;
                 }
-                print("isRecipeCor: "+isRecipeCor);
+                print("processes[]: "+processes);
                 // 레시피 내용 중 틀린 게 있을 때
                 if(!isRecipeCor)
                     continue;   // 다음 레시피 탐색
                 // 레시피 모든 내용 맞았을 때
                 else
                 {
-                    resultUI.ShowResult("Success", count);
+                    resultUI.ShowResult("Success", processes, count);
                     break;
                 }
                 
