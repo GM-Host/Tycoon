@@ -20,6 +20,8 @@ public class CookDataManager : MonoBehaviour
         public string name;
     }
 
+    
+
     // 드래그 중인 아이템 정보 갱신
     public CookInventory draggingItem;
     public void DraggingItem(CookInventory item)
@@ -62,6 +64,16 @@ public class CookDataManager : MonoBehaviour
         food0003.count = 6;
         food0003.name = "굽은 뿔 산양 위장주머니";
         curInv.Add(food0003.imgId, food0003);
+        CookInventory food0015 = new CookInventory();
+        food0015.imgId = "food0015";
+        food0015.count = 3;
+        food0015.name = "토마토";
+        curInv.Add(food0015.imgId, food0015);
+        CookInventory food0016 = new CookInventory();
+        food0016.imgId = "food0016";
+        food0016.count = 12;
+        food0016.name = "코카트리스 알";
+        curInv.Add(food0016.imgId, food0016);
     }
 
     /**************************
@@ -226,7 +238,7 @@ public class CookDataManager : MonoBehaviour
                     if(isRecipeCor)
                         processes[j/2] = curCook[j+1].id;
                 }
-                print("processes[]: "+processes);
+                print("processes[0]: "+processes[0]);
                 // 레시피 내용 중 틀린 게 있을 때
                 if(!isRecipeCor)
                     continue;   // 다음 레시피 탐색

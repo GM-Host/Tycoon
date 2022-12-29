@@ -3098,9 +3098,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93453962c28b9564c8c32319d60e7c9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resultFood: {fileID: 504958989}
-  successImg: {fileID: 21300000, guid: da211b0071f878143b76ec8d54638db4, type: 3}
-  failedImg: {fileID: 21300000, guid: 12ca26da72ced8342a54c14fd1f81d89, type: 3}
+  result1: {fileID: 1982904799}
+  result2: {fileID: 1344009298}
+  result3: {fileID: 489589133}
 --- !u!1 &1239596600
 GameObject:
   m_ObjectHideFlags: 0
