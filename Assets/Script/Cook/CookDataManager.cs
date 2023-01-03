@@ -8,28 +8,27 @@ public class CookDataManager : MonoBehaviour
     // History Object Class
     public class CookObject {
         public string id;
-        public CookInventory itemInfo = null;
+        public string itemInfo = null;
     }
     public List<CookObject> curCook = new List<CookObject>();
 
-    // Inventory Information Class
-    public class CookInventory
-    {
-        public string imgId;
-        public int count = 0;
-        public string name;
-    }
-
-    
+        
 
     // 드래그 중인 아이템 정보 갱신
-    public CookInventory draggingItem;
-    public void DraggingItem(CookInventory item)
+    public string draggingItem;
+    public void DraggingItem(string item)
     {
         draggingItem = item;
     }
 
-    public Dictionary<string, CookInventory> curInv = new Dictionary<string, CookInventory>();
+    [SerializeField] private Inventory Inventory;
+    [SerializeField] private CookUI cookUI;
+    [SerializeField] private InventoryUI invUI;
+    [SerializeField] private FlavorUI flavorUI;
+    [SerializeField] ResultUI resultUI;
+    [SerializeField] private NoelleUI noelleUI;
+
+    private Dictionary<string, int> inventoryDict = new Dictionary<string, int>();
 
 
     // Noelle Dialog Data
@@ -54,31 +53,18 @@ public class CookDataManager : MonoBehaviour
         findRecipe = CSVReader.Read("FindRecipe");
 
         // test
-        CookInventory food0001 = new CookInventory();
-        food0001.imgId = "food0001";
-        food0001.count = 4;
-        food0001.name = "건식 전투식량 블럭";
-        curInv.Add(food0001.imgId, food0001);
-        CookInventory food0003 = new CookInventory();
-        food0003.imgId = "food0003";
-        food0003.count = 6;
-        food0003.name = "굽은 뿔 산양 위장주머니";
-        curInv.Add(food0003.imgId, food0003);
-        CookInventory food0015 = new CookInventory();
-        food0015.imgId = "food0015";
-        food0015.count = 3;
-        food0015.name = "토마토";
-        curInv.Add(food0015.imgId, food0015);
-        CookInventory food0016 = new CookInventory();
-        food0016.imgId = "food0016";
-        food0016.count = 12;
-        food0016.name = "코카트리스 알";
-        curInv.Add(food0016.imgId, food0016);
+        inventoryDict["food0001"] = 4;
+        inventoryDict["food0003"] = 6;
+        inventoryDict["food0015"] = 3;
+        inventoryDict["food0016"] = 12;
+
+        SetInventory();
     }
 
-    /**************************
-        # 2 -> # CDM -> # 2
-    **************************/
+    /*****************************************************
+        # NoelleUI -> # CookDataManager -> # NoelleUI
+        노엘 대사 DB를 전달
+    ******************************************************/
     public string DialogNoelle()
     {
         int random = Random.Range(0, dialogData.Count);
@@ -86,13 +72,13 @@ public class CookDataManager : MonoBehaviour
         return dialogData[random]["대사"].ToString();
     }
 
-    /**************************
-        # 4 -> # CDM -> # 6
-    **************************/
+    /*****************************************************
+        # NoelleUI -> # CookDataManager -> # CookUI
+        노엘의 Clean/Delete 버튼 누르면 조리 프로세스 삭제
+    ******************************************************/
     public void CleanHistory(int cleanAll)
     {
-        CookUI cookUI = FindObjectOfType<CookUI>();
-
+        
         print("Clean History left = "+curCook.Count);
 
         if(cleanAll == 1)
@@ -101,7 +87,6 @@ public class CookDataManager : MonoBehaviour
             numOfObj=0;
             hasHistory = false;
             order = Order.Food;
-            // Item Inventory에 Unselect 하는 기능 아직 없음!!!
         }
         else
         {
@@ -126,46 +111,64 @@ public class CookDataManager : MonoBehaviour
         }
     }
 
-
-    private void ItemUnselect(CookInventory item)
+    // 조리프로세스에서 아이템 인벤토리로 다시 옮기기
+    private void ItemUnselect(string item)
     {
-        print("ItemUnselect Initial Stage");
-        CookInventory temp;
-        if(!curInv.ContainsKey(item.imgId))    // 현재 inven에 없는 아이템인 경우
+        int itemCount;
+
+        // 현재 inven에 없는 아이템인 경우
+        if(!inventoryDict.ContainsKey(item))    
         {
-            curInv.Add(item.imgId, item);
+            inventoryDict.Add(item, 1);
         }
         else
         {
-            curInv.TryGetValue(item.imgId, out temp);
-            temp.count++;
+            inventoryDict.TryGetValue(item, out itemCount);
+            inventoryDict[item] = itemCount++;
         }
+
         // update Inventory
-        InventoryUI invUI = FindObjectOfType<InventoryUI>();
-        invUI.updateInv();
+        SetInventory();
     }
 
+    // 인벤토리 업데이트
+    private void SetInventory()
+    {
+        foreach (KeyValuePair<string, int> slot in inventoryDict)
+        {
+            Item item = Resources.Load<Item>("Item/" + slot.Key);
+            print("item " + item.itemName);
+            print("slot.Value " + slot.Value);
+            Inventory.AcquireItem(item, slot.Value);
+        }
+    }
 
-    /**************************
-        # 8 -> # CDM -> # 6
-    **************************/
+    /*****************************************************
+        # Inventory -> # CookDataManager -> # CookUI
+        아이템 선택 시 조리 프로세스에 띄우기
+    ******************************************************/
     public int numOfObj = 0;
     public bool hasHistory = false;
+
+    // 조리 차례, 아이템 차례
     public enum Order {Food, Operation};
     public Order order = Order.Food;
-    public void ItemSelected(CookInventory item)
+    public void ItemSelected(string item)
     {
         if(order != Order.Food || numOfObj == 6)
             return;
 
-        // update history
+        // 아이템 차례이고, 조리 기회가 아직 남아있을 때
+        // update history, 차례, 조리 수
         hasHistory = true;
         order = Order.Operation;
+
+
         CookObject itemObj = new CookObject();
-        itemObj.id = item.imgId;
+        itemObj.id = item;
         itemObj.itemInfo = item;
-        CookUI cookUI = FindObjectOfType<CookUI>();
-        NoelleUI noelleUI = FindObjectOfType<NoelleUI>();
+        
+        
         noelleUI.DeleteDialog();
         curCook.Add(itemObj);
         cookUI.ShowObject(itemObj, curCook.Count-1);
@@ -173,14 +176,15 @@ public class CookDataManager : MonoBehaviour
 
 
         // update Inventory
-        item.count--;
-        InventoryUI invUI = FindObjectOfType<InventoryUI>();
-        invUI.updateInv();
-        if(item.count==0)
-            curInv.Remove(item.imgId);
+        int itemCount;
+        inventoryDict.TryGetValue(item, out itemCount);
+        inventoryDict[item] = itemCount--;
+        if(itemCount==0)
+            inventoryDict.Remove(item);
+        SetInventory();
 
     }
-    
+    // 여기까지 수정함
     /**************************
         # 7 -> # CDM -> # 6
     **************************/
@@ -191,8 +195,6 @@ public class CookDataManager : MonoBehaviour
         // update history
         hasHistory = true;
         order = Order.Food;
-        CookUI cookUI = FindObjectOfType<CookUI>();
-        NoelleUI noelleUI = FindObjectOfType<NoelleUI>();
         noelleUI.DeleteDialog();
         curCook.Add(oper);
         cookUI.ShowObject(oper, curCook.Count-1);
@@ -204,8 +206,6 @@ public class CookDataManager : MonoBehaviour
     **************************/
     public void MakeResult()
     {
-        //List<CookObject> recipe0001 = new List<CookObject>();
-        ResultUI resultUI = FindObjectOfType<ResultUI>();
         string recipe = "";
 
         for (int i = 1 ; i <= 3 ; i++)
@@ -268,7 +268,6 @@ public class CookDataManager : MonoBehaviour
     **************************/
     public void SendFlavorData(int itemId)
     {
-        FlavorUI flavorUI = FindObjectOfType<FlavorUI>();
         flavorUI.PrintFlavor(flavorData[itemId - 1]["플레이버_텍스트"].ToString());
     }
 

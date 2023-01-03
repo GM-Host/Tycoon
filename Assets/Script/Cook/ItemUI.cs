@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class ItemUI : MonoBehaviour//, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public CookDataManager.CookInventory item;
+    public string item;
     public bool isDroppedOnCook = false;
     /********************
         # 8 -> # CDM
@@ -14,7 +14,7 @@ public class ItemUI : MonoBehaviour//, IBeginDragHandler, IDragHandler, IEndDrag
     public void ClickedItem()
     {
         CookDataManager.Instance.ItemSelected(item);
-        CookDataManager.Instance.SendFlavorData(int.Parse(Regex.Replace(item.imgId, @"\D", "")));
+        CookDataManager.Instance.SendFlavorData(int.Parse(Regex.Replace(item, @"\D", "")));
     }
 
     // /// 현재 오브젝트를 드래그하기 시작할 때 1회 호출
