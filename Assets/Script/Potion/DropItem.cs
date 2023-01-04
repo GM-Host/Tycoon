@@ -17,7 +17,7 @@ public class DropItem : MonoBehaviour
         instance = this;
     }
 
-    public void Drop(float x, Vector2 moveRange)
+    public void PotionDrop(float x, Vector2 moveRange)
     {
         Slot slot = DragSlot.instance.dragSlot;
 
@@ -25,6 +25,17 @@ public class DropItem : MonoBehaviour
         slot.SetSlotCount(-1);    // J : 재료 1개 소비
 
         StartCoroutine(MoveCoroutine(x, moveRange));
+    }
+
+    // 요리 씬에서 드롭 시 인벤토리 업데이트
+    public void CookDrop()
+    {
+        Slot slot = DragSlot.instance.dragSlot;
+
+        GetComponent<Image>().sprite = slot.item.itemImage; // J : 드래그한 아이템의 이미지 세팅
+        slot.SetSlotCount(-1);    // J : 재료 1개 소비
+
+        // 내 생각엔 인벤토리 DB는 안바뀌는 것 같다. 이거를 매번 바꿀지 아니면 완성이나 Clean/Delete 후에 한꺼번에 바꿀지...
     }
 
     // J : 오브젝트가 아래로 떨어짐

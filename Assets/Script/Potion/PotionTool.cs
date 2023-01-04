@@ -19,7 +19,7 @@ public class PotionTool : MonoBehaviour, IDropHandler
         {
             Debug.Log(DragSlot.instance.dragSlot.item.name + " ตๅทำ!");
 
-            DropItem.instance.Drop(transform.position.x, moveRange);
+            DropItem.instance.PotionDrop(transform.position.x, moveRange);
             animator.SetTrigger("Work");
             PotionManager.processed++;
         }
