@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 211e1ea05899a584aa9822b193962cd6, type: 3}
   m_Name: food0016
   m_EditorClassIdentifier: 
-  itemName: "\uAC74\uC2DD \uC804\uD22C\uC2DD\uB7C9 \uBE14\uB7ED"
+  itemName: "\uCF54\uCE74\uD2B8\uB9AC\uC2A4 \uC54C"
   itemType: 1
-  itemImage: {fileID: 21300000, guid: f71c60e64d7ae1442b19cc82475c75f2, type: 3}
+  itemImage: {fileID: 21300000, guid: 9865eb4b51041d640b448f2543e6566f, type: 3}

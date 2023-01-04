@@ -185,25 +185,30 @@ public class CookDataManager : MonoBehaviour
 
     }
     // 여기까지 수정함
-    /**************************
-        # 7 -> # CDM -> # 6
-    **************************/
+    /*****************************************************
+        # CookUI -> # CookDataManager -> # CookUI
+        조리 과정 선택 시 조리 프로세스 띄우기
+    ******************************************************/
     public void OperSelected(CookObject oper)
     {
         if(order != Order.Operation || numOfObj == 6)
             return;
-        // update history
+
+        // 아이템 차례이고, 조리 기회가 아직 남아있을 때
+        // update history, 차례, 조리 수
         hasHistory = true;
         order = Order.Food;
+        
         noelleUI.DeleteDialog();
         curCook.Add(oper);
         cookUI.ShowObject(oper, curCook.Count-1);
         numOfObj++;
     }
 
-    /**************************
-        # 5 -> # CDM -> # 10
-    **************************/
+    /*****************************************************
+        # CookUI -> # CookDataManager -> # ResultUI
+        콜벨 누르면 조리 계산해서 결과 띄우기
+    ******************************************************/
     public void MakeResult()
     {
         string recipe = "";
@@ -263,9 +268,10 @@ public class CookDataManager : MonoBehaviour
     }
 
     
-    /**************************
-        # 8 -> # CDM -> # 9
-    **************************/
+    /*****************************************************
+        # Inventory -> # CookDataManager -> # FlavorUI
+        아이템 누르면 설명 띄우기
+    ******************************************************/
     public void SendFlavorData(int itemId)
     {
         flavorUI.PrintFlavor(flavorData[itemId - 1]["플레이버_텍스트"].ToString());
