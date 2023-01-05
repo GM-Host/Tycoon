@@ -14,12 +14,8 @@ public class CookDataManager : MonoBehaviour
 
         
 
-    // 드래그 중인 아이템 정보 갱신
+    // 드래그 중인 아이템 정보
     public string draggingItem;
-    public void DraggingItem(string item)
-    {
-        draggingItem = item;
-    }
 
     [SerializeField] private Inventory Inventory;
     [SerializeField] private CookUI cookUI;
@@ -136,9 +132,9 @@ public class CookDataManager : MonoBehaviour
     {
         foreach (KeyValuePair<string, int> slot in inventoryDict)
         {
+            //print("slot.Key : "+slot.Key);
+            //print("slot.Value " + slot.Value);
             Item item = Resources.Load<Item>("Item/" + slot.Key);
-            print("item " + item.itemName);
-            print("slot.Value " + slot.Value);
             Inventory.AcquireItem(item, slot.Value);
         }
     }
@@ -153,7 +149,7 @@ public class CookDataManager : MonoBehaviour
     // 조리 차례, 아이템 차례
     public enum Order {Food, Operation};
     public Order order = Order.Food;
-    public void ItemSelected(string item)
+    public void ItemSelected(string item, CookObject operation)
     {
         if(order != Order.Food || numOfObj == 6)
             return;
@@ -175,13 +171,15 @@ public class CookDataManager : MonoBehaviour
         numOfObj++;
 
 
-        // update Inventory
+        // update InventoryDict
         int itemCount;
         inventoryDict.TryGetValue(item, out itemCount);
-        inventoryDict[item] = itemCount--;
+        inventoryDict[item] = --itemCount;
+        
         if(itemCount==0)
             inventoryDict.Remove(item);
-        SetInventory();
+
+        OperSelected(operation);
 
     }
     // 여기까지 수정함

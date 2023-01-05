@@ -13,7 +13,7 @@ public class ItemUI : MonoBehaviour//, IBeginDragHandler, IDragHandler, IEndDrag
     ********************/
     public void ClickedItem()
     {
-        CookDataManager.Instance.ItemSelected(item);
+        //CookDataManager.Instance.ItemSelected(item);
         CookDataManager.Instance.SendFlavorData(int.Parse(Regex.Replace(item, @"\D", "")));
     }
 

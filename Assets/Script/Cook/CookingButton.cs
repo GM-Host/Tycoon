@@ -16,11 +16,9 @@ public class CookingButton : MonoBehaviour, IDropHandler
             Debug.Log(DragSlot.instance.dragSlot.item.name + " 드롭!");
 
             DropItem.instance.CookDrop();
-            //eventData.pointerDrag.GetComponent<ItemUI>().isDroppedOnCook = true;
             CookDataManager.CookObject operation = new CookDataManager.CookObject();
             operation.id = category.name;
-            CookDataManager.Instance.OperSelected(operation);
-            CookDataManager.Instance.ItemSelected(CookDataManager.Instance.draggingItem);
+            CookDataManager.Instance.ItemSelected(CookDataManager.Instance.draggingItem, operation);
         }
 
         
