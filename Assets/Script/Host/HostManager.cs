@@ -6,26 +6,26 @@ using UnityEngine.UI;
 
 public class HostManager : MonoBehaviour
 {
-    public GameObject localIdentity;    // 현재 모험가 지역의 신분증
+    public GameObject localIdentity;                                            // 현재 모험가 지역의 신분증
 
-    private Guest guest;    // 생성한 모험가 정보
-    private bool correct;   // 모험가 진위 여부
-    private bool decision;  // 승인/거절 여부
-    private GameObject identity, tierSeal;  // 스폰한 신원서, 증표 오브젝트
-    private GameObject stampArea;           // 인장 삭제를 위한 부모 오브젝트 (스탬프 영역)
+    private Guest guest;                                                        // 생성한 모험가 정보
+    private bool correct;                                                       // 모험가 진위 여부
+    private bool decision;                                                      // 승인/거절 여부
+    private GameObject identity, tierSeal;                                      // 스폰한 신원서, 증표 오브젝트
+    private GameObject stampArea;                                               // 인장 삭제를 위한 부모 오브젝트 (스탬프 영역)
 
-    [SerializeField ]private float trueRatio;    // 신원서가 올바를 확률
-    [SerializeField] private Vector2 spawnIdentityPos, spawnTierSealPos;     // 신원서, 증표 오브젝트의 스폰 위치
-    [SerializeField] private int sibilinIndex;  // 신원서, 증표 오브젝트의 렌더링 순서
+    [SerializeField ]private float trueRatio;                                   // 신원서가 올바를 확률
+    [SerializeField] private Vector2 spawnIdentityPos, spawnTierSealPos;        // 신원서, 증표 오브젝트의 스폰 위치
+    [SerializeField] private int sibilinIndex;                                  // 신원서, 증표 오브젝트의 렌더링 순서
 
     // 필요한 컴포넌트
     [SerializeField] private GuestManager guestManager;
-    [SerializeField] private DialogueManager dialogueManager;    // 모험가 안내/승인/거절 대화 출력을 위함
-    [SerializeField] private GameObject closeUpIdentity;    // 클로즈업 오브젝트 (신원서)
-    [SerializeField] private GameObject parent;  // 신원서, 증표 오브젝트의 부모 오브젝트(캔버스)
-    [SerializeField] private GameObject identityPrefab, tierSealPrefab;  // 신원서 프리팹, 증표 프리팹
-    [SerializeField] private Image guestTierSeal;    // 티어 증표 이미지
-    [SerializeField] private Animator billAnimator; // 고지서 출력 애니메이터
+    [SerializeField] private DialogueManager dialogueManager;                   // 모험가 안내/승인/거절 대화 출력을 위함
+    [SerializeField] private GameObject closeUpIdentity;                        // 클로즈업 오브젝트 (신원서)
+    [SerializeField] private GameObject parent;                                 // 신원서, 증표 오브젝트의 부모 오브젝트(캔버스)
+    [SerializeField] private GameObject identityPrefab, tierSealPrefab;         // 신원서 프리팹, 증표 프리팹
+    [SerializeField] private Image guestTierSeal;                               // 티어 증표 이미지
+    [SerializeField] private Animator billAnimator;                             // 고지서 출력 애니메이터
 
 
     // Start is called before the first frame update

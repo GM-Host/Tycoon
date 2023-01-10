@@ -31,6 +31,15 @@ public class GuestDB : MonoBehaviour
         Deek,
     }
 
+    public struct WeaponState
+    {
+        public int iDurabilityState;
+        public int iDamageState;
+        public int iDefenseState;
+        public int iCurseState;
+        public int iLevel;
+    }
+
     private static Dictionary<SpeciesType, string[]> localDictionary = new Dictionary<SpeciesType, string[]>();   // 종족에 따른 지역
     private static Dictionary<string, string[]> partyDictionary = new Dictionary<string, string[]>();   // 지역에 따른 세력
     private static Dictionary<string, ProfessionType[]> professionDictionary = new Dictionary<string, ProfessionType[]>();   // 지역에 따른 직업
