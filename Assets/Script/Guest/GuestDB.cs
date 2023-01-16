@@ -40,18 +40,50 @@ public class GuestDB : MonoBehaviour
         public int iLevel;
     }
 
+    public enum WeaponStateType
+    {
+        Worst,
+        Bad,
+        Good,
+        Best
+    }
+
+
+    public class WeaponInfo
+    {
+        string name;
+        WeaponState state;
+
+        public WeaponInfo() { }
+        
+        public string GetName() { return name; }
+        public WeaponState GetState() { return state; }
+        public void Set(string pstrname, int piDurabilityState, int piDamageState, int piDefenseState, int piCurseState, int piLevel)
+        {
+            name = string.Copy(pstrname);
+            state.iDurabilityState = piDurabilityState;
+            state.iDamageState = piDamageState;
+            state.iDefenseState = piDefenseState;
+            state.iCurseState = piCurseState;
+            state.iLevel = piLevel;
+        }
+    }
+
     private static Dictionary<SpeciesType, string[]> localDictionary = new Dictionary<SpeciesType, string[]>();   // 종족에 따른 지역
     private static Dictionary<string, string[]> partyDictionary = new Dictionary<string, string[]>();   // 지역에 따른 세력
     private static Dictionary<string, ProfessionType[]> professionDictionary = new Dictionary<string, ProfessionType[]>();   // 지역에 따른 직업
     private static Dictionary<string, ProfessionType[]> nonProfessionDictionary = new Dictionary<string, ProfessionType[]>();   // 지역에 따라 없는 직업
+    private static Dictionary<string, List<string>> dtWeaponDictionary = new Dictionary<string, List<string>>(); // 무기 정보 (Name, WeaponName)
 
-    [SerializeField] private TextAsset csvFile1 = null; // 종족-지역-세력 데이터
-    [SerializeField] private TextAsset csvFile2 = null; // 지역-직업 데이터
+    [SerializeField] private TextAsset csvFile1 = null;     // 종족-지역-세력 데이터
+    [SerializeField] private TextAsset csvFile2 = null;     // 지역-직업 데이터
+    [SerializeField] private TextAsset csvWeapon = null;    // 무기 데이터
 
     private void Awake()
     {
         SetGuestData();
         SetProfessionData();
+        SetWeaponData();
     }
 
     // 종족 랜덤 리턴
@@ -110,6 +142,44 @@ public class GuestDB : MonoBehaviour
             return (ProfessionType) (-1);
         else
             return wrongProfessionList[Random.Range(0, wrongProfessionList.Length)];
+    }
+
+    // 이름에 맞는 무기 리턴
+    public static WeaponInfo GetWeaponName(string pstrGuestName = null)
+    {
+        WeaponInfo weapon = new WeaponInfo();
+
+        string strName;
+        int iDurabilityState = Random.Range(0, 4);
+        int iDamageState = Random.Range(0, 4);
+        int iDefenseState = Random.Range(0, 4);
+        int iCurseState = Random.Range(0, 4);
+        int iLevel = Random.Range(0, 4);
+
+        if (pstrGuestName != null)
+        {
+            strName = string.Copy(pstrGuestName);
+        }
+
+        else
+        {
+            // 이름 없는 애들끼리 배열 만들어서 랜덤으로 추출
+
+            List<string> tstrWeaponNames = new List<string>();
+            foreach (var obj in dtWeaponDictionary)
+            {
+                if(obj.Value.First() == "") // NPC
+                {
+                    tstrWeaponNames.Add(obj.Key);
+                }
+            }
+
+            // 랜덤으로 무기 정하기
+            string tstrWeaponName = tstrWeaponNames[Random.Range(0, tstrWeaponNames.Count)];
+            weapon = new WeaponInfo(tstrWeaponName, );
+        }
+
+        return weapon;
     }
 
     // csvFile2(GuestDataFile) 파싱
@@ -205,5 +275,34 @@ public class GuestDB : MonoBehaviour
         }
         professionDictionary.Add(local, professionList.ToArray());
         nonProfessionDictionary.Add(local, nonProfessionList.ToArray());
+    }
+
+    public void SetWeaponData()
+    {
+        /* 중간에 크게 건너뛰는 부분이 있으니까 확인해서 넘겨줘야 함 */
+
+        string strCsvWeapon = csvWeapon.text.Substring(0, csvWeapon.text.Length - 1);
+
+        // 줄바꿈(한 줄)을 기준으로 csv 파일을 쪼개서 string배열에 줄 순서대로 담음
+        string[] rows = strCsvWeapon.Split(new char[] { '\n' });
+
+        // 엑셀 파일 2번째 줄부터 시작
+        for (int i = 2; i < rows.Length; i++)
+        {
+            string[] rowValues = rows[i].Split(new char[] { ',' });
+
+            string tId = rowValues[0];
+            string tOwnerName = rowValues[1];
+            string tWeaponName = rowValues[2];
+
+            if (tId == "") break;
+            
+            if(!dtWeaponDictionary.ContainsKey(tOwnerName))
+            {
+                dtWeaponDictionary.Add(tOwnerName, new List<string>());
+            }
+
+            dtWeaponDictionary[tId].Add(tWeaponName);
+        }
     }
 }

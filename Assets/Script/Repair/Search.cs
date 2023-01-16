@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace Repair
 {
-    public class Monitoring : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class Search : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] private GameObject MonitorText;
 
