@@ -53,7 +53,6 @@ public class CookDataManager : MonoBehaviour
         inventoryDict["food0003"] = 6;
         inventoryDict["food0015"] = 3;
         inventoryDict["food0016"] = 12;
-
         SetInventory();
     }
 
