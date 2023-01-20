@@ -53,6 +53,9 @@ public class CookDataManager : MonoBehaviour
         inventoryDict["food0003"] = 6;
         inventoryDict["food0015"] = 3;
         inventoryDict["food0016"] = 12;
+        inventoryDict["food0002"] = 2;
+        inventoryDict["food0017"] = 2;
+        inventoryDict["food0018"] = 2;
         SetInventory();
     }
 
@@ -131,8 +134,6 @@ public class CookDataManager : MonoBehaviour
     {
         foreach (KeyValuePair<string, int> slot in inventoryDict)
         {
-            //print("slot.Key : "+slot.Key);
-            //print("slot.Value " + slot.Value);
             Item item = Resources.Load<Item>("Item/" + slot.Key);
             Inventory.AcquireItem(item, slot.Value);
         }
