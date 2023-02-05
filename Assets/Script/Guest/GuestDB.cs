@@ -33,11 +33,11 @@ public class GuestDB : MonoBehaviour
 
     public struct WeaponState
     {
-        public int iDurabilityState;
-        public int iDamageState;
-        public int iDefenseState;
-        public int iCurseState;
-        public int iLevel;
+        public int  iDurabilityState;
+        public int  iDamageState;
+        public int  iDefenseState;
+        public bool bCurseState;
+        public int  iRuneLevel;
     }
 
     public enum WeaponStateType
@@ -58,14 +58,14 @@ public class GuestDB : MonoBehaviour
         
         public string GetName() { return name; }
         public WeaponState GetState() { return state; }
-        public void Set(string pstrname, int piDurabilityState, int piDamageState, int piDefenseState, int piCurseState, int piLevel)
+        public void Set(string pstrname, int piDurabilityState, int piDamageState, int piDefenseState, bool pbCurseState, int piRuneLevel)
         {
             name = string.Copy(pstrname);
             state.iDurabilityState = piDurabilityState;
             state.iDamageState = piDamageState;
             state.iDefenseState = piDefenseState;
-            state.iCurseState = piCurseState;
-            state.iLevel = piLevel;
+            state.bCurseState = pbCurseState;
+            state.iRuneLevel = piRuneLevel;
         }
     }
 
@@ -145,40 +145,32 @@ public class GuestDB : MonoBehaviour
     }
 
     // 이름에 맞는 무기 리턴
-    public static WeaponInfo GetWeaponName(string pstrGuestName = null)
+    public static WeaponInfo GetWeaponInfo(string pstrGuestName = null)
     {
         WeaponInfo weapon = new WeaponInfo();
 
-        string strName;
-        int iDurabilityState = Random.Range(0, 4);
-        int iDamageState = Random.Range(0, 4);
-        int iDefenseState = Random.Range(0, 4);
-        int iCurseState = Random.Range(0, 4);
-        int iLevel = Random.Range(0, 4);
+        string tstrWeaponName = "";
+
+        // 조합 뽑기로 수정
+        int tiDurabilityState = Random.Range(0, 4);
+        int tiDamageState = Random.Range(0, 4);
+        int tiDefenseState = Random.Range(0, 4);
+        bool tbCurseState = Random.RandomRange(0, 2) == 1 ? true : false;
+        int tiRuneLevel = Random.RandomRange(0, 4);
 
         if (pstrGuestName != null)
         {
-            strName = string.Copy(pstrGuestName);
+            tstrWeaponName = dtWeaponDictionary[pstrGuestName][0];
         }
 
         else
         {
-            // 이름 없는 애들끼리 배열 만들어서 랜덤으로 추출
-
-            List<string> tstrWeaponNames = new List<string>();
-            foreach (var obj in dtWeaponDictionary)
-            {
-                if(obj.Value.First() == "") // NPC
-                {
-                    tstrWeaponNames.Add(obj.Key);
-                }
-            }
-
-            // 랜덤으로 무기 정하기
-            string tstrWeaponName = tstrWeaponNames[Random.Range(0, tstrWeaponNames.Count)];
-            weapon = new WeaponInfo(tstrWeaponName, );
+            List<string> tstrWeaponNames = dtWeaponDictionary["NPC"];
+            tstrWeaponName = tstrWeaponNames[Random.Range(0, tstrWeaponNames.Count)];
         }
 
+        weapon.Set(tstrWeaponName, tiDurabilityState, tiDamageState, tiDefenseState, tbCurseState, tiRuneLevel);
+        
         return weapon;
     }
 
