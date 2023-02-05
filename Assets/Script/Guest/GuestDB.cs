@@ -31,44 +31,6 @@ public class GuestDB : MonoBehaviour
         Deek,
     }
 
-    public struct WeaponState
-    {
-        public int  iDurabilityState;
-        public int  iDamageState;
-        public int  iDefenseState;
-        public bool bCurseState;
-        public int  iRuneLevel;
-    }
-
-    public enum WeaponStateType
-    {
-        Worst,
-        Bad,
-        Good,
-        Best
-    }
-
-
-    public class WeaponInfo
-    {
-        string name;
-        WeaponState state;
-
-        public WeaponInfo() { }
-        
-        public string GetName() { return name; }
-        public WeaponState GetState() { return state; }
-        public void Set(string pstrname, int piDurabilityState, int piDamageState, int piDefenseState, bool pbCurseState, int piRuneLevel)
-        {
-            name = string.Copy(pstrname);
-            state.iDurabilityState = piDurabilityState;
-            state.iDamageState = piDamageState;
-            state.iDefenseState = piDefenseState;
-            state.bCurseState = pbCurseState;
-            state.iRuneLevel = piRuneLevel;
-        }
-    }
-
     private static Dictionary<SpeciesType, string[]> localDictionary = new Dictionary<SpeciesType, string[]>();   // 종족에 따른 지역
     private static Dictionary<string, string[]> partyDictionary = new Dictionary<string, string[]>();   // 지역에 따른 세력
     private static Dictionary<string, ProfessionType[]> professionDictionary = new Dictionary<string, ProfessionType[]>();   // 지역에 따른 직업
@@ -145,18 +107,16 @@ public class GuestDB : MonoBehaviour
     }
 
     // 이름에 맞는 무기 리턴
-    public static WeaponInfo GetWeaponInfo(string pstrGuestName = null)
+    public static void SetWeaponInfo(string pstrGuestName = null)
     {
-        WeaponInfo weapon = new WeaponInfo();
-
         string tstrWeaponName = "";
 
         // 조합 뽑기로 수정
         int tiDurabilityState = Random.Range(0, 4);
         int tiDamageState = Random.Range(0, 4);
         int tiDefenseState = Random.Range(0, 4);
-        bool tbCurseState = Random.RandomRange(0, 2) == 1 ? true : false;
-        int tiRuneLevel = Random.RandomRange(0, 4);
+        bool tbCurseState = Random.Range(0, 2) == 1 ? true : false;
+        int tiRuneLevel = Random.Range(0, 4);
 
         if (pstrGuestName != null)
         {
@@ -169,9 +129,7 @@ public class GuestDB : MonoBehaviour
             tstrWeaponName = tstrWeaponNames[Random.Range(0, tstrWeaponNames.Count)];
         }
 
-        weapon.Set(tstrWeaponName, tiDurabilityState, tiDamageState, tiDefenseState, tbCurseState, tiRuneLevel);
-        
-        return weapon;
+        Repair.WeaponInfo.Set(tstrWeaponName, tiDurabilityState, tiDamageState, tiDefenseState, tbCurseState, tiRuneLevel);
     }
 
     // csvFile2(GuestDataFile) 파싱
@@ -273,6 +231,7 @@ public class GuestDB : MonoBehaviour
     {
         /* 중간에 크게 건너뛰는 부분이 있으니까 확인해서 넘겨줘야 함 */
 
+        // 마지막 공백 제외
         string strCsvWeapon = csvWeapon.text.Substring(0, csvWeapon.text.Length - 1);
 
         // 줄바꿈(한 줄)을 기준으로 csv 파일을 쪼개서 string배열에 줄 순서대로 담음
@@ -282,10 +241,10 @@ public class GuestDB : MonoBehaviour
         for (int i = 2; i < rows.Length; i++)
         {
             string[] rowValues = rows[i].Split(new char[] { ',' });
-
+            
             string tId = rowValues[0];
-            string tOwnerName = rowValues[1];
-            string tWeaponName = rowValues[2];
+            string tWeaponName = rowValues[1];
+            string tOwnerName = rowValues[2];
 
             if (tId == "") break;
             
@@ -294,7 +253,7 @@ public class GuestDB : MonoBehaviour
                 dtWeaponDictionary.Add(tOwnerName, new List<string>());
             }
 
-            dtWeaponDictionary[tId].Add(tWeaponName);
+            dtWeaponDictionary[tWeaponName].Add(tWeaponName);
         }
     }
 }

@@ -60,14 +60,8 @@ public class Guest
         get { return tierSeal; }
     }
 
-    private GuestDB.WeaponInfo weapon;
-    public GuestDB.WeaponInfo Weapon
-    {
-        get { return weapon; }
-    }
-
     // »ý¼ºÀÚ
-    public Guest(string _name, string _local, string _party, GuestDB.SpeciesType _species, GuestDB.ProfessionType _profession, Sprite _professionSeal, int _tier, Sprite _tierSeal, GuestDB.WeaponInfo _weapon)
+    public Guest(string _name, string _local, string _party, GuestDB.SpeciesType _species, GuestDB.ProfessionType _profession, Sprite _professionSeal, int _tier, Sprite _tierSeal)
     {
         name = _name;
         local = _local;
@@ -77,6 +71,5 @@ public class Guest
         professionSeal = _professionSeal;
         tier = _tier;
         tierSeal = _tierSeal;
-        weapon = _weapon;
     }
 }
