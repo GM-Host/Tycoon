@@ -23,7 +23,7 @@ namespace Repair
 
         private Hint                hintManager;
         private string              strOwnerName;
-        private Queue<ActionData>   qWeaponState;
+        private Queue<ActionData>   qWeaponState = new Queue<ActionData>();
 
         [SerializeField] private TMP_Text HintText;
         [SerializeField] private TextAsset csvHint = null;
@@ -56,7 +56,7 @@ namespace Repair
         {
             ActionData tAction = qWeaponState.Dequeue();
 
-            HintText.text = hintManager.GetHint(strOwnerName, tAction.action);
+            List<string> arrHint = hintManager.GetHint(strOwnerName, tAction.action);
         }
     }
 }
