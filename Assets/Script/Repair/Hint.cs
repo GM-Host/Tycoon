@@ -15,17 +15,14 @@ namespace Repair
             public string hintText;
         }
 
-        [SerializeField] private TextAsset csvHint = null;
-        [SerializeField] private TMP_Text HintText;
-        private string strHintText;
-        private Dictionary<string, Dictionary<string, string>> hintDict; // 상황, 캐릭터 이름, 힌트 내용
+        private Dictionary<string, Dictionary<string, string>> hintDict = new Dictionary<string, Dictionary<string, string>>(); // 상황, 캐릭터 이름, 힌트 내용
 
-        public void SetHint(string pstrOwnerName, string pstrAction)
+        public string GetHint(string pstrOwnerName, string pstrAction)
         {
-            HintText.text = hintDict[pstrAction][pstrOwnerName];
+            return hintDict[pstrAction][pstrOwnerName];
         }
 
-        public void SetHintData()
+        public void SetHintData(TextAsset csvHint)
         {
             string[] rowValues;
 
@@ -41,7 +38,7 @@ namespace Repair
             string[] rows = strCsvWeapon.Split(new char[] { '\n' });
 
             // 엑셀 파일 2번째 줄부터 시작
-            for (int i = 2; i < rows.Length; i++)
+            for (int i = 1; i < rows.Length - 1; i++)
             {
                 rowValues = rows[i].Split(new char[] { ',' });
 
@@ -51,10 +48,19 @@ namespace Repair
 
                 if (tId == "") continue;
 
-                if (rowValues[1] != "") tAction = string.Copy(rowValues[1]);
+                if (rowValues[1] != "")
+                {
+                    tAction = string.Copy(rowValues[1]);
 
-                hintDict.Add(tAction, new Dictionary<string, string>() { { tOwnerName, tHintText } });
+                    hintDict.Add(tAction, new Dictionary<string, string>() { { tOwnerName, tHintText } });
+                }
+                else
+                {
+                    hintDict[tAction].Add(tOwnerName, tHintText);
+                }    
             }
+
+            Debug.Log("");
         }
     }
 }

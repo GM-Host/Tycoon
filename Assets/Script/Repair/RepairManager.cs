@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using TMPro;
 
 namespace Repair
 {
@@ -20,16 +21,24 @@ namespace Repair
             }
         }
 
-        private Hint        hintManager;
-        private string      strOwnerName;
-        private string      strHintText;
-        private Queue<ActionData> qWeaponState;
+        private Hint                hintManager;
+        private string              strOwnerName;
+        private Queue<ActionData>   qWeaponState;
 
-        private void Start()
+        [SerializeField] private TMP_Text HintText;
+        [SerializeField] private TextAsset csvHint = null;
+
+        public void Start()
         {
-            List<ActionData> tList = new List<ActionData>();
+            WeaponInfo.state.iDamageState = 1;
+            WeaponInfo.state.iDurabilityState = 2;
+            WeaponInfo.state.iDefenseState = 3;
 
-            hintManager.SetHintData();
+            List<ActionData> tList = new List<ActionData>();
+            hintManager = new Hint();
+
+            hintManager.SetHintData(csvHint);
+
             tList.Add(new ActionData("공격력", WeaponInfo.state.iDamageState));
             tList.Add(new ActionData("내구도", WeaponInfo.state.iDurabilityState));
             tList.Add(new ActionData("방어력", WeaponInfo.state.iDefenseState));
@@ -46,8 +55,8 @@ namespace Repair
         public void SetHint()
         {
             ActionData tAction = qWeaponState.Dequeue();
-            
-            hintManager.SetHint(strOwnerName, tAction.action);
+
+            HintText.text = hintManager.GetHint(strOwnerName, tAction.action);
         }
     }
 }
