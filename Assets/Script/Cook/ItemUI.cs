@@ -11,9 +11,7 @@ public class ItemUI : MonoBehaviour//, IBeginDragHandler, IDragHandler, IEndDrag
     /********************
         # 8 -> # CDM
     ********************/
-    public void ClickedItem()
-    {
-        //CookDataManager.Instance.ItemSelected(item);
+    private void OnMouseEnter() {
         CookDataManager.Instance.SendFlavorData(int.Parse(Regex.Replace(item, @"\D", "")));
     }
 
