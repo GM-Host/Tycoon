@@ -5,12 +5,23 @@ using UnityEngine.UI;
 
 public class ResultUI : MonoBehaviour
 {
-    [SerializeField] private GameObject result;
-    [SerializeField] private Image resultImg;
-    public void ShowResult(string result, string [] processes, int count)
+    [SerializeField] private Image resultFood;
+    [SerializeField] private GameObject resultScene;
+    [SerializeField] private Image cutScene;
+    [SerializeField] private GameObject resultUI;
+    [SerializeField] private Image food;
+    public void ShowResult(string result, string [] processes, int count, string str_food)
     {
         if(result == "Success")
-            StartCoroutine(CookProcess(processes, count));
+            {
+                // 컷씬
+                resultScene.SetActive(true);
+                StartCoroutine(CookProcess(processes, count));
+                // 결과창
+                resultUI.SetActive(true);
+                food.sprite = Resources.Load("Cook/result/food"+str_food, typeof(Sprite)) as Sprite;
+            }
+
         else
             print("FAILED IMAGE TURN");
     }
@@ -18,9 +29,8 @@ public class ResultUI : MonoBehaviour
     private IEnumerator CookProcess(string [] processes, int count)
     {
         for (int i=0; i<count; i++)
-        {
-            result.SetActive(true);
-            resultImg.sprite = Resources.Load("Cook/result/" + processes[i]+"1", typeof(Sprite)) as Sprite;
+        {  
+            cutScene.sprite = Resources.Load("Cook/result/" + processes[i]+"1", typeof(Sprite)) as Sprite;
             yield return new WaitForSeconds(3f);
         }
     }

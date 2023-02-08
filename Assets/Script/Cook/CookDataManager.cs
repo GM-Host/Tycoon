@@ -207,6 +207,7 @@ public class CookDataManager : MonoBehaviour
         # CookUI -> # CookDataManager -> # ResultUI
         콜벨 누르면 조리 계산해서 결과 띄우기
     ******************************************************/
+    private string resultfood;
     public void MakeResult()
     {
         string recipe = "";
@@ -248,7 +249,9 @@ public class CookDataManager : MonoBehaviour
                 // 레시피 모든 내용 맞았을 때
                 else
                 {
-                    resultUI.ShowResult("Success", processes, count);
+                    resultfood = recipeData[row]["요리_이름"].ToString();
+                    print("resultFood : "+resultfood);
+                    resultUI.ShowResult("Success", processes, count, resultfood);
                     break;
                 }
                 
