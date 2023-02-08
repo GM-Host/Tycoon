@@ -10,7 +10,8 @@ public class ResultUI : MonoBehaviour
     [SerializeField] private Image cutScene;
     [SerializeField] private GameObject resultUI;
     [SerializeField] private Image food;
-    public void ShowResult(string result, string [] processes, int count, string str_food)
+    [SerializeField] private Text resultText;
+    public void ShowResult(string result, string [] processes, int count, string str_food, string foodtxt)
     {
         if(result == "Success")
             {
@@ -19,7 +20,8 @@ public class ResultUI : MonoBehaviour
                 StartCoroutine(CookProcess(processes, count));
                 // 결과창
                 resultUI.SetActive(true);
-                food.sprite = Resources.Load("Cook/result/food"+str_food, typeof(Sprite)) as Sprite;
+                food.sprite = Resources.Load("Cook/food/"+str_food, typeof(Sprite)) as Sprite;
+                resultText.text = foodtxt;
             }
 
         else
