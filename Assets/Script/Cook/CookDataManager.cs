@@ -276,6 +276,7 @@ public class CookDataManager : MonoBehaviour
     ******************************************************/
     public void SendFlavorData(int itemId)
     {
+        print("SendFlavorData itemId : " + itemId);
         flavorUI.PrintFlavor(flavorData[itemId - 1]["플레이버_텍스트"].ToString());
     }
 

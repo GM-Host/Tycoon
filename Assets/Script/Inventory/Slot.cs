@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Slot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class Slot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Item item; // J : 아이템 정보
     public int itemCount; // J : 아이템 개수
@@ -96,5 +96,20 @@ public class Slot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         itemImg.SetActive(false);
         itemImage.sprite = null;
         countText.text = "0";
+    }
+
+    void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
+    {
+        if(item != null)
+        {
+            int itemId = int.Parse(item.itemImage.name.Replace("food", ""));
+            print(itemId);
+            CookDataManager.Instance.SendFlavorData(itemId);
+        }
+    }
+
+    void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
+    {
+
     }
 }
