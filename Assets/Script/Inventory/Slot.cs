@@ -103,13 +103,15 @@ public class Slot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if(item != null)
         {
             int itemId = int.Parse(item.itemImage.name.Replace("food", ""));
-            print(itemId);
             CookDataManager.Instance.SendFlavorData(itemId);
         }
     }
 
     void IPointerExitHandler.OnPointerExit(PointerEventData eventData)
     {
-
+        if(item != null)
+        {
+            CookDataManager.Instance.DelFlavorData();
+        }
     }
 }

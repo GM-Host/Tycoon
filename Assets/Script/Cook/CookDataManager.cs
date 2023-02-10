@@ -277,7 +277,11 @@ public class CookDataManager : MonoBehaviour
     public void SendFlavorData(int itemId)
     {
         print("SendFlavorData itemId : " + itemId);
-        flavorUI.PrintFlavor(flavorData[itemId - 1]["플레이버_텍스트"].ToString());
+        flavorUI.PrintFlavor(flavorData[itemId - 1]["플레이버_텍스트"].ToString(), flavorData[itemId - 1]["재료_이름"].ToString());
+    }
+    public void DelFlavorData()
+    {
+        flavorUI.ExitFlavor();
     }
 
     // Update is called once per frame
