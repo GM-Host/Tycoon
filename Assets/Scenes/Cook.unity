@@ -3041,6 +3041,7 @@ GameObject:
   - component: {fileID: 1123966740}
   - component: {fileID: 1123966739}
   - component: {fileID: 1123966742}
+  - component: {fileID: 1123966743}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -3192,6 +3193,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ee7bdedff7747a489b8059331fca431, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flavorUI: {fileID: 0}
+  uiCamera: {fileID: 0}
   flavorText: {fileID: 682443890}
 --- !u!114 &1123966741
 MonoBehaviour:
@@ -3226,6 +3229,21 @@ MonoBehaviour:
   resultUI: {fileID: 697249062}
   food: {fileID: 1485397657}
   resultText: {fileID: 556886654}
+--- !u!114 &1123966743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123966733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ee7bdedff7747a489b8059331fca431, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flavorUI: {fileID: 922414956}
+  uiCamera: {fileID: 1036128471}
+  flavorText: {fileID: 682443890}
 --- !u!1 &1295136072
 GameObject:
   m_ObjectHideFlags: 0
