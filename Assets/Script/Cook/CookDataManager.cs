@@ -79,9 +79,26 @@ public class CookDataManager : MonoBehaviour
         
         print("Clean History left = "+curCook.Count);
 
+        // clean
         if(cleanAll == 1)
         {
+            // inventory update
+            foreach(CookObject obj in curCook)
+            {
+                // item 아니면 skip
+                if(obj.itemInfo == null)
+                    continue;
+
+                print("Cleaning ... In Cur Cook : "+ obj.id);
+                // update InventoryDict
+                int itemCount;
+                inventoryDict.TryGetValue(obj.id, out itemCount);
+                inventoryDict[obj.id] = ++itemCount;
+            }
+            
+            // history 전부 지우기
             cookUI.cleanHistory();
+            curCook.Clear();
             numOfObj=0;
             hasHistory = false;
             order = Order.Food;
@@ -126,10 +143,10 @@ public class CookDataManager : MonoBehaviour
         }
 
         // update Inventory
-        SetInventory();
+        UpdateInventory();
     }
 
-    // 인벤토리 업데이트
+    // 인벤토리 초기화
     private void SetInventory()
     {
         foreach (KeyValuePair<string, int> slot in inventoryDict)
@@ -137,6 +154,11 @@ public class CookDataManager : MonoBehaviour
             Item item = Resources.Load<Item>("Item/" + slot.Key);
             Inventory.AcquireItem(item, slot.Value);
         }
+    }
+
+    private void UpdateInventory()
+    {
+        
     }
 
     /*****************************************************
