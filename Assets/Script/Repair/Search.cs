@@ -15,10 +15,10 @@ namespace Repair
         public void OnPointerEnter(PointerEventData eventData)
         {
             string tstring = "";
-            tstring += "내구도     " + Repair.WeaponInfo.state.iDurabilityState;
-            tstring += "\n공격력     " + Repair.WeaponInfo.state.iDamageState;
-            tstring += "\n방어력     " + Repair.WeaponInfo.state.iDefenseState;
-            tstring += "\n룬 레벨    " + Repair.WeaponInfo.state.iRuneLevel;
+            tstring += "내구도     " + MakeInfoToString(Repair.WeaponInfo.state.iDurabilityState);
+            tstring += "\n공격력     " + MakeInfoToString(Repair.WeaponInfo.state.iDamageState);
+            tstring += "\n방어력     " + MakeInfoToString(Repair.WeaponInfo.state.iDefenseState);
+            tstring += "\n룬 레벨    " + MakeInfoToString(Repair.WeaponInfo.state.iRuneLevel);
 
             MonitorText.text = tstring;
             MonitorTextPanel.SetActive(true);
@@ -27,6 +27,20 @@ namespace Repair
         public void OnPointerExit(PointerEventData eventData)
         {
             MonitorTextPanel.SetActive(false);
+        }
+
+        string MakeInfoToString(int value)
+        {
+            string result = "";
+            switch(value)
+            {
+                case 0: result = "매우 나쁨"; break;
+                case 1: result = "나쁨"; break;
+                case 2: result = "보통"; break;
+                case 3: result = "좋음"; break;
+                case 4: result = "매우 좋음"; break;
+            }
+            return result;
         }
     }
 }

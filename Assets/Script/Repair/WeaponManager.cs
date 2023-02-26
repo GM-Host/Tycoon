@@ -19,6 +19,7 @@ namespace Repair
     {
         Worst,
         Bad,
+        Normal,
         Good,
         Best
     }
