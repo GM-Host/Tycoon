@@ -66,6 +66,8 @@ namespace Repair
             ActionData tAction = qWeaponState.Dequeue();
 
             List<string> arrHint = hintManager.GetHint(strOwnerName, tAction.action);
+
+            if (arrHint.Count == 1) HintText.text = arrHint[0];
         }
     }
 }
