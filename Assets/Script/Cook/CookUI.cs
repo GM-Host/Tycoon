@@ -47,7 +47,7 @@ public class CookUI : MonoBehaviour
         Destroy(lastChild.gameObject);
         
         // remove history data
-        CookDataManager.Instance.curCook.RemoveAt(CookDataManager.Instance.curCook.Count - 1);
+        //CookDataManager.Instance.curCook.RemoveAt(CookDataManager.Instance.curCook.Count - 1);
     }
 
     

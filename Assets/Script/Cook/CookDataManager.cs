@@ -77,8 +77,6 @@ public class CookDataManager : MonoBehaviour
     public void CleanHistory(int cleanAll)
     {
         
-        print("Clean History left = "+curCook.Count);
-
         // clean
         if(cleanAll == 1)
         {
@@ -91,9 +89,7 @@ public class CookDataManager : MonoBehaviour
 
                 print("Cleaning ... In Cur Cook : "+ obj.id);
                 // update InventoryDict
-                int itemCount;
-                inventoryDict.TryGetValue(obj.id, out itemCount);
-                inventoryDict[obj.id] = ++itemCount;
+                ItemUnselect(obj.id);
             }
             
             // history 전부 지우기
@@ -103,15 +99,16 @@ public class CookDataManager : MonoBehaviour
             hasHistory = false;
             order = Order.Food;
         }
-        else
+        else    // delete
         {
             if(curCook.Count != 0)
             {
-                if (order==Order.Operation && curCook[curCook.Count - 1].itemInfo != null)
-                    ItemUnselect(curCook[curCook.Count - 1].itemInfo);
+                ItemUnselect(curCook[curCook.Count - 2].itemInfo);
                 cookUI.deleteHistory(curCook[curCook.Count - 1].id, curCook.Count-1);
-                order = order==Order.Food ? Order.Operation : Order.Food;
-                numOfObj--;
+                cookUI.deleteHistory(curCook[curCook.Count - 2].id, curCook.Count-2);
+                curCook.RemoveAt(curCook.Count - 1);
+                curCook.RemoveAt(curCook.Count - 1);
+                numOfObj = numOfObj - 2;
                 foreach(CookObject obj in curCook)
                 {
                     print("In Cur Cook : "+ obj.id);
@@ -130,20 +127,22 @@ public class CookDataManager : MonoBehaviour
     private void ItemUnselect(string item)
     {
         int itemCount;
+        // 해당 아이템 슬롯 찾기
+        Slot slot;
 
         // 현재 inven에 없는 아이템인 경우
         if(!inventoryDict.ContainsKey(item))    
         {
             inventoryDict.Add(item, 1);
+            // 새 슬롯에 해당 아이템 추가
         }
         else
         {
             inventoryDict.TryGetValue(item, out itemCount);
-            inventoryDict[item] = itemCount++;
+            inventoryDict[item] = ++itemCount;
+            // 해당 슬롯에 SetSlotCount(1)
         }
-
-        // update Inventory
-        UpdateInventory();
+        
     }
 
     // 인벤토리 초기화
@@ -154,11 +153,6 @@ public class CookDataManager : MonoBehaviour
             Item item = Resources.Load<Item>("Item/" + slot.Key);
             Inventory.AcquireItem(item, slot.Value);
         }
-    }
-
-    private void UpdateInventory()
-    {
-        
     }
 
     /*****************************************************
@@ -298,7 +292,6 @@ public class CookDataManager : MonoBehaviour
     ******************************************************/
     public void SendFlavorData(int itemId)
     {
-        print("SendFlavorData itemId : " + itemId);
         flavorUI.PrintFlavor(flavorData[itemId - 1]["플레이버_텍스트"].ToString(), flavorData[itemId - 1]["재료_이름"].ToString());
     }
     public void DelFlavorData()

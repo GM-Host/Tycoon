@@ -10,11 +10,8 @@ public class CookingButton : MonoBehaviour, IDropHandler
     // 해당 슬롯에 무언가가 마우스 드롭 됐을 때 발생하는 이벤트
     public void OnDrop(PointerEventData eventData)
     {
-        print("onDrop");
         if(DragSlot.instance.dragSlot != null)
         {
-            Debug.Log(DragSlot.instance.dragSlot.item.name + " 드롭!");
-
             DropItem.instance.CookDrop();
             CookDataManager.CookObject operation = new CookDataManager.CookObject();
             operation.id = category.name;
