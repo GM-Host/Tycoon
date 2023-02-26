@@ -99,8 +99,6 @@ namespace Repair
                         hintDict.Add(tAction, new Dictionary<string, List<string>>() { { nameList[n], new List<string>() { tHintText } } });
                 }
             }
-
-            Debug.Log("");
         }
     }
 }
