@@ -22,7 +22,7 @@ namespace Repair
             return hintDict[pstrAction][pstrOwnerName];
         }
 
-        public void SetHintData(TextAsset csvHint)
+        public void SetHintDataFromCSV(TextAsset csvHint)
         {
             string[] rowValues = new string[100];
 

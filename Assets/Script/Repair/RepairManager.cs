@@ -30,26 +30,35 @@ namespace Repair
 
         public void Start()
         {
+            // 임시 설정
+            strOwnerName = "톨문드";
+
+
             WeaponInfo.state.iDamageState = 1;
             WeaponInfo.state.iDurabilityState = 2;
             WeaponInfo.state.iDefenseState = 3;
 
-            List<ActionData> tList = new List<ActionData>();
+            List<ActionData> curWeaponStateList = new List<ActionData>();
             hintManager = new Hint();
 
-            hintManager.SetHintData(csvHint);
+            hintManager.SetHintDataFromCSV(csvHint);
 
-            tList.Add(new ActionData("공격력", WeaponInfo.state.iDamageState));
-            tList.Add(new ActionData("내구도", WeaponInfo.state.iDurabilityState));
-            tList.Add(new ActionData("방어력", WeaponInfo.state.iDefenseState));
+            // 현재 무기 상태를 리스트에 저장
+            curWeaponStateList.Add(new ActionData("공격력", WeaponInfo.state.iDamageState));
+            curWeaponStateList.Add(new ActionData("내구도", WeaponInfo.state.iDurabilityState));
+            curWeaponStateList.Add(new ActionData("방어력", WeaponInfo.state.iDefenseState));
 
-            var rnd = new System.Random();
-            var randList = tList.OrderBy(item => rnd.Next()).ToList();
+            // 무기 상태 순서를 랜덤으로 조정
+            var tRand = new System.Random();
+            var randList = curWeaponStateList.OrderBy(item => tRand.Next()).ToList();
 
             for(int i=0; i<randList.Count(); i++)
             {
                 qWeaponState.Enqueue(randList[i]);
             }
+
+            // 힌트 세팅
+            SetHint();
         }
 
         public void SetHint()
