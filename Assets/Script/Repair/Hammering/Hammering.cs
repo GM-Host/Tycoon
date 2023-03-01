@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Hammering
+namespace Repair
 {
     class Hammering : MonoBehaviour
     {
