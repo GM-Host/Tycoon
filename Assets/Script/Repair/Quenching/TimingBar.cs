@@ -7,8 +7,9 @@ namespace Repair
 {
     class TimingBar : MonoBehaviour
     {
-        [SerializeField] [Range(0f, 10f)] private float speed = 1f;
-        [SerializeField] [Range(0f, 5f)] private float delayTime = 0.5f;
+        [SerializeField] [Range(0f, 10f)]   private float speed = 1f;
+        [SerializeField] [Range(0f, 5f)]    private float delayTime = 0.5f;
+        [SerializeField] [Range(0f, 5f)]    private float reduceLen = 10f;
 
 
         [SerializeField] private Transform blueTarget;
@@ -43,9 +44,12 @@ namespace Repair
                 {
                     yield return new WaitForSeconds(delayTime);
 
-                    CheckYellowLinePosition();
-
-                    count++;
+                    if(CheckYellowLinePosition())
+                    {
+                        print("perfect");
+                        count++;
+                        ReduceBlueTargetLen();
+                    }
                 }
 
                 yield return null;
@@ -54,7 +58,7 @@ namespace Repair
             print("끝!");
         }
 
-        private void CheckYellowLinePosition()
+        private bool CheckYellowLinePosition()
         {
             float targetLeftX = blueTarget.position.x;
             float targetRightX = targetLeftX + blueTarget.GetComponent<RectTransform>().sizeDelta.x;
@@ -62,23 +66,25 @@ namespace Repair
             float lineLeftX = yellowLine.transform.position.x;
             float lineRightX = lineLeftX + yellowLine.GetComponent<RectTransform>().sizeDelta.x;
 
-            // Perfect
+            //print("target : " + targetLeftX + ", " + targetRightX);
+            //print("line : " + lineLeftX + ", " + lineRightX);
+            
             if(targetLeftX <= lineLeftX && lineRightX <= targetRightX)
             {
-                print("Perfect");
+                return true;
             }
 
-            // Bad
-            else if(lineRightX < targetLeftX || targetRightX < lineLeftX)
-            {
-                print("Bad");
-            }
+            return false;
+        }
 
-            // Good
-            else
-            {
-                print("Good");
-            }
+        private void ReduceBlueTargetLen()
+        {
+            float sizeDeltaX = blueTarget.GetComponent<RectTransform>().sizeDelta.x;
+            float sizeDeltaY = blueTarget.GetComponent<RectTransform>().sizeDelta.y;
+
+            print(sizeDeltaX + " " + sizeDeltaY);
+
+            blueTarget.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeDeltaX - reduceLen, sizeDeltaY);
         }
     }
 }
