@@ -9,7 +9,7 @@ namespace Repair
     {
         [SerializeField] [Range(0f, 10f)]   private float speed = 1f;
         [SerializeField] [Range(0f, 5f)]    private float delayTime = 0.5f;
-        [SerializeField] [Range(0f, 5f)]    private float reduceLen = 10f;
+        [SerializeField] [Range(0f, 50f)]   private float reduceLen = 20f;
 
 
         [SerializeField] private Transform blueTarget;
@@ -42,8 +42,6 @@ namespace Repair
                 // 클릭하고 2초 정지 후 타겟 크기 줄어듦
                 if (Input.GetMouseButtonDown(0))
                 {
-                    yield return new WaitForSeconds(delayTime);
-
                     if(CheckYellowLinePosition())
                     {
                         print("perfect");
@@ -60,8 +58,9 @@ namespace Repair
 
         private bool CheckYellowLinePosition()
         {
-            float targetLeftX = blueTarget.position.x;
-            float targetRightX = targetLeftX + blueTarget.GetComponent<RectTransform>().sizeDelta.x;
+            float targetLeftWidth = blueTarget.GetComponent<RectTransform>().sizeDelta.x;
+            float targetLeftX = blueTarget.position.x - targetLeftWidth / 2;
+            float targetRightX = blueTarget.position.x + targetLeftWidth / 2;
 
             float lineLeftX = yellowLine.transform.position.x;
             float lineRightX = lineLeftX + yellowLine.GetComponent<RectTransform>().sizeDelta.x;
