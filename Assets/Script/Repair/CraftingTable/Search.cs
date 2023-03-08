@@ -15,10 +15,10 @@ namespace Repair
         public void OnPointerEnter(PointerEventData eventData)
         {
             string tstring = "";
-            tstring += "내구도   " + MakeInfoToString(Repair.WeaponInfo.state.iDurabilityState);
-            tstring += "\n공격력   " + MakeInfoToString(Repair.WeaponInfo.state.iDamageState);
-            tstring += "\n방어력   " + MakeInfoToString(Repair.WeaponInfo.state.iDefenseState);
-            tstring += "\n룬 레벨  LV." + Repair.WeaponInfo.state.iRuneLevel;
+            tstring += "내구도   " + MakeInfoToString(RepairManager.Instance.WeaponInfo.state.iDurabilityState);
+            tstring += "\n공격력   " + MakeInfoToString(RepairManager.Instance.WeaponInfo.state.iDamageState);
+            tstring += "\n방어력   " + MakeInfoToString(RepairManager.Instance.WeaponInfo.state.iDefenseState);
+            tstring += "\n룬 레벨  LV." + RepairManager.Instance.WeaponInfo.state.iRuneLevel;
 
             MonitorText.text = tstring;
             MonitorTextPanel.SetActive(true);

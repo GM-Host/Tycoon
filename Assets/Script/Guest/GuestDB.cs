@@ -31,6 +31,41 @@ public class GuestDB : MonoBehaviour
         Deek,
     }
 
+    public class WeaponInfo
+    {
+        public struct WeaponState
+        {
+            public int iDurabilityState;
+            public int iDamageState;
+            public int iDefenseState;
+            public bool bCurseState;
+            public int iRuneLevel;
+        }
+
+        public string name;
+        public WeaponState state;
+
+        public WeaponInfo(string pstrname, int piDurabilityState, int piDamageState, int piDefenseState, bool pbCurseState, int piRuneLevel)
+        {
+            name = string.Copy(pstrname);
+            state.iDurabilityState = piDurabilityState;
+            state.iDamageState = piDamageState;
+            state.iDefenseState = piDefenseState;
+            state.bCurseState = pbCurseState;
+            state.iRuneLevel = piRuneLevel;
+        }
+
+        public void Set(WeaponInfo weapon)
+        {
+            name = string.Copy(weapon.name);
+            state.iDurabilityState = weapon.state.iDurabilityState;
+            state.iDamageState = weapon.state.iDamageState;
+            state.iDefenseState = weapon.state.iDefenseState;
+            state.bCurseState = weapon.state.bCurseState;
+            state.iRuneLevel = weapon.state.iRuneLevel;
+        }
+    }
+
     private static Dictionary<SpeciesType, string[]> localDictionary = new Dictionary<SpeciesType, string[]>();   // 종족에 따른 지역
     private static Dictionary<string, string[]> partyDictionary = new Dictionary<string, string[]>();   // 지역에 따른 세력
     private static Dictionary<string, ProfessionType[]> professionDictionary = new Dictionary<string, ProfessionType[]>();   // 지역에 따른 직업
@@ -107,16 +142,17 @@ public class GuestDB : MonoBehaviour
     }
 
     // 이름에 맞는 무기 리턴
-    public static void SetWeaponInfo(string pstrGuestName = null)
+    public static WeaponInfo GetWeaponInfo(string pstrGuestName = null)
     {
+        WeaponInfo weapon;
+
         string tstrWeaponName = "";
 
-        // 조합 뽑기로 수정
-        int tiDurabilityState = Random.Range(0, 4);
-        int tiDamageState = Random.Range(0, 4);
-        int tiDefenseState = Random.Range(0, 4);
+        int tiDurabilityState = Random.Range(0, 5);
+        int tiDamageState = Random.Range(0, 5);
+        int tiDefenseState = Random.Range(0, 5);
         bool tbCurseState = Random.Range(0, 2) == 1 ? true : false;
-        int tiRuneLevel = Random.Range(0, 4);
+        int tiRuneLevel = Random.Range(1, 4);
 
         if (pstrGuestName != null)
         {
@@ -129,7 +165,7 @@ public class GuestDB : MonoBehaviour
             tstrWeaponName = tstrWeaponNames[Random.Range(0, tstrWeaponNames.Count)];
         }
 
-        Repair.WeaponInfo.Set(tstrWeaponName, tiDurabilityState, tiDamageState, tiDefenseState, tbCurseState, tiRuneLevel);
+        return weapon = new WeaponInfo(tstrWeaponName, tiDurabilityState, tiDamageState, tiDefenseState, tbCurseState, tiRuneLevel);
     }
 
     // csvFile2(GuestDataFile) 파싱

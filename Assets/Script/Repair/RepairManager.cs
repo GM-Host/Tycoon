@@ -9,6 +9,7 @@ namespace Repair
 {
     public class RepairManager : MonoBehaviour
     {
+        // 수리 할 분야(내구도, 방어력, 공격력)와 상태
         class ActionData
         {
             public string action;
@@ -21,22 +22,48 @@ namespace Repair
             }
         }
 
-        private Hint                hintManager;
-        private string              strOwnerName;
-        private Queue<ActionData>   qWeaponState = new Queue<ActionData>();
+        private static RepairManager    instance = null;
+        public static RepairManager     Instance
+        {
+            get
+            {
+                if (instance == null)
+                    return null;
+                else
+                    return instance;
+            }
+        }
+
+        private GuestDB.WeaponInfo      weaponInfo;
+        public GuestDB.WeaponInfo       WeaponInfo { get; }
+        private Hint                    hintManager;
+        private string                  strOwnerName;
+        private Queue<ActionData>       qWeaponState = new Queue<ActionData>();
 
         [SerializeField] private TMP_Text HintText;
         [SerializeField] private TextAsset csvHint = null;
+
+        public void Awake()
+        {
+            if (null == instance)
+            {
+                instance = this;
+                DontDestroyOnLoad(this.gameObject);
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
+        }
 
         public void Start()
         {
             // 임시 설정
             strOwnerName = "톨문드";
+            weaponInfo = new GuestDB.WeaponInfo("검", 1, 2, 3, true, 5);
 
 
-            WeaponInfo.state.iDamageState = 1;
-            WeaponInfo.state.iDurabilityState = 2;
-            WeaponInfo.state.iDefenseState = 3;
+
 
             List<ActionData> curWeaponStateList = new List<ActionData>();
             hintManager = new Hint();
@@ -44,9 +71,9 @@ namespace Repair
             hintManager.SetHintDataFromCSV(csvHint);
 
             // 현재 무기 상태를 리스트에 저장
-            curWeaponStateList.Add(new ActionData("공격력", WeaponInfo.state.iDamageState));
-            curWeaponStateList.Add(new ActionData("내구도", WeaponInfo.state.iDurabilityState));
-            curWeaponStateList.Add(new ActionData("방어력", WeaponInfo.state.iDefenseState));
+            curWeaponStateList.Add(new ActionData("공격력", weaponInfo.state.iDamageState));
+            curWeaponStateList.Add(new ActionData("내구도", weaponInfo.state.iDurabilityState));
+            curWeaponStateList.Add(new ActionData("방어력", weaponInfo.state.iDefenseState));
 
             // 무기 상태 순서를 랜덤으로 조정
             var tRand = new System.Random();

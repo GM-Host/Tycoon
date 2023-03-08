@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,13 +7,17 @@ namespace Repair
 {
     class Hammering : MonoBehaviour
     {
-        [SerializeField] private GameObject[] KeyboardObjs;
-        [SerializeField] private Sprite[] keyImgs;
+        [SerializeField] private GameObject[] TargetObjects;
+        private int clickedTarget = 0;
 
-        // 3~6개 중 랜덤으로 활성화 될 오브젝트 고르기
-        
+        public void ClickTarget()
+        {
+            clickedTarget++;
 
-        // 랜덤으로 키보드 설정
-
+            if(clickedTarget >= TargetObjects.Length)
+            {
+                // 다음 씬으로 넘어가기
+            }
+        }
     }
 }

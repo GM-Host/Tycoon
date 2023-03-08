@@ -29,6 +29,9 @@ namespace Repair
 
         void Start()
         {
+            print("스타트");
+
+            gaugeBar.fillAmount = 0;
             iLayerMask = ~(LayerMask.GetMask("Ignore Raycast"));
         }
 
