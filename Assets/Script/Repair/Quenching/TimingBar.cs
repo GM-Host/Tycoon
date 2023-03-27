@@ -7,6 +7,8 @@ namespace Repair
 {
     class TimingBar : MonoBehaviour
     {
+        public Quenching quenching;
+
         [SerializeField] [Range(0f, 10f)]   private float speed = 1f;
         [SerializeField] [Range(0f, 5f)]    private float delayTime = 0.5f;
         [SerializeField] [Range(0f, 50f)]   private float reduceLen = 20f;
@@ -19,15 +21,28 @@ namespace Repair
 
         private float runningTime = 0f;
         private float xPos = 0f;
-        private RectTransform rectTransform;
         private float yellowLineY = 0f;
         private int count = 0;
+        private float blueTargetSizeDeltaX, blueTargetSizeDeltaY;
 
-        void Start()
+        private void OnEnable()
         {
+            runningTime = 0f;
+            xPos = 0f;
+            yellowLineY = 0f;
+            count = 0;
+
             yellowLineY = yellowLine.transform.localPosition.y;
 
             StartCoroutine(MoveTimingBar());
+
+            blueTargetSizeDeltaX = blueTarget.GetComponent<RectTransform>().sizeDelta.x;
+            blueTargetSizeDeltaY = blueTarget.GetComponent<RectTransform>().sizeDelta.y;
+        }
+
+        private void OnDisable()
+        {
+            blueTarget.GetComponent<RectTransform>().sizeDelta = new Vector2(blueTargetSizeDeltaX, blueTargetSizeDeltaY);
         }
 
         private IEnumerator MoveTimingBar()
@@ -36,7 +51,6 @@ namespace Repair
             {
                 runningTime += Time.deltaTime * speed;
                 xPos = Mathf.Sin(runningTime) * (length / 2) - 10;
-                //Debug.Log(xPos);
                 yellowLine.transform.localPosition = new Vector2(xPos, yellowLineY);
 
                 // 클릭하고 2초 정지 후 타겟 크기 줄어듦
@@ -53,7 +67,7 @@ namespace Repair
                 yield return null;
             }
 
-            print("끝!");
+            quenching.Finish();
         }
 
         private bool CheckYellowLinePosition()
@@ -80,8 +94,6 @@ namespace Repair
         {
             float sizeDeltaX = blueTarget.GetComponent<RectTransform>().sizeDelta.x;
             float sizeDeltaY = blueTarget.GetComponent<RectTransform>().sizeDelta.y;
-
-            print(sizeDeltaX + " " + sizeDeltaY);
 
             blueTarget.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeDeltaX - reduceLen, sizeDeltaY);
         }

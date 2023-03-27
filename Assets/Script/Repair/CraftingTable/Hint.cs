@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 namespace Repair
 {
-    class Hint
+    class Hint : MonoBehaviour
     {
         public class HintData
         {
@@ -15,14 +15,53 @@ namespace Repair
             public string hintText;
         }
 
+        [SerializeField] private TMP_Text HintText;
+        [SerializeField] private TextAsset csvHint = null;
+
         private Dictionary<string, Dictionary<string, List<string>>> hintDict = new Dictionary<string, Dictionary<string, List<string>>>(); // 상황, 캐릭터 이름, 힌트 내용
+        private List<KeyValuePair<string, int>> stateList = new List<KeyValuePair<string, int>>();
+
+        void Awake()
+        {
+            SetHintDataFromCSV();
+        }
+
+        private void OnEnable()
+        {
+            SetHint();
+        }
+
+        public void SetHint()
+        {
+            if (RepairManager.Instance == null) return;
+
+            foreach (KeyValuePair<string, int> pair in RepairManager.Instance.WeaponInfo.stateDict)
+            {
+                if (pair.Value < 2) // 매우 나쁨, 나쁨
+                {
+                    stateList.Add(pair);
+                }
+            }
+
+            int idx = UnityEngine.Random.Range(0, stateList.Count);
+
+            List<string> arrHint = GetHint(RepairManager.Instance.strOwnerName, stateList[idx].Key);
+
+            if (arrHint.Count == 1) HintText.text = arrHint[0];
+            else
+            {
+                // NPC의 경우 힌트 종류가 다양
+            }
+
+            stateList.Clear();
+        }
 
         public List<string> GetHint(string pstrOwnerName, string pstrAction)
         {
             return hintDict[pstrAction][pstrOwnerName];
         }
 
-        public void SetHintDataFromCSV(TextAsset csvHint)
+        public void SetHintDataFromCSV()
         {
             string[] rowValues = new string[100];
 

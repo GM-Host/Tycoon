@@ -75,6 +75,6 @@ public class Guest
         professionSeal = _professionSeal;
         tier = _tier;
         tierSeal = _tierSeal;
-        weapon.Set(_weapon);
+        weapon = new GuestDB.WeaponInfo(_weapon);
     }
 }

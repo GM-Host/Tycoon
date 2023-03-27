@@ -1,4 +1,3 @@
-ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,53 +5,43 @@ using UnityEngine.UI;
 
 namespace Repair
 {
-    class Hammering : MonoBehaviour
+    public class Rune : MonoBehaviour
     {
-        public GameObject Quenching;
+        public List<GameObject> runes;
         public Image weaponImg;
 
-        [SerializeField] private GameObject[] TargetObjects;
-        private int clickedTarget = 0;
-        private string type = "";
+        private int randomIdx;
+        private int enabledPointCount;
 
         void OnEnable()
         {
+            enabledPointCount = 0;
+            randomIdx = Random.Range(0, runes.Count);
+            runes[randomIdx].SetActive(true);
+
             SetWeaponImage(RepairManager.Instance.WeaponInfo.name);
         }
 
         void OnDisable()
         {
-            foreach(GameObject go in TargetObjects)
-            {
-                go.SetActive(true);
-                clickedTarget = 0;
-                type = "";
-            }
+            runes[randomIdx].SetActive(false);
         }
 
-        public void ClickTarget()
+        public void EnabledPoint()
         {
-            clickedTarget++;
+            enabledPointCount++;
 
-            if(clickedTarget >= TargetObjects.Length)
+            if (enabledPointCount >= runes[randomIdx].GetComponent<Transform>().childCount)
             {
+                RepairManager.Instance.RemoveState("·é");
                 StartCoroutine(ActiveFalseAfter(1f));
             }
-        }
-
-        public void SetType(string ptype)
-        {
-            type = String.Copy(ptype);
-
-            print(type);
         }
 
         IEnumerator ActiveFalseAfter(float time)
         {
             yield return new WaitForSeconds(time);
 
-            Quenching.SetActive(true);
-            Quenching.GetComponent<Quenching>().SetType(type);
             gameObject.SetActive(false);
         }
 

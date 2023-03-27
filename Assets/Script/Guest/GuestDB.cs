@@ -33,6 +33,7 @@ public class GuestDB : MonoBehaviour
 
     public class WeaponInfo
     {
+        public Dictionary<string, int> stateDict = new Dictionary<string, int>();
         public struct WeaponState
         {
             public int iDurabilityState;
@@ -53,6 +54,24 @@ public class GuestDB : MonoBehaviour
             state.iDefenseState = piDefenseState;
             state.bCurseState = pbCurseState;
             state.iRuneLevel = piRuneLevel;
+
+            stateDict["내구도"] = piDurabilityState;
+            stateDict["공격력"] = piDamageState;
+            stateDict["방어력"] = piDefenseState;
+        }
+
+        public WeaponInfo(WeaponInfo weapon)
+        {
+            name = string.Copy(weapon.name);
+            state.iDurabilityState = weapon.state.iDurabilityState;
+            state.iDamageState = weapon.state.iDamageState;
+            state.iDefenseState = weapon.state.iDefenseState;
+            state.bCurseState = weapon.state.bCurseState;
+            state.iRuneLevel = weapon.state.iRuneLevel;
+
+            stateDict["내구도"] = weapon.state.iDurabilityState;
+            stateDict["공격력"] = weapon.state.iDamageState;
+            stateDict["방어력"] = weapon.state.iDefenseState;
         }
 
         public void Set(WeaponInfo weapon)
@@ -63,6 +82,10 @@ public class GuestDB : MonoBehaviour
             state.iDefenseState = weapon.state.iDefenseState;
             state.bCurseState = weapon.state.bCurseState;
             state.iRuneLevel = weapon.state.iRuneLevel;
+
+            stateDict["내구도"] = weapon.state.iDurabilityState;
+            stateDict["공격력"] = weapon.state.iDamageState;
+            stateDict["방어력"] = weapon.state.iDefenseState;
         }
     }
 
@@ -289,7 +312,7 @@ public class GuestDB : MonoBehaviour
                 dtWeaponDictionary.Add(tOwnerName, new List<string>());
             }
 
-            dtWeaponDictionary[tWeaponName].Add(tWeaponName);
+            dtWeaponDictionary[tOwnerName].Add(tWeaponName);
         }
     }
 }

@@ -1,22 +1,22 @@
-ï»¿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 namespace Repair
 {
-    class Weapon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    class Purifying : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        // ë“œë˜ê·¸
+        // µå·¡±×
         public static GameObject itemBeingDragged;
         private Vector3 startPosition;
 
-        // ë¶ˆê½ƒ íƒì§€ìš© ë ˆì´
+        // ¼º¼ö Å½Áö¿ë ·¹ÀÌ
         private float distance;
         private RaycastHit2D rayHit;
         private Ray2D ray;
 
-        // í˜¸ë²„ë§
+        // È£¹ö¸µ
         [SerializeField] private Image gaugeBar;
         private bool hovering = false;
         private string strOldType = "Old";
@@ -27,26 +27,33 @@ namespace Repair
         private bool done = false;
         private string resultType = "";
 
-        void Start()
+        void OnEnable()
         {
-            print("ìŠ¤íƒ€íŠ¸");
+            print("½ºÅ¸Æ®");
 
             gaugeBar.fillAmount = 0;
             iLayerMask = ~(LayerMask.GetMask("Ignore Raycast"));
+
+            hovering = false;
+            strOldType = "Old";
+            strNewType = "New";
+            hoveringTime = 2f;
+            done = false;
+            resultType = "";
         }
 
         void FixedUpdate()
         {
-            if(done)
+            if (done)
             {
                 return;
             }
 
             if (hovering)
             {
-                if(strOldType != strNewType)
+                if (strOldType != strNewType)
                 {
-                    // ìƒˆë¡œ ì‹œì‘
+                    // »õ·Î ½ÃÀÛ
                     strOldType = string.Copy(strNewType);
 
                     gaugeBar.fillAmount = 0f;
@@ -54,7 +61,7 @@ namespace Repair
 
                 else
                 {
-                    // ê¸°ì¡´ ì‘ì—…
+                    // ±âÁ¸ ÀÛ¾÷
                     gaugeBar.fillAmount += 1 / hoveringTime * Time.deltaTime;
                 }
             }
@@ -89,19 +96,18 @@ namespace Repair
             if (rayHit)
             {
                 string tstrFireName = rayHit.transform.name;
-                switch(tstrFireName)
+                switch (tstrFireName)
                 {
-                    case "Begin":
-                    case "Brave":
-                    case "Bless":
-                    case "Clear":
+                    case "Burn":
+                    case "Corrosion":
+                    case "Mind Break":
                         strNewType = string.Copy(tstrFireName);
                         hovering = true;
                         break;
                     default:
                         hovering = false;
                         break;
-                }
+                } 
             }
             else
             {
@@ -115,6 +121,11 @@ namespace Repair
             transform.position = startPosition;
 
             hovering = false;
+        }
+
+        public void Finish()
+        {
+
         }
     }
 }

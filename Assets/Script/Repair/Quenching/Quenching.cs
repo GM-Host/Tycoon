@@ -1,4 +1,3 @@
-﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,53 +5,34 @@ using UnityEngine.UI;
 
 namespace Repair
 {
-    class Hammering : MonoBehaviour
+    public class Quenching : MonoBehaviour
     {
-        public GameObject Quenching;
+        public GameObject CraftingTable;
         public Image weaponImg;
 
-        [SerializeField] private GameObject[] TargetObjects;
-        private int clickedTarget = 0;
-        private string type = "";
+        private string type;
 
         void OnEnable()
         {
             SetWeaponImage(RepairManager.Instance.WeaponInfo.name);
         }
 
-        void OnDisable()
+        public void Finish()
         {
-            foreach(GameObject go in TargetObjects)
-            {
-                go.SetActive(true);
-                clickedTarget = 0;
-                type = "";
-            }
-        }
-
-        public void ClickTarget()
-        {
-            clickedTarget++;
-
-            if(clickedTarget >= TargetObjects.Length)
-            {
-                StartCoroutine(ActiveFalseAfter(1f));
-            }
+            RepairManager.Instance.RemoveState(type);
+            StartCoroutine(ActiveFalseAfter(1f));
         }
 
         public void SetType(string ptype)
         {
-            type = String.Copy(ptype);
-
-            print(type);
+            type = string.Copy(ptype);
         }
 
         IEnumerator ActiveFalseAfter(float time)
         {
             yield return new WaitForSeconds(time);
 
-            Quenching.SetActive(true);
-            Quenching.GetComponent<Quenching>().SetType(type);
+            CraftingTable.SetActive(true);
             gameObject.SetActive(false);
         }
 
@@ -67,4 +47,5 @@ namespace Repair
             }
         }
     }
+
 }

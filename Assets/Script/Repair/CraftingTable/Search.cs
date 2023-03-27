@@ -14,6 +14,8 @@ namespace Repair
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            RepairManager rp = RepairManager.Instance;
+
             string tstring = "";
             tstring += "내구도   " + MakeInfoToString(RepairManager.Instance.WeaponInfo.state.iDurabilityState);
             tstring += "\n공격력   " + MakeInfoToString(RepairManager.Instance.WeaponInfo.state.iDamageState);
