@@ -40,8 +40,7 @@ namespace Repair
             }
 
             // 임시 설정
-            strOwnerName = "톨문드";
-            weaponInfo = new GuestDB.WeaponInfo("도끼", 0, 1, 0, true, 2);
+            SetRepairManager("톨문드", new GuestDB.WeaponInfo("도끼", 0, 1, 0, true, 2));
         }
 
         public void SetRepairManager(string ownerName, GuestDB.WeaponInfo weapon)

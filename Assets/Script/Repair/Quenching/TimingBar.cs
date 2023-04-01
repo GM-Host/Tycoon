@@ -17,25 +17,32 @@ namespace Repair
         [SerializeField] private Transform blueTarget;
         [SerializeField] private Image yellowLine;
 
-        private float length = 1600f - 70f;
+        private float length;
+        private RectTransform yellowLineRect;
 
-        private float runningTime = 0f;
-        private float xPos = 0f;
-        private float yellowLineY = 0f;
-        private int count = 0;
+        private float runningTime;
+        private float xPos;
+        private float yellowLineX, yellowLineY;
+        private int count;
         private float blueTargetSizeDeltaX, blueTargetSizeDeltaY;
 
         private void OnEnable()
         {
+            yellowLineRect = yellowLine.rectTransform;
+            yellowLineX = yellowLineRect.anchoredPosition.x;
+            yellowLineY = yellowLineRect.anchoredPosition.y;
+
+            length = GetComponent<RectTransform>().sizeDelta.x - yellowLineX * 2;
             runningTime = 0f;
             xPos = 0f;
-            yellowLineY = 0f;
             count = 0;
 
-            yellowLineY = yellowLine.transform.localPosition.y;
+            print(length);
+            print(yellowLineX + " " + yellowLineY);
 
             StartCoroutine(MoveTimingBar());
 
+            // 타겟의 가로와 세로
             blueTargetSizeDeltaX = blueTarget.GetComponent<RectTransform>().sizeDelta.x;
             blueTargetSizeDeltaY = blueTarget.GetComponent<RectTransform>().sizeDelta.y;
         }
@@ -50,8 +57,9 @@ namespace Repair
             while(count < 3)
             {
                 runningTime += Time.deltaTime * speed;
-                xPos = Mathf.Sin(runningTime) * (length / 2) - 10;
-                yellowLine.transform.localPosition = new Vector2(xPos, yellowLineY);
+                xPos = Mathf.Sin(runningTime + Mathf.PI * 1.5f) * (length / 2);
+
+                yellowLineRect.anchoredPosition = new Vector2(xPos + yellowLineX + length / 2, yellowLineY);
 
                 // 클릭하고 2초 정지 후 타겟 크기 줄어듦
                 if (Input.GetMouseButtonDown(0))
@@ -61,6 +69,11 @@ namespace Repair
                         print("perfect");
                         count++;
                         ReduceBlueTargetLen();
+
+                        yellowLineRect.anchoredPosition = new Vector2(yellowLineX, yellowLineY);
+                        runningTime = 0;
+
+                        yield return new WaitForSeconds(0.5f);
                     }
                 }
 
@@ -73,16 +86,21 @@ namespace Repair
         private bool CheckYellowLinePosition()
         {
             float targetLeftWidth = blueTarget.GetComponent<RectTransform>().sizeDelta.x;
-            float targetLeftX = blueTarget.position.x - targetLeftWidth / 2;
-            float targetRightX = blueTarget.position.x + targetLeftWidth / 2;
+            //float targetLeftX = blueTarget.position.x - targetLeftWidth / 2;
+            //float targetRightX = blueTarget.position.x + targetLeftWidth / 2;
+            float targetLeftX = blueTarget.GetComponent<RectTransform>().anchoredPosition.x;
+            float targetRightX = targetLeftX + targetLeftWidth;
 
-            float lineLeftX = yellowLine.transform.position.x;
-            float lineRightX = lineLeftX + yellowLine.GetComponent<RectTransform>().sizeDelta.x;
+            //float lineLeftX = yellowLine.transform.position.x;
+            //float lineRightX = lineLeftX + yellowLine.GetComponent<RectTransform>().sizeDelta.x;
+
+            float lineLeftX = yellowLineRect.anchoredPosition.x;
+            float lineRightX = lineLeftX + yellowLineRect.sizeDelta.x;
 
             //print("target : " + targetLeftX + ", " + targetRightX);
             //print("line : " + lineLeftX + ", " + lineRightX);
-            
-            if(targetLeftX <= lineLeftX && lineRightX <= targetRightX)
+
+            if (targetLeftX <= lineLeftX && lineRightX <= targetRightX)
             {
                 return true;
             }
