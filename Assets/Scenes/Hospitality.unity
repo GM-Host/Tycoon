@@ -1251,6 +1251,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   csvFile1: {fileID: 4900000, guid: 4aed4a35cf1858041ad480cd41b46647, type: 3}
   csvFile2: {fileID: 4900000, guid: abf47be318602114db98bf241b8aadcb, type: 3}
+  csvWeapon: {fileID: 0}
 --- !u!1 &483295876
 GameObject:
   m_ObjectHideFlags: 0
@@ -4116,7 +4117,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d2f3dc383510a4d92ff187ccdee66a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speechBubbleList: []
   spawnTime: 2
   guestBubblePrefab: {fileID: 8743051030394804758, guid: 55526701c8e0ac249a5029ee04bf4087, type: 3}
   myBubblePrefab: {fileID: 8743051030394804758, guid: 53a4e984056f17b44944faf8d42750b3, type: 3}

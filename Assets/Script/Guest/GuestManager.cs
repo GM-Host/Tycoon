@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GuestManager : MonoBehaviour
 {
-    private List<string> nameList = new List<string>() { "발라드", "이안하트", "디르크", "무에르테", "샤카" };
+    // private List<string> nameList = new List<string>() { "발라드", "이안하트", "디르크", "무에르테", "샤카" };
+    private List<string> nameList = new List<string>() { "발라드", "이안하트", "디르크", "샤카", "마르코", "톨문드" };
 
     // 직업-인장
     [SerializeField]
@@ -29,6 +30,7 @@ public class GuestManager : MonoBehaviour
         GuestDB.SpeciesType species;
         GuestDB.ProfessionType profession;
         Sprite professionSeal, tierSeal;
+        GuestDB.WeaponInfo weapon;
 
         // 이름 랜덤
         name = nameList[Random.Range(0, nameList.Count)];
@@ -50,6 +52,9 @@ public class GuestManager : MonoBehaviour
 
         // 티어 랜덤
         tier = Random.Range(0, 3);
+
+        // 이름에 따라 무기 설정
+        weapon = GuestDB.GetWeaponInfo(name);
 
         // 티어에 따른 올바른 증표 설정
         tierSeal = tierSealList[tier];
@@ -123,6 +128,6 @@ public class GuestManager : MonoBehaviour
             }
         }
         
-        return new Guest(name, local, party, species, profession, professionSeal, ++tier, tierSeal);
+        return new Guest(name, local, party, species, profession, professionSeal, ++tier, tierSeal, weapon);
     }
 }
