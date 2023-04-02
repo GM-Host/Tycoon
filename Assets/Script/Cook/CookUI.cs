@@ -17,8 +17,7 @@ public class CookUI : MonoBehaviour
         actionBtn_NPC = !actionBtn_NPC;
         boilingBtn.SetActive(actionBtn_NPC); steamingBtn.SetActive(actionBtn_NPC); boildownBtn.SetActive(actionBtn_NPC); 
         roastingBtn.SetActive(actionBtn_NPC); fryingBtn.SetActive(actionBtn_NPC); stirfryingBtn.SetActive(actionBtn_NPC);
-        inventory.SetActive(actionBtn_NPC); flavorTxt.SetActive(actionBtn_NPC);
-        
+        inventory.SetActive(actionBtn_NPC); //flavorTxt.SetActive(actionBtn_NPC);
     }
 
     /********************
@@ -48,7 +47,7 @@ public class CookUI : MonoBehaviour
         Destroy(lastChild.gameObject);
         
         // remove history data
-        CookDataManager.Instance.curCook.RemoveAt(CookDataManager.Instance.curCook.Count - 1);
+        //CookDataManager.Instance.curCook.RemoveAt(CookDataManager.Instance.curCook.Count - 1);
     }
 
     

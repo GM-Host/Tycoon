@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
 
-// J : Æ÷¼Ç Á¦Á¶ ¾À¿¡¼­ ¾ÆÀÌÅÛ µµ±¸·Î µå·¡±× ½Ã ¶³¾îÁö´Â ¿ÀºêÁ§Æ®(DropItem)¿¡ ºÎÂøÇÏ´Â ½ºÅ©¸³Æ®
+// J : í¬ì…˜ ì œì¡° ì”¬ì—ì„œ ì•„ì´í…œ ë„êµ¬ë¡œ ë“œë˜ê·¸ ì‹œ ë–¨ì–´ì§€ëŠ” ì˜¤ë¸Œì íŠ¸(DropItem)ì— ë¶€ì°©í•˜ëŠ” ìŠ¤í¬ë¦½íŠ¸
 public class DropItem : MonoBehaviour
 {
     static public DropItem instance;
 
-    private float gravity = 980f;   // J : Áß·Â°¡¼Óµµ
+    private float gravity = 980f;   // J : ì¤‘ë ¥ê°€ì†ë„
 
     // Start is called before the first frame update
     void Start()
@@ -21,31 +21,34 @@ public class DropItem : MonoBehaviour
     {
         Slot slot = DragSlot.instance.dragSlot;
 
-        GetComponent<Image>().sprite = slot.item.itemImage; // J : µå·¡±×ÇÑ ¾ÆÀÌÅÛÀÇ ÀÌ¹ÌÁö ¼¼ÆÃ
-        slot.SetSlotCount(-1);    // J : Àç·á 1°³ ¼Òºñ
+        GetComponent<Image>().sprite = slot.item.itemImage; // J : ë“œë˜ê·¸í•œ ì•„ì´í…œì˜ ì´ë¯¸ì§€ ì„¸íŒ…
+        slot.SetSlotCount(-1);    // J : ì¬ë£Œ 1ê°œ ì†Œë¹„
 
         StartCoroutine(MoveCoroutine(x, moveRange));
     }
 
-    // ¿ä¸® ¾À¿¡¼­ µå·Ó ½Ã ÀÎº¥Åä¸® ¾÷µ¥ÀÌÆ®
+    // ï¿½ä¸® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½? ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     public void CookDrop()
     {
         Slot slot = DragSlot.instance.dragSlot;
 
-        GetComponent<Image>().sprite = slot.item.itemImage; // J : µå·¡±×ÇÑ ¾ÆÀÌÅÛÀÇ ÀÌ¹ÌÁö ¼¼ÆÃ
-        slot.SetSlotCount(-1);    // J : Àç·á 1°³ ¼Òºñ
+        GetComponent<Image>().sprite = slot.item.itemImage; // J : ï¿½å·¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        slot.SetSlotCount(-1);    // J : ï¿½ï¿½ï¿½? 1ï¿½ï¿½ ï¿½Òºï¿½
 
-        // ³» »ı°¢¿£ ÀÎº¥Åä¸® DB´Â ¾È¹Ù²î´Â °Í °°´Ù. ÀÌ°Å¸¦ ¸Å¹ø ¹Ù²ÜÁö ¾Æ´Ï¸é ¿Ï¼ºÀÌ³ª Clean/Delete ÈÄ¿¡ ÇÑ²¨¹ø¿¡ ¹Ù²ÜÁö...
+        CookDataManager.Instance.draggingItem = slot.item.itemImage.name;
+        
+        print("draggingItem : "+CookDataManager.Instance.draggingItem);
+        // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸® DBï¿½ï¿½ ï¿½È¹Ù²ï¿½ï¿½? ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. ï¿½Ì°Å¸ï¿½ ï¿½Å¹ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½ ï¿½Æ´Ï¸ï¿½ ï¿½Ï¼ï¿½ï¿½Ì³ï¿½ Clean/Delete ï¿½Ä¿ï¿½ ï¿½Ñ²ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½...
     }
 
-    // J : ¿ÀºêÁ§Æ®°¡ ¾Æ·¡·Î ¶³¾îÁü
+    // J : ì˜¤ë¸Œì íŠ¸ê°€ ì•„ë˜ë¡œ ë–¨ì–´ì§
     private IEnumerator MoveCoroutine(float x, Vector2 moveRange)
     {
-        float velocity = 500f;  // J : ÃÊ±â ¼Óµµ
-        transform.position = new Vector2(x, moveRange.x);   // J : ¶³¾îÁö±â ½ÃÀÛÇÏ´Â À§Ä¡
+        float velocity = 500f;  // J : ì´ˆê¸° ì†ë„
+        transform.position = new Vector2(x, moveRange.x);   // J : ë–¨ì–´ì§€ê¸° ì‹œì‘í•˜ëŠ” ìœ„ì¹˜
         Vector3 pos = transform.position;
 
-        while (pos.y > moveRange.y) // J : moveRange.y±îÁö ¶³¾îÁöµµ·Ï ¹İº¹
+        while (pos.y > moveRange.y) // J : moveRange.yê¹Œì§€ ë–¨ì–´ì§€ë„ë¡ ë°˜ë³µ
         {
             pos = transform.position;
             velocity += gravity * Time.deltaTime;

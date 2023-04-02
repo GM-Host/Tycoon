@@ -14,12 +14,8 @@ public class CookDataManager : MonoBehaviour
 
         
 
-    // 드래그 중인 아이템 정보 갱신
+    // 드래그 중인 아이템 정보
     public string draggingItem;
-    public void DraggingItem(string item)
-    {
-        draggingItem = item;
-    }
 
     [SerializeField] private Inventory Inventory;
     [SerializeField] private CookUI cookUI;
@@ -57,7 +53,9 @@ public class CookDataManager : MonoBehaviour
         inventoryDict["food0003"] = 6;
         inventoryDict["food0015"] = 3;
         inventoryDict["food0016"] = 12;
-
+        inventoryDict["food0002"] = 2;
+        inventoryDict["food0017"] = 2;
+        inventoryDict["food0018"] = 2;
         SetInventory();
     }
 
@@ -79,24 +77,38 @@ public class CookDataManager : MonoBehaviour
     public void CleanHistory(int cleanAll)
     {
         
-        print("Clean History left = "+curCook.Count);
-
+        // clean
         if(cleanAll == 1)
         {
+            // inventory update
+            foreach(CookObject obj in curCook)
+            {
+                // item 아니면 skip
+                if(obj.itemInfo == null)
+                    continue;
+
+                print("Cleaning ... In Cur Cook : "+ obj.id);
+                // update InventoryDict
+                ItemUnselect(obj.id);
+            }
+            
+            // history 전부 지우기
             cookUI.cleanHistory();
+            curCook.Clear();
             numOfObj=0;
             hasHistory = false;
             order = Order.Food;
         }
-        else
+        else    // delete
         {
             if(curCook.Count != 0)
             {
-                if (order==Order.Operation && curCook[curCook.Count - 1].itemInfo != null)
-                    ItemUnselect(curCook[curCook.Count - 1].itemInfo);
+                ItemUnselect(curCook[curCook.Count - 2].itemInfo);
                 cookUI.deleteHistory(curCook[curCook.Count - 1].id, curCook.Count-1);
-                order = order==Order.Food ? Order.Operation : Order.Food;
-                numOfObj--;
+                cookUI.deleteHistory(curCook[curCook.Count - 2].id, curCook.Count-2);
+                curCook.RemoveAt(curCook.Count - 1);
+                curCook.RemoveAt(curCook.Count - 1);
+                numOfObj = numOfObj - 2;
                 foreach(CookObject obj in curCook)
                 {
                     print("In Cur Cook : "+ obj.id);
@@ -115,30 +127,30 @@ public class CookDataManager : MonoBehaviour
     private void ItemUnselect(string item)
     {
         int itemCount;
+        // 해당 아이템 슬롯 찾기
+        Slot slot;
 
         // 현재 inven에 없는 아이템인 경우
         if(!inventoryDict.ContainsKey(item))    
         {
             inventoryDict.Add(item, 1);
+            // 새 슬롯에 해당 아이템 추가
         }
         else
         {
             inventoryDict.TryGetValue(item, out itemCount);
-            inventoryDict[item] = itemCount++;
+            inventoryDict[item] = ++itemCount;
+            // 해당 슬롯에 SetSlotCount(1)
         }
-
-        // update Inventory
-        SetInventory();
+        
     }
 
-    // 인벤토리 업데이트
+    // 인벤토리 초기화
     private void SetInventory()
     {
         foreach (KeyValuePair<string, int> slot in inventoryDict)
         {
             Item item = Resources.Load<Item>("Item/" + slot.Key);
-            print("item " + item.itemName);
-            print("slot.Value " + slot.Value);
             Inventory.AcquireItem(item, slot.Value);
         }
     }
@@ -153,7 +165,7 @@ public class CookDataManager : MonoBehaviour
     // 조리 차례, 아이템 차례
     public enum Order {Food, Operation};
     public Order order = Order.Food;
-    public void ItemSelected(string item)
+    public void ItemSelected(string item, CookObject operation)
     {
         if(order != Order.Food || numOfObj == 6)
             return;
@@ -175,13 +187,15 @@ public class CookDataManager : MonoBehaviour
         numOfObj++;
 
 
-        // update Inventory
+        // update InventoryDict
         int itemCount;
         inventoryDict.TryGetValue(item, out itemCount);
-        inventoryDict[item] = itemCount--;
+        inventoryDict[item] = --itemCount;
+        
         if(itemCount==0)
             inventoryDict.Remove(item);
-        SetInventory();
+
+        OperSelected(operation);
 
     }
     // 여기까지 수정함
@@ -209,6 +223,7 @@ public class CookDataManager : MonoBehaviour
         # CookUI -> # CookDataManager -> # ResultUI
         콜벨 누르면 조리 계산해서 결과 띄우기
     ******************************************************/
+    private string resultfood, foodstring;
     public void MakeResult()
     {
         string recipe = "";
@@ -250,7 +265,10 @@ public class CookDataManager : MonoBehaviour
                 // 레시피 모든 내용 맞았을 때
                 else
                 {
-                    resultUI.ShowResult("Success", processes, count);
+                    resultfood = recipeData[row]["성공"].ToString();
+                    foodstring = recipeData[row]["요리_이름"].ToString();
+                    print("resultFood : "+resultfood);
+                    resultUI.ShowResult("Success", processes, count, resultfood, foodstring);
                     break;
                 }
                 
@@ -274,7 +292,11 @@ public class CookDataManager : MonoBehaviour
     ******************************************************/
     public void SendFlavorData(int itemId)
     {
-        flavorUI.PrintFlavor(flavorData[itemId - 1]["플레이버_텍스트"].ToString());
+        flavorUI.PrintFlavor(flavorData[itemId - 1]["플레이버_텍스트"].ToString(), flavorData[itemId - 1]["재료_이름"].ToString());
+    }
+    public void DelFlavorData()
+    {
+        flavorUI.ExitFlavor();
     }
 
     // Update is called once per frame

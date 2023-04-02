@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 211e1ea05899a584aa9822b193962cd6, type: 3}
+  m_Script: {fileID: 11500000, guid: b5578d6e434dcad42b1081b9e704ad25, type: 3}
   m_Name: food0016
   m_EditorClassIdentifier: 
   itemName: "\uCF54\uCE74\uD2B8\uB9AC\uC2A4 \uC54C"
   itemType: 1
-  itemImage: {fileID: 21300000, guid: 9865eb4b51041d640b448f2543e6566f, type: 3}
+  itemImage: {fileID: 21300000, guid: 634f6cf8c85cd8b4d895384cbef472e2, type: 3}
+  itemId: 16

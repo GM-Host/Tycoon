@@ -5,44 +5,44 @@ using UnityEngine.UI;
 
 public class ResultUI : MonoBehaviour
 {
-    public GameObject result1, result2, result3;
-    public void ShowResult(string result, string [] processes, int count)
+    [SerializeField] private Image resultFood;
+    [SerializeField] private GameObject resultScene;
+    [SerializeField] private Image cutScene;
+    [SerializeField] private GameObject resultUI;
+    [SerializeField] private Image food;
+    [SerializeField] private Text resultText;
+    private string str_Food, foodTxt;
+    public void ShowResult(string result, string [] processes, int count, string str_food, string foodtxt)
     {
         if(result == "Success")
-            switch(count)
             {
-                case 1:
-                result1.SetActive(true);
-                result1.transform.Find("Image").GetComponent<Image>().sprite = Resources.Load("Cook/result/" + processes[0]+"1", typeof(Sprite)) as Sprite;
-
-                break;
-
-                case 2:
-                
-                result2.SetActive(true);
-                result2.transform.Find("Image_1").GetComponent<Image>().sprite = Resources.Load("Cook/result/" + processes[0]+"2", typeof(Sprite)) as Sprite;
-                result2.transform.Find("Image_2").GetComponent<Image>().sprite = Resources.Load("Cook/result/" + processes[1]+"2", typeof(Sprite)) as Sprite;
-                break;
-                
-                case 3:
-                
-                result3.SetActive(true);
-                result3.transform.Find("Image_1").GetComponent<Image>().sprite = Resources.Load("Cook/result/" + processes[0]+"3", typeof(Sprite)) as Sprite;
-                result3.transform.Find("Image_2").GetComponent<Image>().sprite = Resources.Load("Cook/result/" + processes[1]+"3", typeof(Sprite)) as Sprite;
-                result3.transform.Find("Image_3").GetComponent<Image>().sprite = Resources.Load("Cook/result/" + processes[2]+"3", typeof(Sprite)) as Sprite;
-                break;
+                // 컷씬
+                resultScene.SetActive(true);
+                StartCoroutine(CookProcess(processes, count));
+                // 결과창 이용
+                str_Food = str_food;
+                foodTxt = foodtxt;
             }
+
+        else
+            print("FAILED IMAGE TURN");
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private IEnumerator CookProcess(string [] processes, int count)
     {
-        
+        for (int i=0; i<count; i++)
+        {  
+            cutScene.sprite = Resources.Load("Cook/result/" + processes[i]+"1", typeof(Sprite)) as Sprite;
+            yield return new WaitForSeconds(3f);
+        }
+        ShowFood();
     }
-
-    // Update is called once per frame
-    void Update()
+    private void ShowFood()
     {
-        
+        resultScene.SetActive(false);
+        // 결과창
+        resultUI.SetActive(true);
+        food.sprite = Resources.Load("Cook/food/"+str_Food, typeof(Sprite)) as Sprite;
+        resultText.text = foodTxt;
     }
 }

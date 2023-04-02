@@ -5,20 +5,24 @@ using UnityEngine;
 
 public class FlavorUI : MonoBehaviour
 {
-    public TMP_Text flavorText;
-    public void PrintFlavor(string data)
+    public GameObject flavorUI;
+    public TMP_Text flavorText, titleText;
+    public void PrintFlavor(string data, string foodname)
     {
+        flavorUI.SetActive(true);
+        // RectTransformUtility.ScreenPointToLocalPointInRectangle(targetTr, Input.mousePosition, uiCamera, out screenPoint);
+        // menuUITr.localPosition = screenPoint;
+        flavorUI.transform.position = Input.mousePosition + new Vector3(-300, -300, 0);
         flavorText.text = data;
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        titleText.text = foodname;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ExitFlavor()
     {
+        flavorUI.SetActive(false);
+    }
+    
+    private void Update() {
         
     }
 }

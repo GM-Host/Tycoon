@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    private Slot[] slots;  // J : ½½·Ô ¹è¿­
+    private Slot[] slots;  // J : ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­
 
-    [SerializeField] private GameObject Grid;  // J : SlotµéÀÇ ºÎ¸ð
+    [SerializeField] private GameObject Grid;  // J : Slotï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½
 
 
     void Awake()
@@ -20,15 +20,15 @@ public class Inventory : MonoBehaviour
         {
             if (slots[i].item != null)
             {
-                if (slots[i].item.itemName == _item.itemName)   // J : ÀÌ¹Ì ÀÎº¥Åä¸®¿¡ ÀÖ´Â ¾ÆÀÌÅÛ
+                if (slots[i].item.itemName == _item.itemName)   // J : ï¿½Ì¹ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 {
-                    slots[i].SetSlotCount(_count);  // J : °³¼ö ¾÷µ¥ÀÌÆ®
+                    slots[i].SetSlotCount(_count);  // J : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
                     return;
                 }
             }
         }
 
-        // J : ÀÎº¥Åä¸®¿¡ ¾ø´ø ¾ÆÀÌÅÛÀÌ¹Ç·Î °¡Àå ¾ÕÀÇ ºóÄ­¿¡ Ãß°¡
+        // J : ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¹Ç·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä­ï¿½ï¿½ ï¿½ß°ï¿½
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].item == null)
@@ -38,4 +38,13 @@ public class Inventory : MonoBehaviour
             }
         }
     }
+
+    // private void SetInventory()
+    // {
+    //     foreach (KeyValuePair<string, int> slot in inventoryDict)
+    //     {
+    //         Item item = Resources.Load<Item>("Item/" + slot.Key);
+    //         Inventory.AcquireItem(item, slot.Value);
+    //     }
+    // }
 }
