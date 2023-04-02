@@ -121,36 +121,20 @@ public class CalculationUI : MonoBehaviour
         if(output > 0)
             outputNum.text = "+" + output.ToString();
         else outputNum.text = output.ToString();
+        yield return new WaitForSeconds(2.0f);
 
-
-        bool isStart = true;
-        float xSpeed = .1f, ySpeed = .1f;
-        print(outputWindow.transform.position);
-        while(true)
-        {
-            if(isStart == true)
-            {
-                // Translation
-                //outputWindow.anchoredPosition += new Vector2(xSpeed * speedOfCurtain * Time.deltaTime, 0);
-                outputWindow.transform.Translate(new Vector3(xSpeed * Time.deltaTime, ySpeed * Time.deltaTime, 0));
-                // Stop condition
-                if(outputWindow.transform.position.x > 1720f)
-                    xSpeed=0f;
-                if(outputWindow.transform.position.y > 850f)
-                    ySpeed=0f;
-                if(xSpeed==0 && ySpeed==0)
-                {
-                    isStart = false;
-                    break;
-                }
-            }
-        }
+        // Translation & Hide
+        outputWindow.GetComponent<Animator>().SetTrigger("Complete");
+        outputWindow.SetActive(false);
 
         // Update Gold
-        gold.text = (int.Parse(gold.text) + output).ToString();
+        int updatedGold = (int.Parse(gold.text) + output);
+        gold.text = updatedGold.ToString();
+        CalculateManager.Instance.UpdateGold(updatedGold);
 
         // Wait 2s and set as invisible
         yield return new WaitForSeconds(2.0f);
+        outputWindow.SetActive(true);
         firstSettleWindow.SetActive(false);
         yield return null;
     }
@@ -183,5 +167,6 @@ public class CalculationUI : MonoBehaviour
         sumOfOutcome.text = outcome.ToString();
         // Final output
         output = income - outcome;
+
     }
 }
