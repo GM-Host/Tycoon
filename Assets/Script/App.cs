@@ -5,7 +5,7 @@ public class App : MonoBehaviour
 {
     public enum eSceneType
     {
-        App, Logo, Loading, Title
+        App, Logo, Loading, Title, Story, Cook, Hospitality
     }
 
     public static App instance;
@@ -84,12 +84,42 @@ public class App : MonoBehaviour
                         {
                             this.uiApp.FadeOut(0.5f, () =>
                             {
-
+                                this.LoadScene<StoryMain>(eSceneType.Story);
                             });
                         });
                         main.Init();
                         break;
                     }
+                case eSceneType.Story:
+                    {
+                        this.uiApp.FadeIn();
+
+                        main.AddListener("onClickWorkBtn", (data) =>
+                        {
+                            this.uiApp.FadeOut(0.5f, () =>
+                            {
+                                this.LoadScene<CookMain>(eSceneType.Cook);
+                            });
+                        });
+                        main.Init();
+                        break;
+                    }
+                case eSceneType.Cook:
+                    {
+                        this.uiApp.FadeIn();
+
+                        main.AddListener("onClickWorkBtn", (data) =>
+                        {
+                            this.uiApp.FadeOut(0.5f, () =>
+                            {
+                                //this.LoadScene<StoryMain>(eSceneType.Cook);
+                            });
+                        });
+                        main.Init();
+                        break;
+                    }
+
+
             }
         };
     }

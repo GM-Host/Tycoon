@@ -18,9 +18,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Title.unity
     guid: 48467c19981290a408c3e05886fed259
   - enabled: 1
+    path: Assets/Scenes/Story.unity
+    guid: cfe21fc0a19e99542b0e1b2ddb4e02c0
+  - enabled: 1
     path: Assets/Scenes/Hospitality.unity
     guid: 78c4c97365c60d840bbda13f0c17c566
   - enabled: 1
     path: Assets/Scenes/RestingPlace.unity
     guid: dc0664fc186b0f04493723c9ab64676e
+  - enabled: 1
+    path: Assets/Scenes/Cook.unity
+    guid: 0950a4936af084a4b8b8f92f3a32b925
   m_configObjects: {}
