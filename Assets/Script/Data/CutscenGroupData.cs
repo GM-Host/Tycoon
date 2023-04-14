@@ -10,11 +10,8 @@
 
 
 
-public class CutscenGroupData
+public class CutscenGroupData : GameMetaData
 {
-    
-    public int id;
-    
     public int group_id;
     
     public string filename;

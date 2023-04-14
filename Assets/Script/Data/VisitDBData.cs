@@ -10,11 +10,8 @@
 
 
 
-public class VisitDBData
+public class VisitDBData : GameMetaData
 {
-    
-    public int id;
-    
     public int dialogue_type;
     
     public int encounter_type;

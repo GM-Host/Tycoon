@@ -1,75 +1,60 @@
 using Newtonsoft.Json;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
-using System;
+using System.IO;
 
 public class DataManager
 {
     public static readonly DataManager instance = new DataManager();
 
-    public UnityEvent<string, float> onDataLoadComplete = new UnityEvent<string, float>();
-    public UnityEvent onDataLoadFinished = new UnityEvent();
-    
-    //private Dictionary<int, RawData> dicDatas = new Dictionary<int, RawData>();
-    //private List<DatapathData> dataPathList;
+    public UserData UserData;
 
-    private DataManager() 
-    {
-    }
-
+    /////////////////// public
     public void Init()
     {
-        //var datapath = "Datas/datapath_data";
-        //var asset = Resources.Load<TextAsset>(datapath);
-        //var json = asset.text;
-        //var datas = JsonConvert.DeserializeObject<DatapathData[]>(json);
+        LoadData();
+    }
 
-        //this.dataPathList = datas.ToList();
-    }
-    //public void LoadData<T>(string json) where T : RawData
-    //{
-    //    var datas = JsonConvert.DeserializeObject<T[]>(json);
-    //    datas.ToDictionary(x => x.id).ToList().ForEach(x => dicDatas.Add(x.Key, x.Value));
-    //}
 
-    public void LoadAllData()
+    public void SaveGame()
     {
-        App.instance.StartCoroutine(LoadAllDataRoutine());
+        var json = JsonConvert.SerializeObject(_gameInfoData);
+        var path = string.Format("{0}/gameinfo_data.json", Application.persistentDataPath);
+        File.WriteAllText(path, json);
     }
-    public void LoadAllData(MonoBehaviour mono)
+
+    public void LoadUserData(string uid)
     {
-        mono.StartCoroutine(LoadAllDataRoutine());
+        UserData = _gameInfoData.UserDatas.Find(x => x.uid == uid);
+        if (UserData == null)
+            Debug.LogFormat("{0} : 없는 유저 UID" , uid);
     }
-    private IEnumerator LoadAllDataRoutine()
+
+
+    //////////////////////////////// private
+
+    private GameInfoData _gameInfoData;
+
+    private DataManager()
     {
-        int idx = 0;
-        // 데이터 없을때 테스트 용도
-        for (int i = 0; i < 10; i++)
+    }
+
+    private void LoadData()
+    {
+        var path = string.Format("{0}/gameinfo_data.json", Application.persistentDataPath);
+
+        if (File.Exists(path))
         {
-            this.onDataLoadComplete.Invoke("호출할 데이터 없음", (float)(i + 1) / 10);
-            yield return YieldInstructionCache.WaitForSeconds(0.1f);
+            Debug.Log("기존 유저");
+            var json = File.ReadAllText(path);
+            _gameInfoData = JsonConvert.DeserializeObject<GameInfoData>(json);
         }
-
-        //foreach (var data in this.dataPathList)
-        //{
-        //    var path = string.Format("Datas/{0}", data.res_name);
-        //    ResourceRequest req = Resources.LoadAsync<TextAsset>(path);
-        //    yield return req;
-        //    float progress = (float)(idx + 1) / this.dataPathList.Count;
-        //    this.onDataLoadComplete.Invoke(data.res_name, progress);
-        //    TextAsset asset = (TextAsset)req.asset;
-        //    var typeDef = Type.GetType(data.type);
-        //    this.GetType().GetMethod(nameof(LoadData))
-        //        .MakeGenericMethod(typeDef).Invoke(this, new string[] { asset.text });
-
-        //    yield return YieldInstructionCache.WaitForSeconds(0.3f);
-        //    idx++;
-        //}
-        yield return null;
-        this.onDataLoadFinished.Invoke();
+        else
+        {
+            Debug.Log("신규 유저 입니다.");
+            _gameInfoData = new GameInfoData();
+            UserData = new UserData("0",0,0);
+            _gameInfoData.UserDatas.Add(UserData);
+        }
+        SaveGame();
     }
-
 }

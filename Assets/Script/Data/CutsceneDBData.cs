@@ -10,11 +10,8 @@
 
 
 
-public class CutsceneDBData
+public class CutsceneDBData : GameMetaData
 {
-    
-    public int id;
-    
     public int reference_group;
     
     public int dialogue_location;

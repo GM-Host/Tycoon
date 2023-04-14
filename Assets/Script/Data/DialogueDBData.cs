@@ -10,11 +10,8 @@
 
 
 
-public class DialogueDBData
+public class DialogueDBData : GameMetaData
 {
-    
-    public int id;
-    
     public string npc_name;
     
     public string dialogue;

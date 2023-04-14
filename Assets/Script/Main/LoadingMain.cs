@@ -10,17 +10,15 @@ public class LoadingMain : SceneMain
         this.uiLoading = GameObject.FindObjectOfType<UILoading>();
         uiLoading.Init();
         
-        DataManager.instance.onDataLoadComplete.AddListener((dataName, progress) => 
+        SpecDataManager.instance.onDataLoadComplete.AddListener((dataName, progress) => 
         {
             uiLoading.SetUI(dataName, progress);
         });
 
-        DataManager.instance.onDataLoadFinished.AddListener(() => 
+        SpecDataManager.instance.onDataLoadFinished.AddListener(() => 
         {
             this.Dispatch("onLoadComplete");
         });
-        DataManager.instance.Init();
-        DataManager.instance.LoadAllData();
-
+        SpecDataManager.instance.Init(App.instance);
     }
 }

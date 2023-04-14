@@ -24,9 +24,13 @@ public class StoryMain : SceneMain
                 Init();
             });
             SpecDataManager.instance.Init(this);
-
         }
-            
+
+        DataManager.instance.Init();
+        DataManager.instance.LoadUserData("0");
+        DataManager.instance.UserData.gold++;
+        DataManager.instance.SaveGame();
+        Debug.Log(DataManager.instance.UserData.gold);
     }
 
     public override void Init(SceneParams param = null)
@@ -34,12 +38,8 @@ public class StoryMain : SceneMain
         _msgIdx = 0;
         storyUI.Init();
 
-        foreach (var item in SpecDataManager.instance.DialogueDBDatas)
-        {
-            Debug.Log(item.id);
-            Debug.Log(item.npc_name);
-            Debug.Log(item.dialogue);
-        }
+        SpecDataManager.instance.DialogueDBDatas[0].id = 1;
+
     }
 
     private void Update()
