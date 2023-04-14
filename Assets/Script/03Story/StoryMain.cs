@@ -18,13 +18,28 @@ public class StoryMain : SceneMain
     private void Start()
     {
         if(App.instance == null)
-            Init();
+        {
+            SpecDataManager.instance.onDataLoadFinished.AddListener(() =>
+            {
+                Init();
+            });
+            SpecDataManager.instance.Init(this);
+
+        }
+            
     }
 
     public override void Init(SceneParams param = null)
     {
         _msgIdx = 0;
         storyUI.Init();
+
+        foreach (var item in SpecDataManager.instance.DialogueDBDatas)
+        {
+            Debug.Log(item.id);
+            Debug.Log(item.npc_name);
+            Debug.Log(item.dialogue);
+        }
     }
 
     private void Update()
