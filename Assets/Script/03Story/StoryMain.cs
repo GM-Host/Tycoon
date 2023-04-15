@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Linq;
 
 public class StoryMain : SceneMain
 {
     public StoryUI storyUI;
     public RectTransform _closeUpCamera;
+    public Vector3 targetPosition;  // 클로즈업 카메라 이동 좌표    // 가까이 갈 수록 클로즈업 대상 오브젝트 크게보임
+    public float duration;  // 이동시간
 
-    // 임시 대사
-    public List<string> _msgs;
+
     // 대사 인덱스
-    private int _msgIdx;
+    private int _msgIdx = 0;
 
     private bool isCloseUp = false;
 
@@ -35,12 +37,18 @@ public class StoryMain : SceneMain
 
     public override void Init(SceneParams param = null)
     {
-        _msgIdx = 0;
         storyUI.Init();
 
         SpecDataManager.instance.DialogueDBDatas[0].id = 1;
 
+
+        _dialogueDBDatas = SpecDataManager.instance.DialogueDBDatas.FindAll(x => x.group_id == 2000).ToList();
     }
+
+
+    /////////////////// private
+    List<DialogueDBData> _dialogueDBDatas;
+
 
     private void Update()
     {
@@ -49,20 +57,17 @@ public class StoryMain : SceneMain
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (_msgIdx >= _msgs.Count)
+            if (_msgIdx >= _dialogueDBDatas.Count)
             {
                 isCloseUp = true;
                 StartCoroutine(CloseUpImpl());
                 return;
             }
-            storyUI.SetMsg(_msgs[_msgIdx]);
+            storyUI.SetMsg(_dialogueDBDatas[_msgIdx].dialogue);
             _msgIdx++;
-
         }
     }
 
-    public Vector3 targetPosition;
-    public float duration;
 
     private IEnumerator CloseUpImpl()
     {
